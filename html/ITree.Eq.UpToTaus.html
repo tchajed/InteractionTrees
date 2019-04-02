@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Eq.UpToTaus</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab99"></a><h1 class="section">Equivalence up to taus</h1>
+
+<div class="paragraph"> </div>
+
+ Abbreviated as <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span>. 
+<div class="paragraph"> </div>
+
+ We consider <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span> as an "internal step", that should not be
+   visible to the outside world, so adding or removing <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span>
+   constructors from an itree should produce an equivalent itree.
+
+<div class="paragraph"> </div>
+
+   We must be careful because there may be infinite sequences of
+   taus (i.e., <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.spin"><span class="id" title="definition">spin</span></a></span>). Here we shall only allow inserting finitely
+   many <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span>s between any two visible steps (<span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span> or <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span>), so that
+   <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.spin"><span class="id" title="definition">spin</span></a></span> is only related to itself. This ensures that equivalence
+   up to taus is transitive (and in fact an equivalence relation).
+ 
+<div class="paragraph"> </div>
+
+ A rewrite hint database named <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> is available via the tactic
+    <span class="inlinecode"><span class="id" title="tactic">autorewrite</span></span> <span class="inlinecode"><span class="id" title="keyword">with</span></span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> as a custom simplifier of expressions using
+    mainly <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span>, <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span>, <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span>, <span class="inlinecode"><span class="id" title="var">ITree.bind</span></span> and <span class="inlinecode"><span class="id" title="var">ITree.Interp.Interp.interp</span></span>.
+ 
+<div class="paragraph"> </div>
+
+ This file contains only the definition of the <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span> relation.
+    Theorems about <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span> are split in two more modules:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> <span class="inlinecode"><span class="id" title="library">ITree.Eq.UpToTausCore</span></span> proves that <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span> is reflexive, symmetric,
+      and that <span class="inlinecode"><span class="id" title="var">ITree.Eq.Eq.eq_itree</span></span> is a subrelation of <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span>.
+      Equations for <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#"><span class="id" title="library">ITree.Core.ITreeDefinition</span></a></span> combinators which only rely on
+      those properties can also be found here.
+
+<div class="paragraph"> </div>
+
+
+</li>
+<li> <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#"><span class="id" title="library">ITree.Eq.UpToTausEquivalence</span></a></span> proves that <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span> is transitive,
+      and, more generally, contains theorems for up-to reasoning in
+      coinductive proofs.
+
+</li>
+</ul>
+ 
+<div class="paragraph"> </div>
+
+ Splitting things this way makes the library easier to build in parallel.
+ 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="EUTT"><span class="id" title="section">EUTT</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">R1</span> <span class="id" title="var">R2</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">RR</span> : <a class="idref" href="ITree.Eq.UpToTaus.html#R1"><span class="id" title="variable">R1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#R2"><span class="id" title="variable">R2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="euttF"><span class="id" title="inductive">euttF</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">eutt</span>: <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R1"><span class="id" title="variable">R1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R2"><span class="id" title="variable">R2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">eutt0</span>: <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R1"><span class="id" title="variable">R1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R2"><span class="id" title="variable">R2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="ITree.Core.ITreeDefinition.html#itree'"><span class="id" title="abbreviation">itree'</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R1"><span class="id" title="variable">R1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree'"><span class="id" title="abbreviation">itree'</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R2"><span class="id" title="variable">R2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span> :=<br/>
+| <a name="euttF_ret"><span class="id" title="constructor">euttF_ret</span></a> <span class="id" title="var">r1</span> <span class="id" title="var">r2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">RBASE</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.RR"><span class="id" title="variable">RR</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r1"><span class="id" title="variable">r1</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r2"><span class="id" title="variable">r2</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r1"><span class="id" title="variable">r1</span></a>) (<a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r2"><span class="id" title="variable">r2</span></a>)<br/>
+| <a name="euttF_vis"><span class="id" title="constructor">euttF_vis</span></a> <span class="id" title="var">u</span> (<span class="id" title="var">e</span> : <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#u"><span class="id" title="variable">u</span></a>) <span class="id" title="var">k1</span> <span class="id" title="var">k2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">EUTTK</span>: <span class="id" title="keyword">forall</span> <span class="id" title="var">x</span>, <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> (<a class="idref" href="ITree.Eq.UpToTaus.html#k1"><span class="id" title="variable">k1</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="ITree.Eq.UpToTaus.html#k2"><span class="id" title="variable">k2</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#7a45dffb109c3069e5c675be68643e60"><span class="id" title="notation">\/</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Eq.UpToTaus.html#k1"><span class="id" title="variable">k1</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="ITree.Eq.UpToTaus.html#k2"><span class="id" title="variable">k2</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a>)):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#e"><span class="id" title="variable">e</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#k1"><span class="id" title="variable">k1</span></a>) (<a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#e"><span class="id" title="variable">e</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#k2"><span class="id" title="variable">k2</span></a>)<br/>
+| <a name="euttF_tau_tau"><span class="id" title="constructor">euttF_tau_tau</span></a> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">EQTAUS</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a>) (<a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>)<br/>
+| <a name="euttF_tau_left"><span class="id" title="constructor">euttF_tau_left</span></a> <span class="id" title="var">t1</span> <span class="id" title="var">ot2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">EQTAUS</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a>) <a class="idref" href="ITree.Eq.UpToTaus.html#ot2"><span class="id" title="variable">ot2</span></a>):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a>) <a class="idref" href="ITree.Eq.UpToTaus.html#ot2"><span class="id" title="variable">ot2</span></a><br/>
+| <a name="euttF_tau_right"><span class="id" title="constructor">euttF_tau_right</span></a> <span class="id" title="var">ot1</span> <span class="id" title="var">t2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">EQTAUS</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#ot1"><span class="id" title="variable">ot1</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>)):<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#ot1"><span class="id" title="variable">ot1</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>)<br/>
+.<br/>
+<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="eutt0_"><span class="id" title="definition">eutt0_</span></a> <span class="id" title="var">eutt</span> <span class="id" title="var">eutt0</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> := <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="variable">eutt0</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a>) (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>).<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0_"><span class="id" title="definition">eutt0_</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="eutt0"><span class="id" title="definition">eutt0</span></a> <span class="id" title="var">eutt</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> := <span class="id" title="inductive">cpn2</span> (<a class="idref" href="ITree.Eq.UpToTaus.html#eutt0_"><span class="id" title="definition">eutt0_</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a>) <span class="id" title="abbreviation">bot2</span> <a class="idref" href="ITree.Eq.UpToTaus.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#t2"><span class="id" title="variable">t2</span></a>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="definition">eutt0</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="euttF_mon"><span class="id" title="lemma">euttF_mon</span></a> <span class="id" title="var">r</span> <span class="id" title="var">r'</span> <span class="id" title="var">s</span> <span class="id" title="var">s'</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">EUTT</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#y"><span class="id" title="variable">y</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">LEr</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#r"><span class="id" title="variable">r</span></a> <span class="id" title="notation">&lt;2=</span> <a class="idref" href="ITree.Eq.UpToTaus.html#r'"><span class="id" title="variable">r'</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">LEs</span>: <a class="idref" href="ITree.Eq.UpToTaus.html#s"><span class="id" title="variable">s</span></a> <span class="id" title="notation">&lt;2=</span> <a class="idref" href="ITree.Eq.UpToTaus.html#s'"><span class="id" title="variable">s'</span></a>):<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#r'"><span class="id" title="variable">r'</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#s'"><span class="id" title="variable">s'</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#y"><span class="id" title="variable">y</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">EUTT</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">econstructor</span>; <span class="id" title="tactic">intros</span>. <span class="id" title="var">edestruct</span> <span class="id" title="var">EUTTK</span>; <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="monotone_eutt0_"><span class="id" title="lemma">monotone_eutt0_</span></a> <span class="id" title="var">eutt</span> : <span class="id" title="definition">monotone2</span> (<a class="idref" href="ITree.Eq.UpToTaus.html#eutt0_"><span class="id" title="definition">eutt0_</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="variable">eutt</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">intro</span>. <span class="id" title="tactic">eauto</span> <span class="id" title="keyword">using</span> <a class="idref" href="ITree.Eq.UpToTaus.html#euttF_mon"><span class="id" title="lemma">euttF_mon</span></a>. <span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">monotone_eutt0_</span> : <span class="id" title="var">paco</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="monotone_eutt0"><span class="id" title="lemma">monotone_eutt0</span></a> : <span class="id" title="definition">monotone2</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="definition">eutt0</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">red</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">eapply</span> <span class="id" title="lemma">cpn2_mon_bot</span>; <span class="id" title="tactic">eauto</span> <span class="id" title="keyword">using</span> <a class="idref" href="ITree.Eq.UpToTaus.html#euttF_mon"><span class="id" title="lemma">euttF_mon</span></a>. <span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">monotone_eutt0</span> : <span class="id" title="var">paco</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;We&nbsp;now&nbsp;take&nbsp;the&nbsp;greatest&nbsp;fixpoint&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">eutt_</span></span>.&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Equivalence Up To Taus.
+
+<div class="paragraph"> </div>
+
+    <span class="inlinecode"><a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt"><span class="id" title="abbreviation">eutt</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Eq.Shallow.html#t1"><span class="id" title="variable">t1</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Eq.Shallow.html#t2"><span class="id" title="variable">t2</span></a></span>: <span class="inlinecode"><a class="idref" href="ITree.Eq.Shallow.html#t1"><span class="id" title="variable">t1</span></a></span> is equivalent to <span class="inlinecode"><a class="idref" href="ITree.Eq.Shallow.html#t2"><span class="id" title="variable">t2</span></a></span> up to taus. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="eutt"><span class="id" title="definition">eutt</span></a> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R1"><span class="id" title="variable">R1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT.R2"><span class="id" title="variable">R2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span> := <span class="id" title="inductive">cpn2</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="definition">eutt0</span></a> <span class="id" title="abbreviation">bot2</span>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="eutt_fold"><span class="id" title="lemma">eutt_fold</span></a> :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a> <span class="id" title="notation">&lt;2=</span> <span class="id" title="inductive">cpn2</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="definition">eutt0</span></a> <span class="id" title="abbreviation">bot2</span>.<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">PR</span>. <span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">eutt_fold</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span> <span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a> <span class="id" title="var">t1</span>%<span class="id" title="var">itree</span> <span class="id" title="var">t2</span>%<span class="id" title="var">itree</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Eq.UpToTaus.html#EUTT"><span class="id" title="section">EUTT</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Constructors</span> <a class="idref" href="ITree.Eq.UpToTaus.html#euttF"><span class="id" title="inductive">euttF</span></a>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0_"><span class="id" title="definition">eutt0_</span></a>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt0"><span class="id" title="definition">eutt0</span></a>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">monotone_eutt0_</span> : <span class="id" title="var">paco</span>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">monotone_eutt0</span> : <span class="id" title="var">paco</span>.<br/>
+<span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a>.<br/>
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">eutt_fold</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Infix</span> <a name="711502b4f8df35d4270ccf31572861b0"><span class="id" title="notation">&quot;</span></a>≈" := (<a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 70) : <span class="id" title="var">itree_scope</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

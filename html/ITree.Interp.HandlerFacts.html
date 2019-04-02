@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Interp.HandlerFacts</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab123"></a><h1 class="section">Theorems for <span class="inlinecode"><a class="idref" href="ITree.Interp.Handler.html#"><span class="id" title="library">ITree.Interp.Handler</span></a></span></h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="CatIdR_Handler"><span class="id" title="instance">CatIdR_Handler</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatIdR"><span class="id" title="class">CatIdR</span></a> <a class="idref" href="ITree.Interp.Handler.html#Handler"><span class="id" title="definition">Handler</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">red</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">X</span> <span class="id" title="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Interp.InterpFacts.html#interp_id_h"><span class="id" title="lemma">interp_id_h</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="CatIdL_Handler"><span class="id" title="instance">CatIdL_Handler</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatIdL"><span class="id" title="class">CatIdL</span></a> <a class="idref" href="ITree.Interp.Handler.html#Handler"><span class="id" title="definition">Handler</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">red</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">f</span> <span class="id" title="var">X</span> <span class="id" title="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="ITree.Basics.CategoryOps.html#cat"><span class="id" title="definition">cat</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Cat_Handler"><span class="id" title="instance">Cat_Handler</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Handler.cat"><span class="id" title="definition">Handler.cat</span></a>, <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Id_Handler"><span class="id" title="instance">Id_Handler</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Handler.id_"><span class="id" title="definition">Handler.id_</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Interp.InterpFacts.html#interp_trigger"><span class="id" title="lemma">interp_trigger</span></a>, <a class="idref" href="ITree.Eq.UpToTausCore.html#tau_eutt"><span class="id" title="lemma">tau_eutt</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="CatAssoc_Handler"><span class="id" title="instance">CatAssoc_Handler</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatAssoc"><span class="id" title="class">CatAssoc</span></a> <a class="idref" href="ITree.Interp.Handler.html#Handler"><span class="id" title="definition">Handler</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">red</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span> <span class="id" title="var">f</span> <span class="id" title="var">g</span> <span class="id" title="var">h</span> <span class="id" title="var">X</span> <span class="id" title="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="ITree.Basics.CategoryOps.html#cat"><span class="id" title="definition">cat</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Cat_Handler"><span class="id" title="instance">Cat_Handler</span></a>, <a class="idref" href="ITree.Interp.Handler.html#Handler.cat"><span class="id" title="definition">Handler.cat</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Interp.InterpFacts.html#interp_interp"><span class="id" title="lemma">interp_interp</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

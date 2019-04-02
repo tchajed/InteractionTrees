@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Basics.Basics</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab12"></a><h1 class="section">General-purpose definitions</h1>
+
+<div class="paragraph"> </div>
+
+ Not specific to itrees. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab13"></a><h2 class="section">Parametric functions</h2>
+
+<div class="paragraph"> </div>
+
+ A notation for a certain class of parametric functions.
+    Some common names of things that can be represented by such a type:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> Natural transformations (functor morphisms)
+
+</li>
+<li> Monad morphisms
+
+</li>
+<li> Event morphisms (if <span class="inlinecode"><a class="idref" href="ITree.Simple.html#E"><span class="id" title="variable">E</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Simple.html#F"><span class="id" title="variable">F</span></a></span> are simply
+      indexed types with no particular structure)
+
+</li>
+<li> Event handlers (if <span class="inlinecode"><a class="idref" href="ITree.Simple.html#F"><span class="id" title="variable">F</span></a></span> is a monad)
+
+</li>
+</ul>
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">&quot;</span></a>E ~&gt; F" := (<span class="id" title="keyword">forall</span> <span class="id" title="var">T</span>, <span class="id" title="var">E</span> <a class="idref" href="ITree.Basics.Basics.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="var">F</span> <a class="idref" href="ITree.Basics.Basics.html#T"><span class="id" title="variable">T</span></a>)<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 99, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>, <span class="id" title="var">only</span> <span class="id" title="var">parsing</span>) : <span class="id" title="var">type_scope</span>.<br/>
+<span class="comment">(*&nbsp;The&nbsp;same&nbsp;level&nbsp;as&nbsp;<span class="inlinecode">-&gt;</span>.&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;This&nbsp;might&nbsp;actually&nbsp;not&nbsp;be&nbsp;such&nbsp;a&nbsp;good&nbsp;idea.&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Identity morphism. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="idM"><span class="id" title="definition">idM</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} : <a class="idref" href="ITree.Basics.Basics.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#E"><span class="id" title="variable">E</span></a> := <span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">e</span> =&gt; <a class="idref" href="ITree.Basics.Basics.html#e"><span class="id" title="variable">e</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.Basics.html#void"><span class="id" title="abbreviation">void</span></a></span> is a shorthand for <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#Empty_set"><span class="id" title="inductive">Empty_set</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="void"><span class="id" title="abbreviation">void</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#Empty_set"><span class="id" title="inductive">Empty_set</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab14"></a><h2 class="section">Relations for morphisms/parametricity</h2>
+
+<div class="paragraph"> </div>
+
+ Logical relation for the <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#sum"><span class="id" title="inductive">sum</span></a></span> type. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Variant</span> <a name="sum_rel"><span class="id" title="inductive">sum_rel</span></a> {<span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">B1</span> <span class="id" title="var">B2</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">RA</span> : <a class="idref" href="ITree.Basics.Basics.html#A1"><span class="id" title="variable">A1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#A2"><span class="id" title="variable">A2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span>) (<span class="id" title="var">RB</span> : <a class="idref" href="ITree.Basics.Basics.html#B1"><span class="id" title="variable">B1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#B2"><span class="id" title="variable">B2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span>)<br/>
+&nbsp;&nbsp;: <span class="id" title="var">A1</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <span class="id" title="var">B1</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="var">A2</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <span class="id" title="var">B2</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span> :=<br/>
+| <a name="inl_morphism"><span class="id" title="constructor">inl_morphism</span></a> <span class="id" title="var">a1</span> <span class="id" title="var">a2</span> : <a class="idref" href="ITree.Basics.Basics.html#RA"><span class="id" title="variable">RA</span></a> <a class="idref" href="ITree.Basics.Basics.html#a1"><span class="id" title="variable">a1</span></a> <a class="idref" href="ITree.Basics.Basics.html#a2"><span class="id" title="variable">a2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#sum_rel"><span class="id" title="inductive">sum_rel</span></a> <a class="idref" href="ITree.Basics.Basics.html#RA"><span class="id" title="variable">RA</span></a> <a class="idref" href="ITree.Basics.Basics.html#RB"><span class="id" title="variable">RB</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <a class="idref" href="ITree.Basics.Basics.html#a1"><span class="id" title="variable">a1</span></a>) (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <a class="idref" href="ITree.Basics.Basics.html#a2"><span class="id" title="variable">a2</span></a>)<br/>
+| <a name="inr_morphism"><span class="id" title="constructor">inr_morphism</span></a> <span class="id" title="var">b1</span> <span class="id" title="var">b2</span> : <a class="idref" href="ITree.Basics.Basics.html#RB"><span class="id" title="variable">RB</span></a> <a class="idref" href="ITree.Basics.Basics.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="ITree.Basics.Basics.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#sum_rel"><span class="id" title="inductive">sum_rel</span></a> <a class="idref" href="ITree.Basics.Basics.html#RA"><span class="id" title="variable">RA</span></a> <a class="idref" href="ITree.Basics.Basics.html#RB"><span class="id" title="variable">RB</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="ITree.Basics.Basics.html#b1"><span class="id" title="variable">b1</span></a>) (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="ITree.Basics.Basics.html#b2"><span class="id" title="variable">b2</span></a>)<br/>
+.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.Basics.html#inl_morphism"><span class="id" title="constructor">inl_morphism</span></a> {<span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">B1</span> <span class="id" title="var">B2</span> <span class="id" title="var">RA</span> <span class="id" title="var">RB</span>}.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.Basics.html#inr_morphism"><span class="id" title="constructor">inr_morphism</span></a> {<span class="id" title="var">A1</span> <span class="id" title="var">A2</span> <span class="id" title="var">B1</span> <span class="id" title="var">B2</span> <span class="id" title="var">RA</span> <span class="id" title="var">RB</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab15"></a><h2 class="section">Common monads and transformers.</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="Monads"><span class="id" title="module">Monads</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.identity"><span class="id" title="definition">identity</span></a> (<span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> := <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.stateT"><span class="id" title="definition">stateT</span></a> (<span class="id" title="var">s</span> : <span class="id" title="keyword">Type</span>) (<span class="id" title="var">m</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>) (<span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>).<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.state"><span class="id" title="definition">state</span></a> (<span class="id" title="var">s</span> <span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) := <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.readerT"><span class="id" title="definition">readerT</span></a> (<span class="id" title="var">r</span> : <span class="id" title="keyword">Type</span>) (<span class="id" title="var">m</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>) (<span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>.<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.reader"><span class="id" title="definition">reader</span></a> (<span class="id" title="var">r</span> <span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) := <a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.writerT"><span class="id" title="definition">writerT</span></a> (<span class="id" title="var">w</span> : <span class="id" title="keyword">Type</span>) (<span class="id" title="var">m</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>) (<span class="id" title="var">a</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a> <a class="idref" href="ITree.Basics.Basics.html#w"><span class="id" title="variable">w</span></a> <a class="idref" href="ITree.Basics.Basics.html#a"><span class="id" title="variable">a</span></a>).<br/>
+<span class="id" title="keyword">Definition</span> <a name="Monads.writer"><span class="id" title="definition">writer</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#prod"><span class="id" title="inductive">prod</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="Monads.Functor_stateT"><span class="id" title="instance">Functor_stateT</span></a> {<span class="id" title="var">m</span> <span class="id" title="var">s</span>} {<span class="id" title="var">Fm</span> : <span class="id" title="class">Functor</span> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a>} : <span class="id" title="class">Functor</span> (<a class="idref" href="ITree.Basics.Basics.html#Monads.stateT"><span class="id" title="definition">stateT</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a>)<br/>
+&nbsp;&nbsp;:= {|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">fmap</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">f</span> <span class="id" title="constructor">:=</span> <span class="id" title="constructor">fun</span> <span class="id" title="constructor">run</span> <span class="id" title="constructor">s</span> <span class="id" title="constructor">=&gt;</span> <span class="id" title="constructor">fmap</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">fun</span> <span class="id" title="constructor">sa</span> <span class="id" title="constructor">=&gt;</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">fst</span> <span class="id" title="constructor">sa</span><span class="id" title="constructor">,</span> <span class="id" title="constructor">f</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">snd</span> <span class="id" title="constructor">sa</span><span class="id" title="constructor">)))</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">run</span> <span class="id" title="constructor">s</span><span class="id" title="constructor">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|}.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="Monads.Monad_stateT"><span class="id" title="instance">Monad_stateT</span></a> {<span class="id" title="var">m</span> <span class="id" title="var">s</span>} {<span class="id" title="var">Fm</span> : <span class="id" title="class">Monad</span> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a>} : <span class="id" title="class">Monad</span> (<a class="idref" href="ITree.Basics.Basics.html#Monads.stateT"><span class="id" title="definition">stateT</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Basics.Basics.html#m"><span class="id" title="variable">m</span></a>)<br/>
+&nbsp;&nbsp;:= {|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">ret</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">a</span> <span class="id" title="constructor">:=</span> <span class="id" title="constructor">fun</span> <span class="id" title="constructor">s</span> <span class="id" title="constructor">=&gt;</span> <span class="id" title="constructor">ret</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">s</span><span class="id" title="constructor">,</span> <span class="id" title="constructor">a</span><span class="id" title="constructor">)</span><br/>
+&nbsp;&nbsp;<span class="id" title="constructor">;</span> <span class="id" title="constructor">bind</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">t</span> <span class="id" title="constructor">k</span> <span class="id" title="constructor">:=</span> <span class="id" title="constructor">fun</span> <span class="id" title="constructor">s</span> <span class="id" title="constructor">=&gt;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">sa</span> <span class="id" title="constructor">&lt;-</span> <span class="id" title="constructor">t</span> <span class="id" title="constructor">s</span> <span class="id" title="constructor">;;</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">k</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">snd</span> <span class="id" title="constructor">sa</span><span class="id" title="constructor">)</span> <span class="id" title="constructor">(</span><span class="id" title="constructor">fst</span> <span class="id" title="constructor">sa</span><span class="id" title="constructor">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.Basics.html#Monads"><span class="id" title="module">Monads</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab16"></a><h2 class="section">Loop operator</h2>
+
+<div class="paragraph"> </div>
+
+ <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">aloop</span></a></span>: A primitive for general recursion.
+    Iterate a function updating an accumulator <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span>, until it produces
+    an output <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span>. It's an Asymmetric variant of <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span>, and it looks
+    similar to an Anamorphism, hence the name <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">aloop</span></a></span>.
+ 
+</div>
+<div class="code">
+<span class="id" title="var">Polymorphic</span> <span class="id" title="keyword">Class</span> <a name="ALoop"><span class="id" title="record">ALoop</span></a> (<span class="id" title="var">M</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;<a name="aloop"><span class="id" title="projection">aloop</span></a> : <span class="id" title="keyword">forall</span> {<span class="id" title="var">R</span> <span class="id" title="var">I</span>: <span class="id" title="keyword">Type</span>}, <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a> <a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Basics.Basics.html#R"><span class="id" title="variable">R</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a> <a class="idref" href="ITree.Basics.Basics.html#R"><span class="id" title="variable">R</span></a>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;TODO:&nbsp;try&nbsp;this&nbsp;one.<br/>
+Class&nbsp;ALoop&nbsp;(M&nbsp;:&nbsp;Type&nbsp;-&gt;&nbsp;Type)&nbsp;:&nbsp;Type&nbsp;:=<br/>
+&nbsp;&nbsp;aloop&nbsp;:&nbsp;forall&nbsp;I&nbsp;R,&nbsp;(I&nbsp;-&gt;&nbsp;itreeF&nbsp;M&nbsp;R&nbsp;I)&nbsp;-&gt;&nbsp;I&nbsp;-&gt;&nbsp;M&nbsp;R.<br/>
+<br/>
+It&nbsp;allows&nbsp;us&nbsp;to&nbsp;drop&nbsp;the&nbsp;<span class="inlinecode"><span class="id" title="var">Monad</span></span>&nbsp;and&nbsp;<span class="inlinecode"><span class="id" title="var">Functor</span></span>&nbsp;constraints<br/>
+in&nbsp;<span class="inlinecode"><span class="id" title="var">Interp.Interp.interp</span></span>.<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab17"></a><h3 class="section">Transformer instances</h3>
+
+<div class="paragraph"> </div>
+
+ And the standard transformers can lift <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">aloop</span></a></span>.
+
+<div class="paragraph"> </div>
+
+    Quite easily in fact, no <span class="inlinecode"><span class="id" title="library">Monad</span></span> assumption needed.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="comment">(*&nbsp;TODO:&nbsp;some&nbsp;of&nbsp;these&nbsp;mk&nbsp;functions&nbsp;have&nbsp;too&nbsp;many&nbsp;explicit&nbsp;arguments&nbsp;*)</span><br/>
+<span class="id" title="keyword">Instance</span> <a name="ALoop_stateT"><span class="id" title="instance">ALoop_stateT</span></a> {<span class="id" title="var">M</span> <span class="id" title="var">S</span>} {<span class="id" title="var">AM</span> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<span class="id" title="record">stateT</span> <a class="idref" href="ITree.Basics.Basics.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">step</span> <span class="id" title="var">i</span> =&gt; <span class="id" title="constructor">mkStateT</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">s</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop"><span class="id" title="definition">aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="keyword">is</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">i</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="ITree.Basics.Basics.html#is"><span class="id" title="variable">is</span></a> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">s</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="ITree.Basics.Basics.html#is"><span class="id" title="variable">is</span></a> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">run</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<span class="id" title="projection">runStateT</span> <span class="id" title="var">run</span> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><span class="id" title="var">r</span><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>).<br/>
+
+<br/>
+<span class="id" title="var">Polymorphic</span> <span class="id" title="keyword">Instance</span> <a name="ALoop_stateT0"><span class="id" title="instance">ALoop_stateT0</span></a> {<span class="id" title="var">M</span> <span class="id" title="var">S</span>} {<span class="id" title="var">AM</span> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<a class="idref" href="ITree.Basics.Basics.html#stateT"><span class="id" title="definition">Monads.stateT</span></a> <a class="idref" href="ITree.Basics.Basics.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">step</span> <span class="id" title="var">i</span> <span class="id" title="var">s</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop"><span class="id" title="definition">aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">si</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">s</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="ITree.Basics.Basics.html#si"><span class="id" title="variable">si</span></a> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <span class="id" title="var">i</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="ITree.Basics.Basics.html#si"><span class="id" title="variable">si</span></a> <span class="id" title="tactic">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">run</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<span class="id" title="var">run</span> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <span class="id" title="var">r</span><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="ALoop_readerT"><span class="id" title="instance">ALoop_readerT</span></a> {<span class="id" title="var">M</span> <span class="id" title="var">S</span>} {<span class="id" title="var">AM</span> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<span class="id" title="record">readerT</span> <a class="idref" href="ITree.Basics.Basics.html#S"><span class="id" title="variable">S</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">step</span> <span class="id" title="var">i</span> =&gt; <span class="id" title="constructor">mkReaderT</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">s</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop"><span class="id" title="definition">aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">i</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">run</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<span class="id" title="projection">runReaderT</span> <span class="id" title="var">run</span> <a class="idref" href="ITree.Basics.Basics.html#s"><span class="id" title="variable">s</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="ALoop_optionT"><span class="id" title="instance">ALoop_optionT</span></a> {<span class="id" title="var">M</span>} {<span class="id" title="var">AM</span> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<span class="id" title="record">optionT</span> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">step</span> <span class="id" title="var">i</span> =&gt; <span class="id" title="constructor">mkOptionT</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop"><span class="id" title="definition">aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">oi</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#oi"><span class="id" title="variable">oi</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">i</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">run</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<span class="id" title="projection">unOptionT</span> <span class="id" title="var">run</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">r</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a>)).<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="ALoop_eitherT"><span class="id" title="instance">ALoop_eitherT</span></a> {<span class="id" title="var">M</span> <span class="id" title="var">E</span>} {<span class="id" title="var">AM</span> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<span class="id" title="record">eitherT</span> <a class="idref" href="ITree.Basics.Basics.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Basics.Basics.html#M"><span class="id" title="variable">M</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">step</span> <span class="id" title="var">i</span> =&gt; <span class="id" title="constructor">mkEitherT</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop"><span class="id" title="definition">aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">ei</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#ei"><span class="id" title="variable">ei</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">e</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">e</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">i</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">run</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<span class="id" title="projection">unEitherT</span> <span class="id" title="var">run</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>) (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And the nondeterminism monad <span class="inlinecode"><span class="id" title="var">_</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="keyword">Prop</span></span> also has one. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="aloop_Prop"><span class="id" title="inductive">aloop_Prop</span></a> {<span class="id" title="var">R</span> <span class="id" title="var">I</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">step</span> : <a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Prop</span><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Basics.Basics.html#R"><span class="id" title="variable">R</span></a>) (<span class="id" title="var">i</span> : <a class="idref" href="ITree.Basics.Basics.html#I"><span class="id" title="variable">I</span></a>) (<span class="id" title="var">r</span> : <a class="idref" href="ITree.Basics.Basics.html#R"><span class="id" title="variable">R</span></a>)<br/>
+&nbsp;&nbsp;: <span class="id" title="keyword">Prop</span> :=<br/>
+| <a name="aloop_done"><span class="id" title="constructor">aloop_done</span></a><br/>
+&nbsp;&nbsp;: <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Basics.Basics.html#aloop_Prop"><span class="id" title="inductive">aloop_Prop</span></a> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a><br/>
+| <a name="aloop_step"><span class="id" title="constructor">aloop_step</span></a> <span class="id" title="var">p</span> <span class="id" title="var">i'</span><br/>
+&nbsp;&nbsp;: <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <a class="idref" href="ITree.Basics.Basics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#p"><span class="id" title="variable">p</span></a> <a class="idref" href="ITree.Basics.Basics.html#i'"><span class="id" title="variable">i'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop_Prop"><span class="id" title="inductive">aloop_Prop</span></a> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i'"><span class="id" title="variable">i'</span></a> <a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.Basics.html#aloop_Prop"><span class="id" title="inductive">aloop_Prop</span></a> <a class="idref" href="ITree.Basics.Basics.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Basics.Basics.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.Basics.html#r"><span class="id" title="variable">r</span></a><br/>
+.<br/>
+
+<br/>
+<span class="id" title="var">Polymorphic</span> <span class="id" title="keyword">Instance</span> <a name="ALoop_Prop"><span class="id" title="instance">ALoop_Prop</span></a> : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Sets.Ensembles.html#Ensemble"><span class="id" title="definition">Ensembles.Ensemble</span></a> := @<a class="idref" href="ITree.Basics.Basics.html#aloop_Prop"><span class="id" title="inductive">aloop_Prop</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

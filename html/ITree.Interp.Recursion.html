@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Interp.Recursion</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab124"></a><h1 class="section">General recursion</h1>
+
+<div class="paragraph"> </div>
+
+<a name="lab125"></a><h3 class="section">Mutual recursion</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="comment">(*&nbsp;Implementation&nbsp;of&nbsp;the&nbsp;fixpoint&nbsp;combinator&nbsp;over&nbsp;interaction<br/>
+&nbsp;*&nbsp;trees.<br/>
+&nbsp;*<br/>
+&nbsp;*&nbsp;The&nbsp;implementation&nbsp;is&nbsp;based&nbsp;on&nbsp;the&nbsp;discussion&nbsp;here<br/>
+&nbsp;*&nbsp;&nbsp;&nbsp;https://gmalecha.github.io/reflections/2018/compositional-coinductive-recursion-in-coq<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+<span class="comment">(*&nbsp;The&nbsp;indexed&nbsp;type&nbsp;<span class="inlinecode"><span class="id" title="var">D</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="keyword">Type</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="keyword">Type</span></span>&nbsp;gives&nbsp;the&nbsp;signature&nbsp;of<br/>
+&nbsp;&nbsp;&nbsp;a&nbsp;set&nbsp;of&nbsp;functions.&nbsp;For&nbsp;example,&nbsp;a&nbsp;pair&nbsp;of&nbsp;mutually&nbsp;recursive<br/>
+&nbsp;&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="var">even</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bool</span></span>&nbsp;and&nbsp;<span class="inlinecode"><span class="id" title="var">odd</span></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" title="var">nat</span></span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><span class="id" title="var">bool</span></span>&nbsp;can&nbsp;be&nbsp;declared<br/>
+&nbsp;&nbsp;&nbsp;as&nbsp;follows:<br/>
+<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Inductive</span> <span class="id" title="var">D</span> : <span class="id" title="keyword">Type</span> -&gt; <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;&nbsp;| <span class="id" title="var">Even</span> : <span class="id" title="var">nat</span> -&gt; <span class="id" title="var">D</span> <span class="id" title="var">bool</span><br/>
+&nbsp;&nbsp;&nbsp;| <span class="id" title="var">Odd</span>  : <span class="id" title="var">nat</span> -&gt; <span class="id" title="var">D</span> <span class="id" title="var">bool</span>.
+<div class="paragraph"> </div>
+
+</span><br/>
+&nbsp;&nbsp;&nbsp;Their&nbsp;mutually&nbsp;recursive&nbsp;definition&nbsp;can&nbsp;then&nbsp;be&nbsp;written&nbsp;finitely<br/>
+&nbsp;&nbsp;&nbsp;(without&nbsp;<span class="inlinecode"><span class="id" title="keyword">Fixpoint</span></span>):<br/>
+<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">def</span> : <span class="id" title="var">D</span> ~&gt; <span class="id" title="var">itree</span> (<span class="id" title="var">D</span> +' <span class="id" title="var">void1</span>) := <span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">d</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">d</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">Even</span> <span class="id" title="var">n</span> =&gt; <span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">O</span> =&gt; <span class="id" title="var">ret</span> <span class="id" title="var">true</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">S</span> <span class="id" title="var">m</span> =&gt; <span class="id" title="var">trigger</span> (<span class="id" title="var">Odd</span> <span class="id" title="var">m</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">Odd</span> <span class="id" title="var">n</span> =&gt; <span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">O</span> =&gt; <span class="id" title="var">ret</span> <span class="id" title="var">false</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">S</span> <span class="id" title="var">m</span> =&gt; <span class="id" title="var">trigger</span> (<span class="id" title="var">Even</span> <span class="id" title="var">m</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.
+<div class="paragraph"> </div>
+
+</span><br/>
+&nbsp;&nbsp;&nbsp;The&nbsp;function&nbsp;<span class="inlinecode"><span class="id" title="var">interp_mrec</span></span>&nbsp;below&nbsp;then&nbsp;ties&nbsp;the&nbsp;knot.<br/>
+<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">f</span> : <span class="id" title="var">D</span> ~&gt; <span class="id" title="var">itree</span> <span class="id" title="var">void1</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">interp_mrec</span> <span class="id" title="var">def</span>.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">even</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) : <span class="id" title="var">itree</span> <span class="id" title="var">void1</span> <span class="id" title="var">bool</span> := <span class="id" title="var">f</span> <span class="id" title="var">_</span> (<span class="id" title="var">Even</span> <span class="id" title="var">n</span>).<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <span class="id" title="var">odd</span>  (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>) : <span class="id" title="var">itree</span> <span class="id" title="var">void1</span> <span class="id" title="var">bool</span> := <span class="id" title="var">f</span> <span class="id" title="var">_</span> (<span class="id" title="var">Odd</span> <span class="id" title="var">n</span>).
+<div class="paragraph"> </div>
+
+</span><br/>
+&nbsp;&nbsp;&nbsp;The&nbsp;result&nbsp;is&nbsp;still&nbsp;in&nbsp;the&nbsp;<span class="inlinecode"><span class="id" title="var">itree</span></span>&nbsp;monad&nbsp;of&nbsp;possibly&nbsp;divergent<br/>
+&nbsp;&nbsp;&nbsp;computations,&nbsp;because&nbsp;<span class="inlinecode"><span class="id" title="var">mutfix_itree</span></span>&nbsp;doesn't&nbsp;care&nbsp;whether<br/>
+&nbsp;&nbsp;&nbsp;the&nbsp;mutually&nbsp;recursive&nbsp;definition&nbsp;is&nbsp;well-founded.<br/>
+<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Interpret an itree in the context of a mutually recursive
+    definition (<span class="inlinecode"><a class="idref" href="ITree.Simple.html#ctx"><span class="id" title="variable">ctx</span></a></span>). 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="interp_mrec"><span class="id" title="definition">interp_mrec</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ctx</span> : <a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>)) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">R</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">ITree.aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Interp.Recursion.html#R"><span class="id" title="variable">R</span></a> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Interp.Recursion.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <span class="id" title="var">t</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <a class="idref" href="ITree.Interp.Recursion.html#t"><span class="id" title="variable">t</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> (<a class="idref" href="ITree.Indexed.Sum.html#inl1"><span class="id" title="constructor">inl1</span></a> <span class="id" title="var">d</span>) <span class="id" title="var">k</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#ctx"><span class="id" title="variable">ctx</span></a> <span class="id" title="var">_</span> <span class="id" title="var">d</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#590a71a18506bd3e386796914bedea7e"><span class="id" title="notation">&gt;&gt;=</span></a> <span class="id" title="var">k</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> (<a class="idref" href="ITree.Indexed.Sum.html#inr1"><span class="id" title="constructor">inr1</span></a> <span class="id" title="var">e</span>) <span class="id" title="var">k</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a> <span class="id" title="var">e</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<span class="id" title="var">k</span> <a class="idref" href="ITree.Interp.Recursion.html#x"><span class="id" title="variable">x</span></a>)))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Interp.Recursion.html#interp_mrec"><span class="id" title="definition">interp_mrec</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span>} <span class="id" title="var">ctx</span> [<span class="id" title="var">T</span>].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Unfold a mutually recursive definition into separate trees,
+    resolving the mutual references. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="mrec"><span class="id" title="definition">mrec</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ctx</span> : <a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>)) : <a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">R</span> <span class="id" title="var">d</span> =&gt; <a class="idref" href="ITree.Interp.Recursion.html#interp_mrec"><span class="id" title="definition">interp_mrec</span></a> <a class="idref" href="ITree.Interp.Recursion.html#ctx"><span class="id" title="variable">ctx</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#ctx"><span class="id" title="variable">ctx</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Interp.Recursion.html#d"><span class="id" title="variable">d</span></a>).<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span>} <span class="id" title="var">ctx</span> [<span class="id" title="var">T</span>].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Make a recursive call in the handler argument of <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="trigger_inl1"><span class="id" title="definition">trigger_inl1</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} : <a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>)<br/>
+&nbsp;&nbsp;:= <span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">d</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.trigger"><span class="id" title="definition">ITree.trigger</span></a> (<a class="idref" href="ITree.Indexed.Sum.html#inl1"><span class="id" title="constructor">inl1</span></a> <a class="idref" href="ITree.Interp.Recursion.html#d"><span class="id" title="variable">d</span></a>).<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Interp.Recursion.html#trigger_inl1"><span class="id" title="definition">trigger_inl1</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span>} [<span class="id" title="var">T</span>].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Here's some syntactic sugar with a notation <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a>-<span class="id" title="keyword">fix</span></span>. 
+<div class="paragraph"> </div>
+
+ Short for endofunctions, used in <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#mrec_fix"><span class="id" title="definition">mrec_fix</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#rec_fix"><span class="id" title="definition">rec_fix</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="endo"><span class="id" title="abbreviation">endo</span></a> <span class="id" title="var">T</span> := (<span class="id" title="var">T</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="var">T</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="mrec_fix"><span class="id" title="definition">mrec_fix</span></a> {<span class="id" title="var">D</span> <span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ctx</span> : <a class="idref" href="ITree.Interp.Recursion.html#endo"><span class="id" title="abbreviation">endo</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>)))<br/>
+&nbsp;&nbsp;: <a class="idref" href="ITree.Interp.Recursion.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a><br/>
+&nbsp;&nbsp;:= <a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#ctx"><span class="id" title="variable">ctx</span></a> <a class="idref" href="ITree.Interp.Recursion.html#trigger_inl1"><span class="id" title="definition">trigger_inl1</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="42b2445cb650163f7d3ef89b5eed11ac"><span class="id" title="notation">&quot;</span></a>'mrec-fix' f d := g" := (<a class="idref" href="ITree.Interp.Recursion.html#mrec_fix"><span class="id" title="definition">mrec_fix</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">f</span> <span class="id" title="var">_</span> <span class="id" title="var">d</span> =&gt; <span class="id" title="var">g</span>))<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 200, <span class="id" title="var">f</span> <span class="id" title="var">ident</span>, <span class="id" title="var">d</span> <span class="id" title="tactic">pattern</span>).<br/>
+<span class="comment">(*&nbsp;No&nbsp;idea&nbsp;what&nbsp;a&nbsp;good&nbsp;level&nbsp;would&nbsp;be.&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab126"></a><h3 class="section">Simple recursion</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Inductive</span> <a name="callE"><span class="id" title="inductive">callE</span></a> (<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span> :=<br/>
+| <a name="Call"><span class="id" title="constructor">Call</span></a> : <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Get the <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span> contained in a <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="unCall"><span class="id" title="definition">unCall</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">T</span>} (<span class="id" title="var">e</span> : <a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Interp.Recursion.html#T"><span class="id" title="variable">T</span></a>) : <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Interp.Recursion.html#e"><span class="id" title="variable">e</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> <span class="id" title="var">a</span> =&gt; <span class="id" title="var">a</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Lift a function on <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span> to a morphism on <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="calling"><span class="id" title="definition">calling</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} {<span class="id" title="var">F</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">f</span> : <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Interp.Recursion.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a>) : <a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Interp.Recursion.html#F"><span class="id" title="variable">F</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Interp.Recursion.html#e"><span class="id" title="variable">e</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> <span class="id" title="var">a</span> =&gt; <a class="idref" href="ITree.Interp.Recursion.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">a</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;TODO:&nbsp;This&nbsp;is&nbsp;identical&nbsp;to&nbsp;<span class="inlinecode"><span class="id" title="var">callWith</span></span>&nbsp;but&nbsp;<span class="inlinecode"><span class="id" title="keyword">rec</span></span>&nbsp;finds&nbsp;a&nbsp;universe<br/>
+&nbsp;&nbsp;&nbsp;inconsistency&nbsp;with&nbsp;<span class="inlinecode"><span class="id" title="var">calling</span></span>,&nbsp;and&nbsp;not&nbsp;with&nbsp;<span class="inlinecode"><span class="id" title="var">calling'</span></span>.<br/>
+&nbsp;&nbsp;&nbsp;The&nbsp;inconsistency&nbsp;now&nbsp;pops&nbsp;up&nbsp;later&nbsp;(currently&nbsp;in&nbsp;<span class="inlinecode"><span class="id" title="var">Events.Env</span></span>)&nbsp;*)</span><br/>
+<span class="id" title="keyword">Definition</span> <a name="calling'"><span class="id" title="definition">calling'</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} {<span class="id" title="var">F</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">f</span> : <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a>) : <a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#F"><span class="id" title="variable">F</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Interp.Recursion.html#e"><span class="id" title="variable">e</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> <span class="id" title="var">a</span> =&gt; <a class="idref" href="ITree.Interp.Recursion.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">a</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Interpret&nbsp;a&nbsp;single&nbsp;recursive&nbsp;definition.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Definition</span> <a name="rec"><span class="id" title="definition">rec</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">body</span> : <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> =&gt; <a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#calling'"><span class="id" title="definition">calling'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#body"><span class="id" title="variable">body</span></a>) (<a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> <a class="idref" href="ITree.Interp.Recursion.html#a"><span class="id" title="variable">a</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+An easy way to construct an event suitable for use with <span class="inlinecode"><span class="id" title="keyword">rec</span></span>.
+    <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#call"><span class="id" title="definition">call</span></a></span> is an event representing the recursive call.  Since in general, the
+    function might have other events of type <span class="inlinecode"><a class="idref" href="ITree.Simple.html#E"><span class="id" title="variable">E</span></a></span>, the resulting itree has
+    type <span class="inlinecode">(<a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span> <span class="inlinecode">+'</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#E"><span class="id" title="variable">E</span></a>)</span>.
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="call"><span class="id" title="definition">call</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">a</span>:<a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> := <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.trigger"><span class="id" title="definition">ITree.trigger</span></a> (<a class="idref" href="ITree.Indexed.Sum.html#inl1"><span class="id" title="constructor">inl1</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#Call"><span class="id" title="constructor">Call</span></a> <a class="idref" href="ITree.Interp.Recursion.html#a"><span class="id" title="variable">a</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Here's some syntactic sugar with a notation <span class="inlinecode"><a class="idref" href="ITree.Interp.Recursion.html#mrec"><span class="id" title="definition">mrec</span></a>-<span class="id" title="keyword">fix</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="rec_fix"><span class="id" title="definition">rec_fix</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">body</span> : <a class="idref" href="ITree.Interp.Recursion.html#endo"><span class="id" title="abbreviation">endo</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#callE"><span class="id" title="inductive">callE</span></a> <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a>))<br/>
+&nbsp;&nbsp;: <a class="idref" href="ITree.Interp.Recursion.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Interp.Recursion.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Interp.Recursion.html#B"><span class="id" title="variable">B</span></a><br/>
+&nbsp;&nbsp;:= <a class="idref" href="ITree.Interp.Recursion.html#rec"><span class="id" title="definition">rec</span></a> (<a class="idref" href="ITree.Interp.Recursion.html#body"><span class="id" title="variable">body</span></a> <a class="idref" href="ITree.Interp.Recursion.html#call"><span class="id" title="definition">call</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="a9456ea59ee4ac75f5da7ff5a987e470"><span class="id" title="notation">&quot;</span></a>'rec-fix' f a := g" := (<a class="idref" href="ITree.Interp.Recursion.html#rec_fix"><span class="id" title="definition">rec_fix</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">f</span> <span class="id" title="var">a</span> =&gt; <span class="id" title="var">g</span>))<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 200, <span class="id" title="var">f</span> <span class="id" title="var">ident</span>, <span class="id" title="var">a</span> <span class="id" title="tactic">pattern</span>).<br/>
+<span class="comment">(*&nbsp;No&nbsp;idea&nbsp;what&nbsp;a&nbsp;good&nbsp;level&nbsp;would&nbsp;be.&nbsp;*)</span><br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

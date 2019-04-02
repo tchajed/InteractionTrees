@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Events.Reader</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab140"></a><h1 class="section">Reader</h1>
+
+<div class="paragraph"> </div>
+
+ Immutable environment. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Reader"><span class="id" title="section">Reader</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Variable</span> (<a name="Reader.Env"><span class="id" title="variable">Env</span></a> : <span class="id" title="keyword">Type</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Variant</span> <a name="readerE"><span class="id" title="inductive">readerE</span></a> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span> :=<br/>
+| <a name="Ask"><span class="id" title="constructor">Ask</span></a> : <a class="idref" href="ITree.Events.Reader.html#readerE"><span class="id" title="inductive">readerE</span></a> <a class="idref" href="ITree.Events.Reader.html#Reader.Env"><span class="id" title="variable">Env</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="ask"><span class="id" title="definition">ask</span></a> {<span class="id" title="var">E</span>} `{<a class="idref" href="ITree.Events.Reader.html#readerE"><span class="id" title="inductive">readerE</span></a> <a class="idref" href="ITree.Core.Subevent.html#2800906c13e5a3b8a4720448ab367ce9"><span class="id" title="notation">-&lt;</span></a> <a class="idref" href="ITree.Events.Reader.html#E"><span class="id" title="variable">E</span></a>} : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Events.Reader.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Events.Reader.html#Reader.Env"><span class="id" title="variable">Env</span></a> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.Subevent.html#trigger"><span class="id" title="abbreviation">trigger</span></a> <a class="idref" href="ITree.Events.Reader.html#Ask"><span class="id" title="constructor">Ask</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="eval_reader"><span class="id" title="definition">eval_reader</span></a> {<span class="id" title="var">E</span>} : <a class="idref" href="ITree.Events.Reader.html#Reader.Env"><span class="id" title="variable">Env</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Interp.Handler.html#Handler"><span class="id" title="definition">Handler</span></a> <a class="idref" href="ITree.Events.Reader.html#readerE"><span class="id" title="inductive">readerE</span></a> <a class="idref" href="ITree.Events.Reader.html#E"><span class="id" title="variable">E</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">r</span> <span class="id" title="var">_</span> <span class="id" title="var">e</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Events.Reader.html#e"><span class="id" title="variable">e</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Events.Reader.html#Ask"><span class="id" title="constructor">Ask</span></a> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <a class="idref" href="ITree.Events.Reader.html#r"><span class="id" title="variable">r</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="run_reader"><span class="id" title="definition">run_reader</span></a> {<span class="id" title="var">E</span>} : <a class="idref" href="ITree.Events.Reader.html#Reader.Env"><span class="id" title="variable">Env</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> (<a class="idref" href="ITree.Events.Reader.html#readerE"><span class="id" title="inductive">readerE</span></a> <a class="idref" href="ITree.Indexed.Sum.html#a713615ae89f5e79b81b3a5662d0793f"><span class="id" title="notation">+'</span></a> <a class="idref" href="ITree.Events.Reader.html#E"><span class="id" title="variable">E</span></a>) <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Events.Reader.html#E"><span class="id" title="variable">E</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">r</span> =&gt; <a class="idref" href="ITree.Interp.Interp.html#interp"><span class="id" title="definition">interp</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#case_"><span class="id" title="definition">case_</span></a> (<a class="idref" href="ITree.Events.Reader.html#eval_reader"><span class="id" title="definition">eval_reader</span></a> <a class="idref" href="ITree.Events.Reader.html#r"><span class="id" title="variable">r</span></a>) (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>)).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Events.Reader.html#Reader"><span class="id" title="section">Reader</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Events.Reader.html#ask"><span class="id" title="definition">ask</span></a> {<span class="id" title="var">Env</span> <span class="id" title="var">E</span> <span class="id" title="var">_</span>}.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Events.Reader.html#run_reader"><span class="id" title="definition">run_reader</span></a> {<span class="id" title="var">Env</span> <span class="id" title="var">E</span>} <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

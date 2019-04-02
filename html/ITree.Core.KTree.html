@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Core.KTree</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab61"></a><h1 class="section">The category of continuation trees (KTrees)</h1>
+
+<div class="paragraph"> </div>
+
+ The Kleisli category of ITrees. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="ktree"><span class="id" title="definition">ktree</span></a> (<span class="id" title="var">E</span>: <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>) (<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>) : <span class="id" title="keyword">Type</span><br/>
+&nbsp;&nbsp;:= <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a>.<br/>
+<span class="comment">(*&nbsp;ktree&nbsp;can&nbsp;represent&nbsp;both&nbsp;blocks&nbsp;(A&nbsp;-&gt;&nbsp;block&nbsp;B)&nbsp;and&nbsp;asm&nbsp;(asm&nbsp;A&nbsp;B).&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Bind</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">ktree_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">ktree</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;(@ktree&nbsp;E)&nbsp;forms&nbsp;a&nbsp;traced&nbsp;monoidal&nbsp;category,&nbsp;i.e.&nbsp;a&nbsp;symmetric&nbsp;monoidal&nbsp;one&nbsp;with&nbsp;a&nbsp;loop&nbsp;operator&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;Obj&nbsp;≅&nbsp;Type&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;Arrow:&nbsp;A&nbsp;-&gt;&nbsp;B&nbsp;≅&nbsp;terms&nbsp;of&nbsp;type&nbsp;(ktree&nbsp;A&nbsp;B)&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab62"></a><h2 class="section">KTree equivalence</h2>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="Equivalence"><span class="id" title="section">Equivalence</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;We&nbsp;work&nbsp;up&nbsp;to&nbsp;pointwise&nbsp;eutt&nbsp;*)</span><br/>
+<span class="id" title="keyword">Definition</span> <a name="eutt_ktree"><span class="id" title="definition">eutt_ktree</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">d1</span> <span class="id" title="var">d2</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#Equivalence.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a>) :=<br/>
+&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>, <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a> (<a class="idref" href="ITree.Core.KTree.html#d1"><span class="id" title="variable">d1</span></a> <a class="idref" href="ITree.Core.KTree.html#a"><span class="id" title="variable">a</span></a>) (<a class="idref" href="ITree.Core.KTree.html#d2"><span class="id" title="variable">d2</span></a> <a class="idref" href="ITree.Core.KTree.html#a"><span class="id" title="variable">a</span></a>)).<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Eq2_ktree"><span class="id" title="instance">Eq2_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> (<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#Equivalence.E"><span class="id" title="variable">E</span></a>) := @<a class="idref" href="ITree.Core.KTree.html#eutt_ktree"><span class="id" title="definition">eutt_ktree</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.KTree.html#Equivalence"><span class="id" title="section">Equivalence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab63"></a><h3 class="section">Conversion to <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span></h3>
+ A trick to allow rewriting with eq_ktree in pointful contexts. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="to_itree"><span class="id" title="definition">to_itree</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">A</span>} (<span class="id" title="var">f</span> : @<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> := <a class="idref" href="ITree.Core.KTree.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#tt"><span class="id" title="constructor">tt</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Proper_to_itree"><span class="id" title="instance">Proper_to_itree</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">A</span>} :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#eq"><span class="id" title="inductive">eq</span></a>) (@<a class="idref" href="ITree.Core.KTree.html#to_itree"><span class="id" title="definition">to_itree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">intro</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="fold_to_itree"><span class="id" title="lemma">fold_to_itree</span></a> {<span class="id" title="var">E</span>} (<span class="id" title="var">f</span> : @<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a>) : <a class="idref" href="ITree.Core.KTree.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#tt"><span class="id" title="constructor">tt</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="ITree.Core.KTree.html#to_itree"><span class="id" title="definition">to_itree</span></a> <a class="idref" href="ITree.Core.KTree.html#f"><span class="id" title="variable">f</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>. <span class="id" title="tactic">reflexivity</span>. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab64"></a><h2 class="section">Categorical operations</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Operations"><span class="id" title="section">Operations</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="ktree"><span class="id" title="abbreviation">ktree</span></a> := (<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#Operations.E"><span class="id" title="variable">E</span></a>).<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Utility&nbsp;function&nbsp;to&nbsp;lift&nbsp;a&nbsp;pure&nbsp;computation&nbsp;into&nbsp;ktree&nbsp;*)</span><br/>
+<span class="id" title="keyword">Definition</span> <a name="lift_ktree"><span class="id" title="definition">lift_ktree</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a>) : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a> := <span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<a class="idref" href="ITree.Core.KTree.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Core.KTree.html#a"><span class="id" title="variable">a</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab65"></a><h3 class="section">Category</h3>
+
+<div class="paragraph"> </div>
+
+ Identity morphism 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="Id_ktree"><span class="id" title="instance">Id_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">A</span> <span class="id" title="var">a</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <a class="idref" href="ITree.Core.KTree.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Composition is <span class="inlinecode"><span class="id" title="var">ITree.cat</span></span>, denoted as <span class="inlinecode">&gt;&gt;&gt;</span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="Cat_ktree"><span class="id" title="instance">Cat_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> := @<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.cat"><span class="id" title="definition">ITree.cat</span></a> <a class="idref" href="ITree.Core.KTree.html#Operations.E"><span class="id" title="variable">E</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab66"></a><h3 class="section">Symmetric monoidal category</h3>
+
+<div class="paragraph"> </div>
+
+ Initial object, monoidal unit 
+</div>
+<div class="code">
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="I"><span class="id" title="abbreviation">I</span></a> := <a class="idref" href="ITree.Basics.Basics.html#void"><span class="id" title="abbreviation">Basics.void</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Initial_void_ktree"><span class="id" title="instance">Initial_void_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#Initial"><span class="id" title="class">Initial</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">v</span> =&gt; <span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.KTree.html#v"><span class="id" title="variable">v</span></a> : <a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a> <span class="id" title="keyword">with</span> <span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The tensor product is given by the coproduct 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Case_ktree"><span class="id" title="instance">Case_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodCase"><span class="id" title="class">CoprodCase</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#sum"><span class="id" title="inductive">sum</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> =&gt; @<a class="idref" href="ITree.Basics.Function.html#case_sum"><span class="id" title="instance">case_sum</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Opaque</span> <a class="idref" href="ITree.Eq.UpToTaus.html#eutt"><span class="id" title="definition">eutt</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Proper_case_"><span class="id" title="instance">Proper_case_</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} :<br/>
+&nbsp;&nbsp;@<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTree.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Core.KTree.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#case_"><span class="id" title="definition">case_</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">intro</span>; <span class="id" title="tactic">destruct</span> <span class="id" title="var">a</span>; <span class="id" title="tactic">cbv</span>; <span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Inl_ktree"><span class="id" title="instance">Inl_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodInl"><span class="id" title="class">CoprodInl</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#sum"><span class="id" title="inductive">sum</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> =&gt; <a class="idref" href="ITree.Core.KTree.html#lift_ktree"><span class="id" title="definition">lift_ktree</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Inr_ktree"><span class="id" title="instance">Inr_ktree</span></a> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodInr"><span class="id" title="class">CoprodInr</span></a> <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#sum"><span class="id" title="inductive">sum</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> =&gt; <a class="idref" href="ITree.Core.KTree.html#lift_ktree"><span class="id" title="definition">lift_ktree</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab67"></a><h3 class="section">Traced monoidal category</h3>
+
+<div class="paragraph"> </div>
+
+ The trace operator here is <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span>.
+
+<div class="paragraph"> </div>
+
+   We can view a <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a></span> <span class="inlinecode">(<a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a>)</span> <span class="inlinecode">(<a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a>)</span> as a circuit, drawn below as <span class="inlinecode">###</span>,
+   with two input wires labeled by <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span>, and two output wires
+   labeled by <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span>.
+
+<div class="paragraph"> </div>
+
+   The <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a></span> <span class="inlinecode">(<a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a>)</span> <span class="inlinecode">(<a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a>)</span> <span class="inlinecode">-&gt;</span> <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="abbreviation">ktree</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span> combinator closes
+   the circuit, linking the box with itself by plugging the <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a></span> output
+   back into the input.
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-----+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ### |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-###-+<a class="idref" href="ITree.Core.KTree.html#I"><span class="id" title="abbreviation">I</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Simple.html#A"><span class="id" title="variable">A</span></a>----###----<a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###
+<div class="paragraph"> </div>
+
+</span> 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.KTree.html#Operations"><span class="id" title="section">Operations</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Iterate a function updating an accumulator <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#C"><span class="id" title="variable">C</span></a></span>,
+    until it produces an output <span class="inlinecode"><a class="idref" href="ITree.Simple.html#B"><span class="id" title="variable">B</span></a></span>. An encoding of tail recursive
+    functions.
+
+<div class="paragraph"> </div>
+
+    The Kleisli category for the <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> monad is a traced
+    monoidal category, with <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span> as its trace.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="loop"><span class="id" title="definition">loop</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">body</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Core.KTree.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTree.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a>)) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.KTree.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTree.html#B"><span class="id" title="variable">B</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#body"><span class="id" title="variable">body</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <a class="idref" href="ITree.Core.KTree.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Core.ITreeDefinition.html#590a71a18506bd3e386796914bedea7e"><span class="id" title="notation">&gt;&gt;=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">ITree.aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">cb</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.KTree.html#cb"><span class="id" title="variable">cb</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">c</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> (<a class="idref" href="ITree.Core.KTree.html#body"><span class="id" title="variable">body</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">c</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">b</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">b</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>).<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

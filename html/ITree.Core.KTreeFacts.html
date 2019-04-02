@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Core.KTreeFacts</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab77"></a><h1 class="section">Theorems about the traced monoidal category of KTrees</h1>
+
+<div class="paragraph"> </div>
+
+ More precisely, facts about the trace operator <span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span>.
+    The coinductive reasoning is all done in <span class="inlinecode"><span class="id" title="library">LoopFacts</span></span>, and
+    this package just repackages it into nice categorical equations.
+
+<div class="paragraph"> </div>
+
+    The monoidal category structure is verified in
+    <span class="inlinecode"><span class="id" title="library">ITree.Core.KTreeBasicFacts</span></span>.
+ 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab78"></a><h3 class="section">Traced monoidal categories</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="TraceLaws"><span class="id" title="section">TraceLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">cat</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab79"></a><h3 class="section"><span class="inlinecode"><a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a></span> lemmas</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="eq_ktree_loop"><span class="id" title="instance">eq_ktree_loop</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#Proper"><span class="id" title="class">Proper</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Classes.Morphisms.html#5bcff5fca4c3a87e683dd8ca07bab63f"><span class="id" title="notation">==&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#eq2"><span class="id" title="definition">eq2</span></a>) (@<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">intro</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>; <span class="id" title="tactic">auto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Naturality&nbsp;of&nbsp;(loop_ktree&nbsp;I&nbsp;A&nbsp;B)&nbsp;in&nbsp;A&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;Or&nbsp;more&nbsp;diagrammatically:<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-----+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ### |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-###-+<span class="id" title="var">I</span><br/>
+<span class="id" title="var">A</span>----<span class="id" title="var">B</span>----###----<span class="id" title="var">C</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###<br/>
+<br/>
+<span class="id" title="keyword">is</span> <span class="id" title="var">equivalent</span> <span class="id" title="var">to</span>:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;+----------+<br/>
+&nbsp;&nbsp;&nbsp;|      ### |<br/>
+&nbsp;&nbsp;&nbsp;+------###-+<span class="id" title="var">I</span><br/>
+<span class="id" title="var">A</span>----<span class="id" title="var">B</span>----###----<span class="id" title="var">C</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###
+<div class="paragraph"> </div>
+
+</span>&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="compose_loop"><span class="id" title="lemma">compose_loop</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">bc_</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#C"><span class="id" title="variable">C</span></a>)) (<span class="id" title="var">ab</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#bc_"><span class="id" title="variable">bc_</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#bc_"><span class="id" title="variable">bc_</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>. <span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.LoopFacts.html#bind_loop2"><span class="id" title="lemma">bind_loop2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">i</span> | <span class="id" title="var">a'</span>]; <span class="id" title="var">cbn</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> 2 <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Eq.html#bind_bind"><span class="id" title="lemma">bind_bind</span></a>. <span class="id" title="tactic">setoid_rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Naturality&nbsp;of&nbsp;(loop&nbsp;I&nbsp;A&nbsp;B)&nbsp;in&nbsp;B&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;Or&nbsp;more&nbsp;diagrammatically:<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;+-----+<br/>
+&nbsp;&nbsp;&nbsp;| ### |<br/>
+&nbsp;&nbsp;&nbsp;+-###-+<span class="id" title="var">I</span><br/>
+<span class="id" title="var">A</span>----###----<span class="id" title="var">B</span>----<span class="id" title="var">C</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###<br/>
+<br/>
+<span class="id" title="keyword">is</span> <span class="id" title="var">equivalent</span> <span class="id" title="var">to</span>:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;+----------+<br/>
+&nbsp;&nbsp;&nbsp;| ###      |<br/>
+&nbsp;&nbsp;&nbsp;+-###------+<span class="id" title="var">I</span><br/>
+<span class="id" title="var">A</span>----###----<span class="id" title="var">B</span>----<span class="id" title="var">C</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###
+<div class="paragraph"> </div>
+
+</span>&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="loop_compose"><span class="id" title="lemma">loop_compose</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">B'</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ab_</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>)) (<span class="id" title="var">bc</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B'"><span class="id" title="variable">B'</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Core.KTreeFacts.html#bc"><span class="id" title="variable">bc</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#bc"><span class="id" title="variable">bc</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.LoopFacts.html#bind_loop"><span class="id" title="lemma">bind_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">ia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> []; <span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Dinaturality&nbsp;of&nbsp;(loop&nbsp;I&nbsp;A&nbsp;B)&nbsp;in&nbsp;I&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="loop_rename_internal"><span class="id" title="lemma">loop_rename_internal</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">J</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ab_</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>)) (<span class="id" title="var">ji</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ji"><span class="id" title="variable">ji</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>))<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ji"><span class="id" title="variable">ji</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">trans4</span>: <span class="id" title="keyword">forall</span> <span class="id" title="var">r</span> <span class="id" title="var">s</span> <span class="id" title="var">t</span> <span class="id" title="var">u</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTreeFacts.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#u"><span class="id" title="variable">u</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#r"><span class="id" title="variable">r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#u"><span class="id" title="variable">u</span></a>).<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">do</span> 2 (<span class="id" title="var">etransitivity</span>; <span class="id" title="tactic">eauto</span>). }<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <span class="id" title="var">trans4</span>.<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Eq.UpToTausCore.html#subrelation_eq_eutt"><span class="id" title="instance">subrelation_eq_eutt</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="ITree.Core.LoopFacts.html#loop_bind"><span class="id" title="lemma">loop_bind</span></a> <span class="id" title="var">ji</span> <span class="id" title="var">ab_</span>). }<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>; <span class="id" title="tactic">cbv</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">ia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">j</span> | <span class="id" title="var">b</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.UpToTausCore.html#tau_eutt"><span class="id" title="lemma">tau_eutt</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>; <span class="id" title="tactic">reflexivity</span>. }<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>. <span class="id" title="tactic">cbv</span>. <span class="id" title="tactic">intros</span> [].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">do</span> 2 (<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="tactic">intro</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.UpToTausCore.html#tau_eutt"><span class="id" title="lemma">tau_eutt</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> !<a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>; <span class="id" title="tactic">reflexivity</span>. }<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Loop&nbsp;over&nbsp;the&nbsp;empty&nbsp;set&nbsp;can&nbsp;be&nbsp;erased&nbsp;*)</span><br/>
+<span class="id" title="keyword">Lemma</span> <a name="vanishing_ktree"><span class="id" title="lemma">vanishing_ktree</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>: <span class="id" title="keyword">Type</span>} (<span class="id" title="var">f</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Basics.Basics.html#void"><span class="id" title="abbreviation">void</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="ITree.Basics.Basics.html#void"><span class="id" title="abbreviation">void</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>)) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="definition">unit_l'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.LoopFacts.html#vanishing1_loop"><span class="id" title="lemma">vanishing1_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [ [] | ]; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">loop_loop</span></span>:<br/>
+<br/>
+These&nbsp;two&nbsp;loops:<br/>
+<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;+----------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| +-----+  |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| | ### |  |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| +-###-+<span class="id" title="var">I</span> |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+---###----+<span class="id" title="var">J</span><br/>
+&nbsp;&nbsp;<span class="id" title="var">A</span>-----###-------<span class="id" title="var">B</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###
+<div class="paragraph"> </div>
+
+</span><br/>
+...&nbsp;can&nbsp;be&nbsp;rewired&nbsp;as&nbsp;a&nbsp;single&nbsp;one:<br/>
+<br/>
+<br/>
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  ###  |<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+--###--+(<span class="id" title="var">I</span>+<span class="id" title="var">J</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+--###--+<br/>
+&nbsp;&nbsp;<span class="id" title="var">A</span>-----###-----<span class="id" title="var">B</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###
+<div class="paragraph"> </div>
+
+</span><br/>
+&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="loop_loop"><span class="id" title="lemma">loop_loop</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">J</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">ab__</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">)</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">)</span></a>)) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab__"><span class="id" title="variable">ab__</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab__"><span class="id" title="variable">ab__</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">a</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.LoopFacts.html#vanishing2_loop"><span class="id" title="lemma">vanishing2_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [[]|]; <span class="id" title="var">cbn</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">rewrite</span> !<a class="idref" href="ITree.Eq.Eq.html#bind_bind"><span class="id" title="lemma">bind_bind</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> !<a class="idref" href="ITree.Eq.Eq.html#bind_ret_"><span class="id" title="lemma">bind_ret_</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">eapply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">intros</span> [ | []]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="fold_map"><span class="id" title="lemma">fold_map</span></a> {<span class="id" title="var">R</span> <span class="id" title="var">S</span>}:<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">forall</span> (<span class="id" title="var">f</span>: <a class="idref" href="ITree.Core.KTreeFacts.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#S"><span class="id" title="variable">S</span></a>) (<span class="id" title="var">t</span>: <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#R"><span class="id" title="variable">R</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.Eq.html#4298ad5df75782c0dcea9678fed216c4"><span class="id" title="notation">(</span></a><span class="id" title="var">x</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#99816956cfd1bb9d8717bec4977dd1ac"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="ITree.Core.ITreeDefinition.html#99816956cfd1bb9d8717bec4977dd1ac"><span class="id" title="notation">;;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#x"><span class="id" title="variable">x</span></a>)<a class="idref" href="ITree.Eq.Eq.html#4298ad5df75782c0dcea9678fed216c4"><span class="id" title="notation">)</span></a> <a class="idref" href="ITree.Eq.Eq.html#4298ad5df75782c0dcea9678fed216c4"><span class="id" title="notation">≅</span></a> <a class="idref" href="ITree.Eq.Eq.html#4298ad5df75782c0dcea9678fed216c4"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.map"><span class="id" title="definition">ITree.map</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="ITree.Eq.Eq.html#4298ad5df75782c0dcea9678fed216c4"><span class="id" title="notation">)</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Transparent</span> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="bimap_ktree_loop"><span class="id" title="lemma">bimap_ktree_loop</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ab</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>)) (<span class="id" title="var">cd</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#D"><span class="id" title="variable">D</span></a>) :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a>) <a class="idref" href="ITree.Core.KTreeFacts.html#cd"><span class="id" title="variable">cd</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#cd"><span class="id" title="variable">cd</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeBasicFacts.html#assoc_l_ktree"><span class="id" title="lemma">assoc_l_ktree</span></a>, <a class="idref" href="ITree.Core.KTreeBasicFacts.html#assoc_r_ktree"><span class="id" title="lemma">assoc_r_ktree</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeBasicFacts.html#lift_compose_ktree"><span class="id" title="lemma">lift_compose_ktree</span></a>, <a class="idref" href="ITree.Core.KTreeBasicFacts.html#compose_ktree_lift"><span class="id" title="lemma">compose_ktree_lift</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">remember</span> @<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <span class="id" title="keyword">as</span> <span class="id" title="var">l</span>; <span class="id" title="tactic">cbv</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> []; <span class="id" title="tactic">subst</span> <span class="id" title="var">l</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#fold_map"><span class="id" title="lemma">fold_map</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (@<a class="idref" href="ITree.Core.LoopFacts.html#superposing1_loop"><span class="id" title="lemma">superposing1_loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">I</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.LoopFacts.html#eutt_loop"><span class="id" title="instance">eutt_loop</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">cbv</span>; <span class="id" title="tactic">intros</span> [|[]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">symmetry</span>. <span class="comment">(*&nbsp;protect&nbsp;the&nbsp;existential.&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.Eq.html#bind_bind"><span class="id" title="lemma">bind_bind</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">setoid_rewrite</span> <a class="idref" href="ITree.Eq.Shallow.html#bind_ret"><span class="id" title="lemma">bind_ret</span></a> <span class="id" title="tactic">at</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">itree</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#eutt_bind"><span class="id" title="instance">eutt_bind</span></a>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">d</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">autorewrite</span> <span class="id" title="keyword">with</span> <span class="id" title="var">itree</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Eq.UpToTausEquivalence.html#unfold_aloop"><span class="id" title="lemma">unfold_aloop</span></a>; <span class="id" title="var">cbn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Utility: lemma to ease working forward in an equational proof.
+      Make it more convenient to rewrite subterm only on one side of the equation.
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fact</span> <a name="fwd_eqn"><span class="id" title="lemma">fwd_eqn</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><span class="id" title="keyword">forall</span> <span class="id" title="var">h</span>, <a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intro</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Utility: lemmas to ease forward reasoning 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fact</span> <a name="cat_eq2_l"><span class="id" title="lemma">cat_eq2_l</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">h</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a>) (<span class="id" title="var">f</span> <span class="id" title="var">g</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#c"><span class="id" title="variable">c</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Fact</span> <a name="cat_eq2_r"><span class="id" title="lemma">cat_eq2_r</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">h</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">f</span> <span class="id" title="var">g</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTreeFacts.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#h"><span class="id" title="variable">h</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Fact</span> <a name="local_rewrite1"><span class="id" title="lemma">local_rewrite1</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> : <span class="id" title="keyword">Type</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#a"><span class="id" title="variable">a</span></a>) (@<a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <span class="id" title="var">_</span> (<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a>) <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.KTreeFacts.html#fwd_eqn"><span class="id" title="lemma">fwd_eqn</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">do</span> 2 <span class="id" title="tactic">apply</span> (<a class="idref" href="ITree.Core.KTreeFacts.html#cat_eq2_l"><span class="id" title="lemma">cat_eq2_l</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a>)) <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_cat"><span class="id" title="definition">bimap_cat</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#swap_involutive"><span class="id" title="lemma">swap_involutive</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a>,<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_id"><span class="id" title="definition">bimap_id</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>), &lt;- (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Basics.CategoryTheory.html#swap_assoc_l"><span class="id" title="definition">swap_assoc_l</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>) <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#assoc_l_mono"><span class="id" title="lemma">assoc_l_mono</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_r"><span class="id" title="definition">cat_id_r</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Fact</span> <a name="local_rewrite2"><span class="id" title="lemma">local_rewrite2</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> : <span class="id" title="keyword">Type</span>}:<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> @<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <span class="id" title="var">_</span> (<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a>) <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Core.KTreeFacts.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Core.KTreeFacts.html#fwd_eqn"><span class="id" title="lemma">fwd_eqn</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">do</span> 2 <span class="id" title="tactic">apply</span> (<a class="idref" href="ITree.Core.KTreeFacts.html#cat_eq2_r"><span class="id" title="lemma">cat_eq2_r</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a>)) <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_cat"><span class="id" title="definition">bimap_cat</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#swap_involutive"><span class="id" title="lemma">swap_involutive</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a>,<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_id"><span class="id" title="definition">bimap_id</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_r"><span class="id" title="definition">cat_id_r</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> 2 (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a>) <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Basics.CategoryTheory.html#swap_assoc_r"><span class="id" title="definition">swap_assoc_r</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- 2 (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a>) <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#assoc_l_mono"><span class="id" title="lemma">assoc_l_mono</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Eq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="loop_bimap_ktree"><span class="id" title="lemma">loop_bimap_ktree</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ab</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">cd</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#C"><span class="id" title="variable">C</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#D"><span class="id" title="variable">D</span></a>)) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> (<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#cd"><span class="id" title="variable">cd</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#cd"><span class="id" title="variable">cd</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryFacts.html#swap_bimap"><span class="id" title="lemma">swap_bimap</span></a>, <a class="idref" href="ITree.Core.KTreeFacts.html#bimap_ktree_loop"><span class="id" title="lemma">bimap_ktree_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Core.KTreeFacts.html#compose_loop"><span class="id" title="lemma">compose_loop</span></a>, &lt;- <a class="idref" href="ITree.Core.KTreeFacts.html#loop_compose"><span class="id" title="lemma">loop_compose</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="ITree.Basics.CategoryFacts.html#swap_bimap"><span class="id" title="lemma">swap_bimap</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">cd</span> <span class="id" title="var">ab</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- !<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#local_rewrite1"><span class="id" title="lemma">local_rewrite1</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> 2 <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- (<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#local_rewrite2"><span class="id" title="lemma">local_rewrite2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- !<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="yanking_ktree"><span class="id" title="lemma">yanking_ktree</span></a> {<span class="id" title="var">A</span>: <span class="id" title="keyword">Type</span>}:<br/>
+&nbsp;&nbsp;@<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ?; <span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.LoopFacts.html#yanking_loop"><span class="id" title="lemma">yanking_loop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Eq.UpToTausCore.html#tau_eutt"><span class="id" title="lemma">tau_eutt</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <a name="loop_rename_internal'"><span class="id" title="lemma">loop_rename_internal'</span></a> {<span class="id" title="var">I</span> <span class="id" title="var">J</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">ij</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a>) (<span class="id" title="var">ji</span>: <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#J"><span class="id" title="variable">J</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ab_</span>: @<a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws.E"><span class="id" title="variable">E</span></a> (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a>) (<a class="idref" href="ITree.Core.KTreeFacts.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>)) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Core.KTreeFacts.html#ij"><span class="id" title="variable">ij</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ji"><span class="id" title="variable">ji</span></a><a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">)</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ji"><span class="id" title="variable">ji</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ij"><span class="id" title="variable">ij</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>))<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab_"><span class="id" title="variable">ab_</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">Hij</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#loop_rename_internal"><span class="id" title="lemma">loop_rename_internal</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_cat"><span class="id" title="definition">bimap_cat</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">Hij</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#bimap_id"><span class="id" title="definition">bimap_id</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.KTreeFacts.html#TraceLaws"><span class="id" title="section">TraceLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="ITree.Core.KTreeBasicFacts.html#bimap_id_lift"><span class="id" title="lemma">bimap_id_lift</span></a> : <span class="id" title="var">lift_ktree</span>.<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="ITree.Core.KTreeBasicFacts.html#bimap_lift_id"><span class="id" title="lemma">bimap_lift_id</span></a> : <span class="id" title="var">lift_ktree</span>.<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="ITree.Core.KTreeBasicFacts.html#lift_case_sum"><span class="id" title="lemma">lift_case_sum</span></a> : <span class="id" title="var">lift_ktree</span>.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Here&nbsp;we&nbsp;show&nbsp;that&nbsp;we&nbsp;can&nbsp;implement&nbsp;<span class="inlinecode"><span class="id" title="var">ITree.cat</span></span>&nbsp;using<br/>
+&nbsp;&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="var">bimap</span></span>,&nbsp;<span class="inlinecode"><span class="id" title="var">loop</span></span>,&nbsp;and&nbsp;composition&nbsp;with&nbsp;the&nbsp;monoidal<br/>
+&nbsp;&nbsp;&nbsp;natural&nbsp;isomorphisms.&nbsp;*)</span><br/>
+
+<br/>
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">cat_from_loop</span></span>:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---\/---ab---+<br/>
+&nbsp;&nbsp;&nbsp;-------/\---bc-------<br/>
+<br/>
+is&nbsp;equivalent&nbsp;to<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;----ab---bc----<br/>
+&nbsp;*)</span><br/>
+<span class="id" title="keyword">Theorem</span> <a name="cat_from_loop"><span class="id" title="lemma">cat_from_loop</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">ab</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">bc</span> : <a class="idref" href="ITree.Core.KTree.html#ktree"><span class="id" title="definition">ktree</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#C"><span class="id" title="variable">C</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.KTree.html#loop"><span class="id" title="definition">loop</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#bc"><span class="id" title="variable">bc</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#ab"><span class="id" title="variable">ab</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Core.KTreeFacts.html#bc"><span class="id" title="variable">bc</span></a>.<br/>
+<span class="id" title="keyword">Proof</span> <span class="id" title="keyword">with</span> <span class="id" title="tactic">try</span> <span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---\/---ab---+<br/>
+&nbsp;&nbsp;&nbsp;-------/\---bc-------<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryFacts.html#bimap_slide"><span class="id" title="lemma">bimap_slide</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+----------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---\/---ab------+<br/>
+&nbsp;&nbsp;&nbsp;-------/\------bc-------<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#loop_compose"><span class="id" title="lemma">loop_compose</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---\/---ab---+<br/>
+&nbsp;&nbsp;&nbsp;-------/\------------bc----<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryFacts.html#swap_bimap"><span class="id" title="lemma">swap_bimap</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- !<a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---\/--\/------\/--+<br/>
+&nbsp;&nbsp;&nbsp;-------/\--/\--ab--/\----bc----<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#swap_involutive"><span class="id" title="lemma">swap_involutive</span></a>, <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_l"><span class="id" title="definition">cat_id_l</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---------------\/--+<br/>
+&nbsp;&nbsp;&nbsp;---------------ab--/\----bc----<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#compose_loop"><span class="id" title="lemma">compose_loop</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+------+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+--\/--+<br/>
+&nbsp;&nbsp;&nbsp;----ab-----/\-----bc----<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Core.KTreeFacts.html#yanking_ktree"><span class="id" title="lemma">yanking_ktree</span></a>...<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_id_r"><span class="id" title="definition">cat_id_r</span></a>...<br/>
+<span class="comment">(*<br/>
+&nbsp;&nbsp;&nbsp;----ab---bc----<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

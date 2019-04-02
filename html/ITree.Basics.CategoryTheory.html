@@ -1,0 +1,579 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Basics.CategoryTheory</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab34"></a><h1 class="section">Category theory</h1>
+
+<div class="paragraph"> </div>
+
+ While <span class="inlinecode"><span class="id" title="library">Basics.CategoryOps</span></span> gives the <i>signatures</i> of categorical
+    operations, this module describes their properties. 
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab35"></a><h2 class="section">Categories</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="CatLaws"><span class="id" title="section">CatLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">IdC</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">CatC</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Interp.Handler.html#Handler.cat"><span class="id" title="definition">cat</span></a></span> must have units and be associative. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CatIdL"><span class="id" title="record">CatIdL</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="cat_id_l"><span class="id" title="projection">cat_id_l</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>), <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CatIdR"><span class="id" title="record">CatIdR</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="cat_id_r"><span class="id" title="projection">cat_id_r</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>), <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CatAssoc"><span class="id" title="record">CatAssoc</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="cat_assoc"><span class="id" title="projection">cat_assoc</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">d</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) (<span class="id" title="var">g</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">h</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#d"><span class="id" title="variable">d</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">)</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#h"><span class="id" title="variable">h</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#h"><span class="id" title="variable">h</span></a><a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Category"><span class="id" title="record">Category</span></a> : <span class="id" title="keyword">Prop</span> := {<br/>
+&nbsp;&nbsp;<a name="category_cat_id_l"><span class="id" title="projection">category_cat_id_l</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CatIdL"><span class="id" title="class">CatIdL</span></a>;<br/>
+&nbsp;&nbsp;<a name="category_cat_id_r"><span class="id" title="projection">category_cat_id_r</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CatIdR"><span class="id" title="class">CatIdR</span></a>;<br/>
+&nbsp;&nbsp;<a name="category_cat_assoc"><span class="id" title="projection">category_cat_assoc</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CatAssoc"><span class="id" title="class">CatAssoc</span></a>;<br/>
+}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab36"></a><h3 class="section">Initial object</h3>
+
+<div class="paragraph"> </div>
+
+ There is only one morphism between the initial object and
+    any other object. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="InitialObject"><span class="id" title="record">InitialObject</span></a> (<span class="id" title="var">i</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.obj"><span class="id" title="variable">obj</span></a>) {<span class="id" title="var">Initial_i</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Initial"><span class="id" title="class">Initial</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#i"><span class="id" title="variable">i</span></a>} : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="initial_object"><span class="id" title="projection">initial_object</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>), <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#empty"><span class="id" title="definition">empty</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#CatLaws"><span class="id" title="section">CatLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#cat_assoc"><span class="id" title="definition">cat_assoc</span></a> {<span class="id" title="var">obj</span>} <span class="id" title="var">C</span> {<span class="id" title="var">Eq2C</span> <span class="id" title="var">CatC</span> <span class="id" title="var">CatAssoc</span>} [<span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">d</span>].<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#initial_object"><span class="id" title="definition">initial_object</span></a> : <span class="id" title="tactic">clear</span> <span class="id" title="var">implicits</span>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#initial_object"><span class="id" title="definition">initial_object</span></a> {<span class="id" title="var">obj</span>} <span class="id" title="var">C</span> {<span class="id" title="var">Eq2C</span>} <span class="id" title="var">i</span> {<span class="id" title="var">Initial_i</span> <span class="id" title="var">InitialObject</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab37"></a><h2 class="section">Mono-, Epi-, Iso- morphisms</h2>
+
+<div class="paragraph"> </div>
+
+ <i>Semi-isomorphisms</i> are morphisms which compose to the identity.
+    If <span class="inlinecode"><a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode">&gt;&gt;&gt;</span> <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="ITree.Interp.Handler.html#Handler.id_"><span class="id" title="definition">id_</span></a></span> <span class="inlinecode"><span class="id" title="var">_</span></span>, we also say that <span class="inlinecode"><a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> is a <i>section</i>, or
+    <i>split monomorphism</i> and <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> is a <i>retraction</i>, or
+    <i>split epimorphism</i>.
+    <i>Isomorphisms</i> are those that compose <i>both ways</i> to the identity.
+ 
+<div class="paragraph"> </div>
+
+ The most common example is in the category of functions: sections
+    are injective functions, retractions are surjective functions.
+    A minor detail to mention regarding that example is that
+    traditional function composition is denoted backwards:
+    <span class="inlinecode">(<a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode">&gt;&gt;&gt;</span> <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a>)</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode">(<a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> <span class="inlinecode">∘</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a>)</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> <span class="inlinecode">(<a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a>)</span>.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SemiIso"><span class="id" title="section">SemiIso</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">IdC</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">CatC</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+An instance <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso"><span class="id" title="record">SemiIso</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#C"><span class="id" title="variable">C</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> means that <span class="inlinecode"><a class="idref" href="ITree.Simple.html#f"><span class="id" title="variable">f</span></a></span> is a section of
+    <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a></span> in the category <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#C"><span class="id" title="variable">C</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="SemiIso"><span class="id" title="record">SemiIso</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.obj"><span class="id" title="variable">obj</span></a>} (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) (<span class="id" title="var">f'</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) : <span class="id" title="keyword">Type</span> :=<br/>
+&nbsp;&nbsp;<a name="semi_iso"><span class="id" title="projection">semi_iso</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The class of isomorphisms 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="Iso"><span class="id" title="record">Iso</span></a> {<span class="id" title="var">a</span> <span class="id" title="var">b</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.obj"><span class="id" title="variable">obj</span></a>} (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) (<span class="id" title="var">f'</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) : <span class="id" title="keyword">Type</span> := {<br/>
+&nbsp;&nbsp;<a name="iso_mono"><span class="id" title="projection">iso_mono</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso"><span class="id" title="class">SemiIso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a>;<br/>
+&nbsp;&nbsp;<a name="iso_epi"><span class="id" title="projection">iso_epi</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso"><span class="id" title="class">SemiIso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f'"><span class="id" title="variable">f'</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a>;<br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso"><span class="id" title="section">SemiIso</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a> : <span class="id" title="tactic">clear</span> <span class="id" title="var">implicits</span>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a> {<span class="id" title="var">obj</span> <span class="id" title="var">C</span> <span class="id" title="var">Eq2C</span> <span class="id" title="var">IdC</span> <span class="id" title="var">CatC</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>} <span class="id" title="var">f</span> <span class="id" title="var">f'</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab38"></a><h2 class="section">Bifunctors</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="BifunctorLaws"><span class="id" title="section">BifunctorLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Id_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Cat_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.binop"><span class="id" title="abbreviation">binop</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Bimap_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Bimap"><span class="id" title="class">Bimap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Vertical composition (<span class="inlinecode"><a class="idref" href="ITree.Interp.Handler.html#Handler.bimap"><span class="id" title="definition">bimap</span></a></span>) must be compatible with horizontal
+    composition (<span class="inlinecode"><a class="idref" href="ITree.Interp.Handler.html#Handler.cat"><span class="id" title="definition">cat</span></a></span>). 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="BimapId"><span class="id" title="record">BimapId</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="bimap_id"><span class="id" title="projection">bimap_id</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="BimapCat"><span class="id" title="record">BimapCat</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="bimap_cat"><span class="id" title="projection">bimap_cat</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a1</span> <span class="id" title="var">a2</span> <span class="id" title="var">b1</span> <span class="id" title="var">b2</span> <span class="id" title="var">c1</span> <span class="id" title="var">c2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">f1</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a1"><span class="id" title="variable">a1</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b1"><span class="id" title="variable">b1</span></a>) (<span class="id" title="var">g1</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b1"><span class="id" title="variable">b1</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c1"><span class="id" title="variable">c1</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">f2</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a2"><span class="id" title="variable">a2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b2"><span class="id" title="variable">b2</span></a>) (<span class="id" title="var">g2</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b2"><span class="id" title="variable">b2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c2"><span class="id" title="variable">c2</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f1"><span class="id" title="variable">f1</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f2"><span class="id" title="variable">f2</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g2"><span class="id" title="variable">g2</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#f1"><span class="id" title="variable">f1</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g1"><span class="id" title="variable">g1</span></a>) (<a class="idref" href="ITree.Basics.CategoryTheory.html#f2"><span class="id" title="variable">f2</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g2"><span class="id" title="variable">g2</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Bifunctor"><span class="id" title="record">Bifunctor</span></a> : <span class="id" title="keyword">Prop</span> := {<br/>
+&nbsp;&nbsp;<a name="bifunctor_bimap_id"><span class="id" title="projection">bifunctor_bimap_id</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#BimapId"><span class="id" title="class">BimapId</span></a>;<br/>
+&nbsp;&nbsp;<a name="bifunctor_bimap_cat"><span class="id" title="projection">bifunctor_bimap_cat</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#BimapCat"><span class="id" title="class">BimapCat</span></a>;<br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#BifunctorLaws"><span class="id" title="section">BifunctorLaws</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab39"></a><h2 class="section">Coproducts</h2>
+
+<div class="paragraph"> </div>
+
+ These laws capture the essence of sums. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="CoproductLaws"><span class="id" title="section">CoproductLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Id_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Cat_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.binop"><span class="id" title="abbreviation">binop</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">CoprodCase_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodCase"><span class="id" title="class">CoprodCase</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.bif"><span class="id" title="variable">bif</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">CoprodInl_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodInl"><span class="id" title="class">CoprodInl</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.bif"><span class="id" title="variable">bif</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">CoprodInr_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#CoprodInr"><span class="id" title="class">CoprodInr</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CaseInl"><span class="id" title="record">CaseInl</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="case_inl"><span class="id" title="projection">case_inl</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">g</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#inl_"><span class="id" title="definition">inl_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#case_"><span class="id" title="definition">case_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="CaseInr"><span class="id" title="record">CaseInr</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="case_inr"><span class="id" title="projection">case_inr</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">g</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#inr_"><span class="id" title="definition">inr_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#case_"><span class="id" title="definition">case_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Uniqueness of coproducts 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="CaseUniversal"><span class="id" title="record">CaseUniversal</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="case_universal"><span class="id" title="projection">case_universal</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">g</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<span class="id" title="var">fg</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.CategoryOps.html#inl_"><span class="id" title="definition">inl_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#fg"><span class="id" title="variable">fg</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><a class="idref" href="ITree.Basics.CategoryOps.html#inr_"><span class="id" title="definition">inr_</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#fg"><span class="id" title="variable">fg</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryTheory.html#fg"><span class="id" title="variable">fg</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#case_"><span class="id" title="definition">case_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#g"><span class="id" title="variable">g</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Coproduct"><span class="id" title="record">Coproduct</span></a> : <span class="id" title="keyword">Prop</span> := {<br/>
+&nbsp;&nbsp;<a name="coproduct_case_inl"><span class="id" title="projection">coproduct_case_inl</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CaseInl"><span class="id" title="class">CaseInl</span></a>;<br/>
+&nbsp;&nbsp;<a name="coproduct_case_inr"><span class="id" title="projection">coproduct_case_inr</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CaseInr"><span class="id" title="class">CaseInr</span></a>;<br/>
+&nbsp;&nbsp;<a name="coproduct_case_universal"><span class="id" title="projection">coproduct_case_universal</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#CaseUniversal"><span class="id" title="class">CaseUniversal</span></a>;<br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#CoproductLaws"><span class="id" title="section">CoproductLaws</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab40"></a><h2 class="section">Monoidal categories</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="MonoidalLaws"><span class="id" title="section">MonoidalLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Id_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Cat_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.binop"><span class="id" title="abbreviation">binop</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">AssocR_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#AssocR"><span class="id" title="class">AssocR</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">AssocL_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#AssocL"><span class="id" title="class">AssocL</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab41"></a><h3 class="section">Associators and unitors are isomorphisms</h3>
+
+<div class="paragraph"> </div>
+
+ <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="projection">assoc_r</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="projection">assoc_l</span></a></span> are mutual inverses. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="AssocIso"><span class="id" title="abbreviation">AssocIso</span></a> :=<br/>
+&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>, <a class="idref" href="ITree.Basics.CategoryTheory.html#Iso"><span class="id" title="class">Iso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r_"><span class="id" title="abbreviation">assoc_r_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a>) (<span class="id" title="var">only</span> <span class="id" title="var">parsing</span>).<br/>
+<span class="comment">(*&nbsp;TODO:&nbsp;should&nbsp;that&nbsp;be&nbsp;a&nbsp;notation?&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="projection">assoc_r</span></a></span> is a split monomorphism, i.e., a left-inverse,
+    <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="projection">assoc_l</span></a></span> is its retraction. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Corollary</span> <a name="assoc_r_mono"><span class="id" title="lemma">assoc_r_mono</span></a> {<span class="id" title="var">AssocIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#AssocIso"><span class="id" title="abbreviation">AssocIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">AssocIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="projection">assoc_r</span></a></span> is a split epimorphism, i.e., a right-inverse,
+    <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="projection">assoc_l</span></a></span> is its section. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Corollary</span> <a name="assoc_l_mono"><span class="id" title="lemma">assoc_l_mono</span></a> {<span class="id" title="var">AssocIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#AssocIso"><span class="id" title="abbreviation">AssocIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">AssocIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">i</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitL_bif</span>  : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitL"><span class="id" title="class">UnitL</span></a>  <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitL'_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitL'"><span class="id" title="class">UnitL'</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitR_bif</span>  : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitR"><span class="id" title="class">UnitR</span></a>  <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitR'_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitR'"><span class="id" title="class">UnitR'</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="projection">unit_l</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="projection">unit_l'</span></a></span> are mutual inverses. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="UnitLIso"><span class="id" title="abbreviation">UnitLIso</span></a> :=<br/>
+&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>, <a class="idref" href="ITree.Basics.CategoryTheory.html#Iso"><span class="id" title="class">Iso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#unit_l_"><span class="id" title="abbreviation">unit_l_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="definition">unit_l'</span></a>) (<span class="id" title="var">only</span> <span class="id" title="var">parsing</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="projection">unit_l</span></a></span> is a split monomorphism, i.e., a left-inverse,
+    <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="projection">unit_l'</span></a></span> is its retraction. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Corollary</span> <a name="unit_l_mono"><span class="id" title="lemma">unit_l_mono</span></a> {<span class="id" title="var">UnitLIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitLIso"><span class="id" title="abbreviation">UnitLIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="definition">unit_l'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">UnitLIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="projection">unit_l</span></a></span> is a split epimorphism, <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="projection">unit_l'</span></a></span> is its section. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Corollary</span> <a name="unit_l_epi"><span class="id" title="lemma">unit_l_epi</span></a> {<span class="id" title="var">UnitLIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitLIso"><span class="id" title="abbreviation">UnitLIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#unit_l'"><span class="id" title="definition">unit_l'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">UnitLIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_r"><span class="id" title="projection">unit_r</span></a></span> and <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#unit_r'"><span class="id" title="projection">unit_r'</span></a></span> are mutual inverses. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="UnitRIso"><span class="id" title="abbreviation">UnitRIso</span></a> :=<br/>
+&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>, <a class="idref" href="ITree.Basics.CategoryTheory.html#Iso"><span class="id" title="class">Iso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#unit_r_"><span class="id" title="abbreviation">unit_r_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r'"><span class="id" title="definition">unit_r'</span></a>) (<span class="id" title="var">only</span> <span class="id" title="var">parsing</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Corollary</span> <a name="unit_r_mono"><span class="id" title="lemma">unit_r_mono</span></a> {<span class="id" title="var">UnitRIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitRIso"><span class="id" title="abbreviation">UnitRIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#unit_r"><span class="id" title="definition">unit_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r'"><span class="id" title="definition">unit_r'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.i"><span class="id" title="variable">i</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">UnitRIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Corollary</span> <a name="unit_r_epi"><span class="id" title="lemma">unit_r_epi</span></a> {<span class="id" title="var">UnitRIso_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitRIso"><span class="id" title="abbreviation">UnitRIso</span></a>} : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#unit_r'"><span class="id" title="definition">unit_r'</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r"><span class="id" title="definition">unit_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">UnitRIso_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Bimap_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Bimap"><span class="id" title="class">Bimap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab42"></a><h3 class="section">Coherence laws</h3>
+
+<div class="paragraph"> </div>
+
+ The Triangle Diagram 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="AssocRUnit"><span class="id" title="record">AssocRUnit</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="assoc_r_unit"><span class="id" title="projection">assoc_r_unit</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r"><span class="id" title="definition">unit_r</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The Pentagon Diagram 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="AssocRAssocR"><span class="id" title="record">AssocRAssocR</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="assoc_r_assoc_r"><span class="id" title="projection">assoc_r_assoc_r</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">d</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (@<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#d"><span class="id" title="variable">d</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>) <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="Monoidal"><span class="id" title="record">Monoidal</span></a> : <span class="id" title="keyword">Prop</span> := {<br/>
+&nbsp;&nbsp;<a name="monoidal_category"><span class="id" title="projection">monoidal_category</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#Category"><span class="id" title="class">Category</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_bifunctor"><span class="id" title="projection">monoidal_bifunctor</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#Bifunctor"><span class="id" title="class">Bifunctor</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws.bif"><span class="id" title="variable">bif</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_assoc_iso"><span class="id" title="projection">monoidal_assoc_iso</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#AssocIso"><span class="id" title="abbreviation">AssocIso</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_unit_l_iso"><span class="id" title="projection">monoidal_unit_l_iso</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitLIso"><span class="id" title="abbreviation">UnitLIso</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_unit_r_iso"><span class="id" title="projection">monoidal_unit_r_iso</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#UnitRIso"><span class="id" title="abbreviation">UnitRIso</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_assoc_r_unit"><span class="id" title="projection">monoidal_assoc_r_unit</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#AssocRUnit"><span class="id" title="class">AssocRUnit</span></a>;<br/>
+&nbsp;&nbsp;<a name="monoidal_assoc_r_assoc_r"><span class="id" title="projection">monoidal_assoc_r_assoc_r</span></a> :&gt; <a class="idref" href="ITree.Basics.CategoryTheory.html#AssocRAssocR"><span class="id" title="class">AssocRAssocR</span></a>;<br/>
+}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="projection">assoc_l</span></a></span> variants can be derived by symmetry,
+    because <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="projection">assoc_l</span></a></span> is the inverse of <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="projection">assoc_r</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="AssocLUnit"><span class="id" title="record">AssocLUnit</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="assoc_l_unit"><span class="id" title="projection">assoc_l_unit</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r"><span class="id" title="definition">unit_r</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="AssocLAssocL"><span class="id" title="record">AssocLAssocL</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="assoc_l_assoc_l"><span class="id" title="projection">assoc_l_assoc_l</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span> <span class="id" title="var">d</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) (@<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#d"><span class="id" title="variable">d</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#MonoidalLaws"><span class="id" title="section">MonoidalLaws</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab43"></a><h2 class="section">Symmetric monoidal categories</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="SymmetricLaws"><span class="id" title="section">SymmetricLaws</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">obj</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.Hom"><span class="id" title="abbreviation">Hom</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Eq2_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Eq2"><span class="id" title="class">Eq2</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Id_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Id_"><span class="id" title="class">Id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a>} {<span class="id" title="var">Cat_C</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Cat"><span class="id" title="class">Cat</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Carrier.binop"><span class="id" title="abbreviation">binop</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Swap_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Swap"><span class="id" title="class">Swap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="projection">swap</span></a></span> is an involution 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="SwapInvolutive"><span class="id" title="abbreviation">SwapInvolutive</span></a> :=<br/>
+&nbsp;&nbsp;(<span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>, <a class="idref" href="ITree.Basics.CategoryTheory.html#SemiIso"><span class="id" title="class">SemiIso</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#swap_"><span class="id" title="abbreviation">swap_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a>) (<span class="id" title="var">only</span> <span class="id" title="var">parsing</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Corollary</span> <a name="swap_involutive"><span class="id" title="lemma">swap_involutive</span></a> {<span class="id" title="var">SwapInvolutive_C</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SwapInvolutive"><span class="id" title="abbreviation">SwapInvolutive</span></a>}<br/>
+&nbsp;&nbsp;: <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span>, <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> (<a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#semi_iso"><span class="id" title="definition">semi_iso</span></a>, <span class="id" title="var">SwapInvolutive_C</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> (<span class="id" title="var">i</span> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.obj"><span class="id" title="variable">obj</span></a>).<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitL_i</span>  : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitL"><span class="id" title="class">UnitL</span></a>  <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitL'_i</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitL'"><span class="id" title="class">UnitL'</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitR_i</span>  : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitR"><span class="id" title="class">UnitR</span></a>  <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">UnitR'_i</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#UnitR'"><span class="id" title="class">UnitR'</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.i"><span class="id" title="variable">i</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Coherence between <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="projection">swap</span></a></span> and unitors. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="SwapUnitL"><span class="id" title="record">SwapUnitL</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="swap_unit_l"><span class="id" title="projection">swap_unit_l</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span>, <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_l"><span class="id" title="definition">unit_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#unit_r_"><span class="id" title="abbreviation">unit_r_</span></a> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">Bimap_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#Bimap"><span class="id" title="class">Bimap</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">AssocR_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#AssocR"><span class="id" title="class">AssocR</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<span class="id" title="var">AssocL_bif</span> : <a class="idref" href="ITree.Basics.CategoryOps.html#AssocL"><span class="id" title="class">AssocL</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Coherence between <span class="inlinecode"><a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="projection">swap</span></a></span> and associators. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="SwapAssocR"><span class="id" title="record">SwapAssocR</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="swap_assoc_r"><span class="id" title="projection">swap_assoc_r</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_r"><span class="id" title="definition">assoc_r</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Symmetric monoidal category. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="SymMonoidal"><span class="id" title="record">SymMonoidal</span></a> : <span class="id" title="keyword">Prop</span> := {<br/>
+&nbsp;&nbsp;<a name="symmetric_monoidal"><span class="id" title="projection">symmetric_monoidal</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#Monoidal"><span class="id" title="class">Monoidal</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.C"><span class="id" title="variable">C</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.bif"><span class="id" title="variable">bif</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws.i"><span class="id" title="variable">i</span></a>;<br/>
+&nbsp;&nbsp;<a name="symmetric_swap_involutive"><span class="id" title="projection">symmetric_swap_involutive</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SwapInvolutive"><span class="id" title="abbreviation">SwapInvolutive</span></a>;<br/>
+&nbsp;&nbsp;<a name="symmetric_swap_unit_l"><span class="id" title="projection">symmetric_swap_unit_l</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SwapUnitL"><span class="id" title="class">SwapUnitL</span></a>;<br/>
+&nbsp;&nbsp;<a name="symmetric_swap_assoc_r"><span class="id" title="projection">symmetric_swap_assoc_r</span></a> : <a class="idref" href="ITree.Basics.CategoryTheory.html#SwapAssocR"><span class="id" title="class">SwapAssocR</span></a>;<br/>
+}.<br/>
+<span class="comment">(*&nbsp;The&nbsp;name&nbsp;<span class="inlinecode"><span class="id" title="var">Symmetric</span></span>&nbsp;is&nbsp;taken&nbsp;by&nbsp;<span class="inlinecode"><span class="id" title="var">Setoid</span></span>.&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="SwapAssocL"><span class="id" title="record">SwapAssocL</span></a> : <span class="id" title="keyword">Prop</span> :=<br/>
+&nbsp;&nbsp;<a name="swap_assoc_l"><span class="id" title="projection">swap_assoc_l</span></a> : <span class="id" title="keyword">forall</span> <span class="id" title="var">a</span> <span class="id" title="var">b</span> <span class="id" title="var">c</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#c"><span class="id" title="variable">c</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Basics.CategoryOps.html#2ec5f6d22e7b6027e46510b0dc464670"><span class="id" title="notation">⩯</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#a"><span class="id" title="variable">a</span></a>) <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#assoc_l"><span class="id" title="definition">assoc_l</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#ed2d6681377211317b9a5314daa2f310"><span class="id" title="notation">&gt;&gt;&gt;</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#bimap"><span class="id" title="definition">bimap</span></a> <a class="idref" href="ITree.Basics.CategoryOps.html#swap"><span class="id" title="definition">swap</span></a> (<a class="idref" href="ITree.Basics.CategoryOps.html#id_"><span class="id" title="definition">id_</span></a> <a class="idref" href="ITree.Basics.CategoryTheory.html#b"><span class="id" title="variable">b</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Basics.CategoryTheory.html#SymmetricLaws"><span class="id" title="section">SymmetricLaws</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

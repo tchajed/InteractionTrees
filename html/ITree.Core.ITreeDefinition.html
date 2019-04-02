@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">ITree.Core.ITreeDefinition</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab52"></a><h1 class="section">Interaction trees: core definitions</h1>
+
+</div>
+<div class="code">
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab53"></a><h2 class="section">The type of interaction trees</h2>
+
+<div class="paragraph"> </div>
+
+ An <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#E"><span class="id" title="variable">E</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#R"><span class="id" title="variable">R</span></a></span> is the denotation of a program as coinductive
+    (possibly infinite) tree where the leaves <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span> are labeled with
+    <span class="inlinecode"><a class="idref" href="ITree.Simple.html#R"><span class="id" title="variable">R</span></a></span> and every node is either a <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span> node with one child, or a
+    branching node <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span> with a <i>visible event</i> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#E"><span class="id" title="variable">E</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#X"><span class="id" title="variable">X</span></a></span> that branches
+    on the values of <span class="inlinecode"><a class="idref" href="ITree.Simple.html#X"><span class="id" title="variable">X</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="itree"><span class="id" title="section">itree</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">R</span> : <span class="id" title="keyword">Type</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The type <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> is defined as the final coalgebra ("greatest
+      fixed point") of the functor <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variant</span> <a name="itreeF"><span class="id" title="inductive">itreeF</span></a> (<span class="id" title="var">itree</span> : <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;| <a name="RetF"><span class="id" title="constructor">RetF</span></a> (<span class="id" title="var">r</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree.R"><span class="id" title="variable">R</span></a>)<br/>
+&nbsp;&nbsp;| <a name="TauF"><span class="id" title="constructor">TauF</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="variable">itree</span></a>)<br/>
+&nbsp;&nbsp;| <a name="VisF"><span class="id" title="constructor">VisF</span></a> {<span class="id" title="var">X</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">e</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#X"><span class="id" title="variable">X</span></a>) (<span class="id" title="var">k</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="variable">itree</span></a>)<br/>
+&nbsp;&nbsp;.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define non-recursive types such as <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a></span> using the <span class="inlinecode"><span class="id" title="keyword">Variant</span></span>
+      command. The main practical difference from <span class="inlinecode"><span class="id" title="keyword">Inductive</span></span> is that
+      <span class="inlinecode"><span class="id" title="keyword">Variant</span></span> does not generate any induction schemes (which are
+      unnecessary). 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">CoInductive</span> <a name="itree"><span class="id" title="record">itree</span></a> : <span class="id" title="keyword">Type</span> := <a name="go"><span class="id" title="constructor">go</span></a><br/>
+&nbsp;&nbsp;{ <a name="_observe"><span class="id" title="projection">_observe</span></a> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="inductive">itree</span></a> }.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A primitive projection, such as <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a></span>, must always be
+      applied. To be used as a function, wrap it explicitly:
+      <span class="inlinecode"><span class="id" title="keyword">fun</span></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> or <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span> (defined below). 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;Notes&nbsp;about&nbsp;using&nbsp;<span class="inlinecode"><span class="id" title="var">itree</span></span>:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;You&nbsp;should&nbsp;simplify&nbsp;using&nbsp;<span class="inlinecode"><span class="id" title="var">cbn</span></span>&nbsp;rather&nbsp;than&nbsp;<span class="inlinecode"><span class="id" title="tactic">simpl</span></span>&nbsp;when&nbsp;working<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;terms&nbsp;of&nbsp;the&nbsp;form&nbsp;<span class="inlinecode"><span class="id" title="var">observe</span></span> <span class="inlinecode"><span class="id" title="var">e</span></span>&nbsp;where&nbsp;<span class="inlinecode"><span class="id" title="var">e</span></span>&nbsp;is&nbsp;defined&nbsp;by<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="keyword">CoFixpoint</span></span>&nbsp;(as&nbsp;in&nbsp;<span class="inlinecode"><span class="id" title="var">bind</span></span>&nbsp;and&nbsp;<span class="inlinecode"><span class="id" title="var">map</span></span>&nbsp;below).&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="tactic">simpl</span></span>&nbsp;does&nbsp;not<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unfold&nbsp;the&nbsp;definition&nbsp;properly&nbsp;to&nbsp;expose&nbsp;the&nbsp;<span class="inlinecode"><span class="id" title="var">observe</span></span> <span class="inlinecode"><span class="id" title="var">t</span></span>&nbsp;term.<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Once&nbsp;you&nbsp;have&nbsp;<span class="inlinecode"><span class="id" title="var">observe</span></span> <span class="inlinecode"><span class="id" title="var">t</span></span>&nbsp;as&nbsp;the&nbsp;subject&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="keyword">match</span></span>,&nbsp;you&nbsp;can<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="tactic">destruct</span></span> <span class="inlinecode">(<span class="id" title="var">observe</span></span> <span class="inlinecode"><span class="id" title="var">t</span>)</span>&nbsp;to&nbsp;do&nbsp;the&nbsp;case&nbsp;split.<br/>
+&nbsp;&nbsp;&nbsp;*)</span><br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="section">itree</span></a>.<br/>
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+An <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree'"><span class="id" title="abbreviation">itree'</span></a></span> is a "forced" <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span>. It is the type of inputs
+    of <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#go"><span class="id" title="constructor">go</span></a></span>, and outputs of <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="itree'"><span class="id" title="abbreviation">itree'</span></a> <span class="id" title="var">E</span> <span class="id" title="var">R</span> := (<a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a> <span class="id" title="var">E</span> <span class="id" title="var">R</span> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <span class="id" title="var">E</span> <span class="id" title="var">R</span>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We wrap the primitive projection <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a></span> in a function
+    <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="observe"><span class="id" title="definition">observe</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">R</span>} (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree'"><span class="id" title="abbreviation">itree'</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> := @<a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that when <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a></span> appears unapplied in an expression,
+    it is implicitly wrapped in a function. However, there is no
+    way to distinguish whether such wrapping took place, so relying
+    on this behavior can lead to confusion.
+
+<div class="paragraph"> </div>
+
+    We recommend to always use a primitive projection applied,
+    and wrap it in a function explicitly like the above to pass
+    around as a first-order function. 
+<div class="paragraph"> </div>
+
+ We introduce notation for the <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span>, <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span>, and <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span> constructors. Using
+    notation rather than definitions works better for extraction.  (The <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.spin"><span class="id" title="definition">spin</span></a></span>
+    definition, given below does not extract correctly if <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span> is a definition.)
+
+<div class="paragraph"> </div>
+
+    Using this notation means that we occasionally have to eta expand, e.g.
+    writing <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#e"><span class="id" title="variable">e</span></a></span> <span class="inlinecode">(<span class="id" title="keyword">fun</span></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> <span class="inlinecode">=&gt;</span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a>)</span> instead of <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#e"><span class="id" title="variable">e</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a></span>. (In this
+    particular case, this is <span class="inlinecode"><span class="id" title="var">ITree.trigger</span></span>.)
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> <a name="Ret"><span class="id" title="abbreviation">Ret</span></a> <span class="id" title="var">x</span> := (<a class="idref" href="ITree.Core.ITreeDefinition.html#go"><span class="id" title="constructor">go</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <span class="id" title="var">x</span>)).<br/>
+<span class="id" title="keyword">Notation</span> <a name="Tau"><span class="id" title="abbreviation">Tau</span></a> <span class="id" title="var">t</span> := (<a class="idref" href="ITree.Core.ITreeDefinition.html#go"><span class="id" title="constructor">go</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <span class="id" title="var">t</span>)).<br/>
+<span class="id" title="keyword">Notation</span> <a name="Vis"><span class="id" title="abbreviation">Vis</span></a> <span class="id" title="var">e</span> <span class="id" title="var">k</span> := (<a class="idref" href="ITree.Core.ITreeDefinition.html#go"><span class="id" title="constructor">go</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> <span class="id" title="var">e</span> <span class="id" title="var">k</span>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab54"></a><h2 class="section">Main operations on <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span></h2>
+
+<div class="paragraph"> </div>
+
+ The core definitions are wrapped in a module for namespacing.
+    They are meant to be used qualified (e.g., ITree.bind) or
+    via notations (e.g., <span class="inlinecode">&gt;&gt;=</span>). 
+<div class="paragraph"> </div>
+
+<a name="lab55"></a><h3 class="section">How to write cofixpoints</h3>
+
+<div class="paragraph"> </div>
+
+ We define cofixpoints in two steps: first a plain definition
+    (prefixed with an <span class="inlinecode"><span class="id" title="var">_</span></span>, e.g., <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a></span>, <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._aloop"><span class="id" title="definition">_aloop</span></a></span>) defines the body
+    of the function:
+
+<div class="paragraph"> </div>
+
+<ul class="doclist">
+<li> it takes the recursive call (<span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span>) as a parameter;
+
+</li>
+<li> if we are deconstructing an itree, this body takes
+      the unwrapped <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a></span>;
+
+</li>
+</ul>
+
+<div class="paragraph"> </div>
+
+    second the actual <span class="inlinecode"><span class="id" title="keyword">CoFixpoint</span></span> (or, equivalently, <span class="inlinecode"><span class="id" title="keyword">cofix</span></span>) ties
+    the knot, applying <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span> to any <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span> parameters. 
+<div class="paragraph"> </div>
+
+ This style allows us to keep <span class="inlinecode"><span class="id" title="keyword">cofix</span></span> from ever appearing in
+    proofs, which could otherwise get quite unwieldly.
+    For every <span class="inlinecode"><span class="id" title="keyword">CoFixpoint</span></span> (such as <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span>), we prove an unfolding
+    lemma to rewrite it as a term whose head is <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a></span>, without
+    any <span class="inlinecode"><span class="id" title="keyword">cofix</span></span> above it.
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Eq.Shallow.html#unfold_bind"><span class="id" title="lemma">unfold_bind</span></a> : <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a> <a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> (<span class="id" title="keyword">fun</span> <a class="idref" href="ITree.Eq.Eq.html#t'"><span class="id" title="variable">t'</span></a> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a> <a class="idref" href="ITree.Eq.Eq.html#t'"><span class="id" title="variable">t'</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a>) <a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a>)
+<div class="paragraph"> </div>
+
+</span>    Note that this is an equality "up to" <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span>. It would not be
+    provable if it were a plain equality:
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a> <a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a> = <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> (...) <a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a>  <span class="comment">(*&nbsp;unfold&nbsp;the&nbsp;definition&nbsp;of&nbsp;<span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span>...&nbsp;*)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">cofix</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind'"><span class="id" title="definition">bind'</span></a> <a class="idref" href="ITree.Eq.Shallow.html#t1"><span class="id" title="variable">t1</span></a> := <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> (...) <a class="idref" href="ITree.Eq.Shallow.html#t1"><span class="id" title="variable">t1</span></a>) <a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a> = <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> (...) <a class="idref" href="ITree.Eq.Shallow.html#t1"><span class="id" title="variable">t1</span></a>
+<div class="paragraph"> </div>
+
+</span>    The <span class="inlinecode"><span class="id" title="keyword">cofix</span></span> is stuck, and can only be unstuck under the primitive
+    projection <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#_observe"><span class="id" title="projection">_observe</span></a></span> (which is wrapped by <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a></span>).
+ 
+<div class="paragraph"> </div>
+
+<a name="lab56"></a><h3 class="section">Definitions</h3>
+
+<div class="paragraph"> </div>
+
+ These are meant to be imported qualified, e.g., <span class="inlinecode"><span class="id" title="var">ITree.bind</span></span>,
+    <span class="inlinecode"><span class="id" title="var">ITree.trigger</span></span>, to avoid ambiguity with identifiers of the same
+    name (some of which are overloaded generalizations of these).
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Module</span> <a name="ITree"><span class="id" title="module">ITree</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span>: monadic composition, tree substitution, sequencing of
+    computations. <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a></span> is also denoted by <span class="inlinecode"><a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">&gt;&gt;=</span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a></span> and using
+    "do-notation" <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span> <span class="inlinecode">&lt;-</span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">;;</span> <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a></span> <span class="inlinecode"><a class="idref" href="ITree.Simple.html#x"><span class="id" title="variable">x</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="ITree.bind"><span class="id" title="section">bind</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">T</span> <span class="id" title="var">U</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;We&nbsp;can&nbsp;keep&nbsp;the&nbsp;continuation&nbsp;outside&nbsp;the&nbsp;cofixpoint.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;particular,&nbsp;this&nbsp;allows&nbsp;us&nbsp;to&nbsp;nest&nbsp;<span class="inlinecode"><span class="id" title="var">bind</span></span>&nbsp;in&nbsp;other&nbsp;cofixpoints,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;long&nbsp;as&nbsp;the&nbsp;recursive&nbsp;occurences&nbsp;are&nbsp;in&nbsp;the&nbsp;continuation<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i.e.,&nbsp;this&nbsp;makes&nbsp;it&nbsp;easy&nbsp;to&nbsp;define&nbsp;tail-recursive&nbsp;functions).<br/>
+&nbsp;&nbsp;&nbsp;*)</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ITree.bind.k"><span class="id" title="variable">k</span></a> : <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.U"><span class="id" title="variable">U</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="ITree._bind"><span class="id" title="definition">_bind</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">bind</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.U"><span class="id" title="variable">U</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">oc</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itreeF"><span class="id" title="inductive">itreeF</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.T"><span class="id" title="variable">T</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.T"><span class="id" title="variable">T</span></a>)) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.U"><span class="id" title="variable">U</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#oc"><span class="id" title="variable">oc</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.k"><span class="id" title="variable">k</span></a> <span class="id" title="var">r</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <span class="id" title="var">t</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#bind"><span class="id" title="variable">bind</span></a> <span class="id" title="var">t</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> <span class="id" title="var">e</span> <span class="id" title="var">h</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a> <span class="id" title="var">e</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#bind"><span class="id" title="variable">bind</span></a> (<span class="id" title="var">h</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">CoFixpoint</span> <a name="ITree.bind'"><span class="id" title="definition">bind'</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.T"><span class="id" title="variable">T</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind.U"><span class="id" title="variable">U</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#bind'"><span class="id" title="definition">bind'</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="section">bind</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._bind"><span class="id" title="definition">_bind</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> /.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="ITree.bind"><span class="id" title="abbreviation">bind</span></a> <span class="id" title="var">c</span> <span class="id" title="var">k</span> := (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind'"><span class="id" title="definition">bind'</span></a> <span class="id" title="var">k</span> <span class="id" title="var">c</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Monadic composition of continuations (i.e., Kleisli composition).
+ 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ITree.cat"><span class="id" title="definition">cat</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">T</span> <span class="id" title="var">U</span> <span class="id" title="var">V</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">k</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#U"><span class="id" title="variable">U</span></a>) (<span class="id" title="var">h</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#U"><span class="id" title="variable">U</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#V"><span class="id" title="variable">V</span></a>) :<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#T"><span class="id" title="variable">T</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#V"><span class="id" title="variable">V</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">t</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind'"><span class="id" title="definition">bind'</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#h"><span class="id" title="variable">h</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#k"><span class="id" title="variable">k</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.aloop"><span class="id" title="definition">aloop</span></a></span>: See <span class="inlinecode"><span class="id" title="var">Basics.Basics.ALoop</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="ITree._aloop"><span class="id" title="definition">_aloop</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">R</span> <span class="id" title="var">I</span> : <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">tau</span> : <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">aloop_</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">step_i</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#step_i"><span class="id" title="variable">step_i</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inl"><span class="id" title="constructor">inl</span></a> <span class="id" title="var">cont</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#tau"><span class="id" title="variable">tau</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">ITree.bind</span></a> <span class="id" title="var">cont</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#aloop_"><span class="id" title="variable">aloop_</span></a>)<br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#inr"><span class="id" title="constructor">inr</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <span class="id" title="var">r</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="ITree.aloop"><span class="id" title="definition">aloop</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} {<span class="id" title="var">R</span> <span class="id" title="var">I</span>: <span class="id" title="keyword">Type</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">step</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#3dcaec3b772747610227247939f96b01"><span class="id" title="notation">+</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#I"><span class="id" title="variable">I</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">cofix</span> <span class="id" title="var">aloop_</span> <span class="id" title="var">i</span> := <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree._aloop"><span class="id" title="definition">_aloop</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">t</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a>) <a class="idref" href="ITree.Core.ITreeDefinition.html#aloop_"><span class="id" title="variable">aloop_</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#step"><span class="id" title="variable">step</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#i"><span class="id" title="variable">i</span></a>).<br/>
+
+<br/>
+<span class="comment">(*&nbsp;note(gmm):&nbsp;There&nbsp;needs&nbsp;to&nbsp;be&nbsp;generic&nbsp;automation&nbsp;for&nbsp;monads&nbsp;to&nbsp;simplify<br/>
+&nbsp;*&nbsp;using&nbsp;the&nbsp;monad&nbsp;laws&nbsp;up&nbsp;to&nbsp;a&nbsp;setoid.<br/>
+&nbsp;*&nbsp;this&nbsp;would&nbsp;be&nbsp;*really*&nbsp;useful&nbsp;to&nbsp;a&nbsp;lot&nbsp;of&nbsp;projects.<br/>
+&nbsp;*<br/>
+&nbsp;*&nbsp;this&nbsp;will&nbsp;be&nbsp;especially&nbsp;important&nbsp;for&nbsp;this&nbsp;project&nbsp;because&nbsp;coinductives<br/>
+&nbsp;*&nbsp;don't&nbsp;simplify&nbsp;very&nbsp;nicely.<br/>
+&nbsp;*)</span><br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Functorial map (<span class="inlinecode"><span class="id" title="method">fmap</span></span> in Haskell) 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ITree.map"><span class="id" title="definition">map</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">R</span> <span class="id" title="var">S</span>} (<span class="id" title="var">f</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#S"><span class="id" title="variable">S</span></a>)  (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#S"><span class="id" title="variable">S</span></a> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Atomic itrees triggering a single event. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ITree.trigger"><span class="id" title="definition">trigger</span></a> {<span class="id" title="var">E</span> : <span class="id" title="keyword">Type</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <span class="id" title="keyword">Type</span>} : <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Basics.Basics.html#2e19e0e46af96350d8b71c39eb325da4"><span class="id" title="notation">~&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">R</span> <span class="id" title="var">e</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#e"><span class="id" title="variable">e</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Ignore the result of a tree. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ITree.ignore"><span class="id" title="definition">ignore</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">R</span>} : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">-&gt;</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a> :=<br/>
+&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.map"><span class="id" title="definition">map</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> =&gt; <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#tt"><span class="id" title="constructor">tt</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Infinite taus. 
+</div>
+<div class="code">
+<span class="id" title="keyword">CoFixpoint</span> <a name="ITree.spin"><span class="id" title="definition">spin</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">R</span>} : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a> := <a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#spin"><span class="id" title="definition">spin</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Repeat a computation infinitely. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="ITree.forever"><span class="id" title="definition">forever</span></a> {<span class="id" title="var">E</span> <span class="id" title="var">R</span> <span class="id" title="var">S</span>} (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#S"><span class="id" title="variable">S</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">cofix</span> <span class="id" title="var">forever_t</span> := <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#forever_t"><span class="id" title="variable">forever_t</span></a>)).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree"><span class="id" title="module">ITree</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab57"></a><h2 class="section">Notations</h2>
+
+<div class="paragraph"> </div>
+
+ Sometimes it's more convenient to work without the type classes
+    <span class="inlinecode"><span class="id" title="library">Monad</span></span>, etc. When functions using type classes are specialized,
+    they simplify easily, so lemmas without classes are easier
+    to apply than lemmas with.
+
+<div class="paragraph"> </div>
+
+    We can also make ExtLib's <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">bind</span></a></span> opaque, in which case it still
+    doesn't hurt to have these notations around.
+ 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="ITreeNotations"><span class="id" title="module">ITreeNotations</span></a>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="590a71a18506bd3e386796914bedea7e"><span class="id" title="notation">&quot;</span></a>t1 &gt;&gt;= k2" := (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">ITree.bind</span></a> <span class="id" title="var">t1</span> <span class="id" title="var">k2</span>)<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 50, <span class="id" title="tactic">left</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">itree_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="99816956cfd1bb9d8717bec4977dd1ac"><span class="id" title="notation">&quot;</span></a>x &lt;- t1 ;; t2" := (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">ITree.bind</span></a> <span class="id" title="var">t1</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <span class="id" title="var">t2</span>))<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 100, <span class="id" title="var">t1</span> <span class="id" title="tactic">at</span> <span class="id" title="var">next</span> <span class="id" title="keyword">level</span>, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">itree_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="b23534398d685d713ab2cb3c30877913"><span class="id" title="notation">&quot;</span></a>t1 ;; t2" := (<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">ITree.bind</span></a> <span class="id" title="var">t1</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> =&gt; <span class="id" title="var">t2</span>))<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 100, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">itree_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="911c608e494f7017464117c3ae6d2b80"><span class="id" title="notation">&quot;</span></a>' p &lt;- t1 ;; t2" :=<br/>
+&nbsp;&nbsp;(<a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.bind"><span class="id" title="abbreviation">ITree.bind</span></a> <span class="id" title="var">t1</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x_</span> =&gt; <span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#x_"><span class="id" title="variable">x_</span></a> <span class="id" title="keyword">with</span> <span class="id" title="var">p</span> =&gt; <span class="id" title="var">t2</span> <span class="id" title="keyword">end</span>))<br/>
+&nbsp;&nbsp;(<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 100, <span class="id" title="var">t1</span> <span class="id" title="tactic">at</span> <span class="id" title="var">next</span> <span class="id" title="keyword">level</span>, <span class="id" title="var">p</span> <span class="id" title="tactic">pattern</span>, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">itree_scope</span>.<br/>
+<span class="id" title="keyword">Infix</span> <a name="ca5621916f412eed7e1d3f19466e0ceb"><span class="id" title="notation">&quot;</span></a>&gt;=&gt;" := <a class="idref" href="ITree.Core.ITreeDefinition.html#ITree.cat"><span class="id" title="definition">ITree.cat</span></a> (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 50, <span class="id" title="tactic">left</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">itree_scope</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#ITreeNotations"><span class="id" title="module">ITreeNotations</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab58"></a><h2 class="section">Instances</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="Functor_itree"><span class="id" title="instance">Functor_itree</span></a> {<span class="id" title="var">E</span>} : <span class="id" title="class">Functor</span> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a>) :=<br/>
+{ <span class="id" title="method">fmap</span> := @<a class="idref" href="ITree.Core.ITreeDefinition.html#map"><span class="id" title="definition">ITree.map</span></a> <span class="id" title="var">E</span> }.<br/>
+
+<br/>
+<span class="comment">(*&nbsp;Instead&nbsp;of&nbsp;<span class="inlinecode"><span class="id" title="var">pure</span></span> <span class="inlinecode">:=</span> <span class="inlinecode">@<span class="id" title="var">Ret</span></span> <span class="inlinecode"><span class="id" title="var">E</span></span>,&nbsp;<span class="inlinecode"><span class="id" title="var">ret</span></span> <span class="inlinecode">:=</span> <span class="inlinecode">@<span class="id" title="var">Ret</span></span> <span class="inlinecode"><span class="id" title="var">E</span></span>,&nbsp;we&nbsp;eta-expand<br/>
+&nbsp;&nbsp;&nbsp;<span class="inlinecode"><span class="id" title="var">pure</span></span>&nbsp;and&nbsp;<span class="inlinecode"><span class="id" title="var">ret</span></span>&nbsp;to&nbsp;make&nbsp;the&nbsp;extracted&nbsp;code&nbsp;respect&nbsp;OCaml's<br/>
+&nbsp;&nbsp;&nbsp;value&nbsp;restriction.&nbsp;*)</span><br/>
+<span class="id" title="keyword">Instance</span> <a name="Applicative_itree"><span class="id" title="instance">Applicative_itree</span></a> {<span class="id" title="var">E</span>} : <span class="id" title="class">Applicative</span> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a>) :=<br/>
+{ <span class="id" title="method">pure</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a><br/>
+; <span class="id" title="method">ap</span> := <span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">f</span> <span class="id" title="var">x</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="ITree.Core.ITreeDefinition.html#bind"><span class="id" title="abbreviation">ITree.bind</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#f"><span class="id" title="variable">f</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">f</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#bind"><span class="id" title="abbreviation">ITree.bind</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#x"><span class="id" title="variable">x</span></a>)))<br/>
+}.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="Monad_itree"><span class="id" title="instance">Monad_itree</span></a> {<span class="id" title="var">E</span>} : <span class="id" title="class">Monad</span> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a>) :=<br/>
+{| <span class="id" title="constructor">ret</span> <span class="id" title="constructor">:=</span> <span class="id" title="constructor">fun</span> <span class="id" title="constructor">_</span> <span class="id" title="constructor">x</span> <span class="id" title="constructor">=&gt;</span> <span class="id" title="constructor">Ret</span> <span class="id" title="constructor">x</span><br/>
+<span class="id" title="constructor">;</span>  <span class="id" title="constructor">bind</span> <span class="id" title="constructor">:=</span> <span class="id" title="constructor">fun</span> <span class="id" title="constructor">T</span> <span class="id" title="constructor">U</span> <span class="id" title="constructor">t</span> <span class="id" title="constructor">k</span> <span class="id" title="constructor">=&gt;</span> <span class="id" title="constructor">@</span><span class="id" title="constructor">ITree.bind'</span> <span class="id" title="constructor">E</span> <span class="id" title="constructor">T</span> <span class="id" title="constructor">U</span> <span class="id" title="constructor">k</span> <span class="id" title="constructor">t</span><br/>
+|}.<br/>
+
+<br/>
+<span class="id" title="keyword">Instance</span> <a name="ALoop_itree"><span class="id" title="instance">ALoop_itree</span></a> {<span class="id" title="var">E</span>} : <a class="idref" href="ITree.Basics.Basics.html#ALoop"><span class="id" title="class">ALoop</span></a> (<a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#aloop"><span class="id" title="definition">ITree.aloop</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab59"></a><h2 class="section">Tactics</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="comment">(*&nbsp;<span class="inlinecode"><span class="id" title="var">inv</span></span>,&nbsp;<span class="inlinecode"><span class="id" title="var">rewrite_everywhere</span></span>,&nbsp;<span class="inlinecode">...<span class="id" title="var">_except</span></span>&nbsp;are&nbsp;general&nbsp;purpose&nbsp;*)</span><br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">inv</span> <span class="id" title="var">H</span> := <span class="id" title="tactic">inversion</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span>; <span class="id" title="tactic">subst</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">rewrite_everywhere</span> <span class="id" title="var">lem</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">progress</span> ((<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [<span class="id" title="var">H</span>: <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span> <span class="id" title="keyword">end</span>); <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">lem</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">rewrite_everywhere_except</span> <span class="id" title="var">lem</span> <span class="id" title="var">X</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">progress</span> ((<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [<span class="id" title="var">H</span>: <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> <span class="id" title="var">X</span> =&gt; <span class="id" title="tactic">fail</span> 1 | <span class="id" title="var">_</span> =&gt; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">lem</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span> <span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>); <span class="id" title="tactic">repeat</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">lem</span>).<br/>
+
+<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">genobs</span> <span class="id" title="var">x</span> <span class="id" title="var">ox</span> := <span class="id" title="var">remember</span> (<a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <span class="id" title="var">x</span>) <span class="id" title="keyword">as</span> <span class="id" title="var">ox</span>.<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">genobs_clear</span> <span class="id" title="var">x</span> <span class="id" title="var">ox</span> := <span class="id" title="var">genobs</span> <span class="id" title="var">x</span> <span class="id" title="var">ox</span>; <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [<span class="id" title="var">H</span>: <span class="id" title="var">ox</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <span class="id" title="var">x</span> |- <span class="id" title="var">_</span>] =&gt; <span class="id" title="tactic">clear</span> <span class="id" title="var">H</span> <span class="id" title="var">x</span> <span class="id" title="keyword">end</span>.<br/>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">simpobs</span> := <span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> [<span class="id" title="var">H</span>: <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <span class="id" title="var">_</span> |- <span class="id" title="var">_</span>] =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">rewrite_everywhere_except</span> (@<a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Logic.html#eq_sym"><span class="id" title="lemma">eq_sym</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">H</span>) <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab60"></a><h2 class="section">Compute with fuel</h2>
+
+<div class="paragraph"> </div>
+
+ Remove <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#Tau"><span class="id" title="abbreviation">Tau</span></a></span>s from the front of an <span class="inlinecode"><a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Fixpoint</span> <a name="burn"><span class="id" title="definition">burn</span></a> (<span class="id" title="var">n</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) {<span class="id" title="var">E</span> <span class="id" title="var">R</span>} (<span class="id" title="var">t</span> : <a class="idref" href="ITree.Core.ITreeDefinition.html#itree"><span class="id" title="record">itree</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#R"><span class="id" title="variable">R</span></a>) :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#n"><span class="id" title="variable">n</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#O"><span class="id" title="constructor">O</span></a> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;| <a class="idref" href="http://coq.inria.fr/distrib/V8.8.2/stdlib//Coq.Init.Datatypes.html#S"><span class="id" title="constructor">S</span></a> <span class="id" title="var">n</span> =&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="ITree.Core.ITreeDefinition.html#observe"><span class="id" title="definition">observe</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#t"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#RetF"><span class="id" title="constructor">RetF</span></a> <span class="id" title="var">r</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Ret"><span class="id" title="abbreviation">Ret</span></a> <span class="id" title="var">r</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#VisF"><span class="id" title="constructor">VisF</span></a> <span class="id" title="var">e</span> <span class="id" title="var">k</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#Vis"><span class="id" title="abbreviation">Vis</span></a> <span class="id" title="var">e</span> <span class="id" title="var">k</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="ITree.Core.ITreeDefinition.html#TauF"><span class="id" title="constructor">TauF</span></a> <span class="id" title="var">t'</span> =&gt; <a class="idref" href="ITree.Core.ITreeDefinition.html#burn"><span class="id" title="definition">burn</span></a> <a class="idref" href="ITree.Core.ITreeDefinition.html#n"><span class="id" title="variable">n</span></a> <span class="id" title="var">t'</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>
