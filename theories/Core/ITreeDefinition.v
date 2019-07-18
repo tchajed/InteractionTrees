@@ -174,6 +174,13 @@ Arguments _bind _ _ /.
 
 Notation bind c k := (bind' k c).
 
+(** Guarded bind: the continuation is guarded by a constructor. *)
+Definition gbind {E T U} (t : itree E T) (k : T -> itree E U) : itree E U :=
+  match observe t with
+  | RetF r => Tau (k r)
+  | TauF t => Tau (bind t k)
+  | VisF e h => Vis e (fun x => bind (h x) k)
+  end.
 
 (** Monadic composition of continuations (i.e., Kleisli composition).
  *)
