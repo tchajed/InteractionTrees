@@ -40,7 +40,7 @@ Lemma bind_iter {E A B C} (f : A -> itree E (A + B)) (g : B -> itree E (B + C))
 Proof.
   einit. ecofix CIH. intros.
   rewrite !unfold_iter. unfold ITree._iter.
-  rewrite bind_map, bind_bind.
+  rewrite gbind_map, gbind_bind.
   ebind; econstructor; try reflexivity.
   intros [a | b] _ [].
   - rewrite bind_tau. etau.

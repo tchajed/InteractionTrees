@@ -151,8 +151,10 @@ Proof.
     destruct e; cbn.
     + rewrite interp_tau, tau_eutt.
       rewrite 2 interp_mrec_bind, interp_bind.
-      rewrite (interp_mrec_as_interp _ (h _ _)).
+      remember (h _ (inl1 a1)) as ha1; rewrite EQh in Heqha1; subst ha1.
+      rewrite interp_trigger.
       subst h; cbn. rewrite interp_trigger, bind_tau.
+      rewrite (interp_mrec_as_interp _ (h _ _)).
       rewrite (unfold_interp_mrec _ _ (Tau _)); cbn.
       rewrite tau_eutt.
       rewrite (interp_mrec_bind _ (ITree.trigger _)).

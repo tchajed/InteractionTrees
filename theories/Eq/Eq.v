@@ -761,9 +761,9 @@ Proof.
 Qed.
 
 Lemma unfold_iter {E A B} (f : A -> itree E (A + B)) (x : A) :
-  (ITree.iter f x) ≅ (f x >>= ITree._iter (fun t => Tau t) (ITree.iter f)).
+  (ITree.iter f x) ≅ (ITree.gbind (f x) (ITree._iter (ITree.iter f))).
 Proof.
-  rewrite unfold_aloop_. reflexivity.
+  rewrite unfold_iter_. reflexivity.
 Qed.
 
 Lemma unfold_forever {E R S} (t : itree E R)
@@ -882,12 +882,36 @@ Proof.
   econstructor; eauto with paco.
 Qed.
 
+Lemma eqit_gbind' {E R1 R2 S1 S2} (RR : R1 -> R2 -> Prop) b1 b2
+      (RS : S1 -> S2 -> Prop)
+      t1 t2 k1 k2 :
+  eqit RR b1 b2 t1 t2 ->
+  (forall r1 r2, RR r1 r2 -> eqit RS b1 b2 (k1 r1) (k2 r2)) ->
+  @eqit E _ _ RS b1 b2 (ITree.gbind t1 k1) (ITree.gbind t2 k2).
+Proof.
+  unfold ITree.gbind; intros.
+  punfold H. induction H; cbn; pstep; constructor; auto.
+  - left. apply H0. auto.
+  - pclearbot. left; eapply eqit_bind'; eauto.
+  - pclearbot. left; eapply eqit_bind'; eauto.
+  -
+Admitted.
+
 Global Instance eqit_bind {E R S} b1 b2 :
   Proper (pointwise_relation _ (eqit eq b1 b2) ==>
           eqit eq b1 b2 ==>
           eqit eq b1 b2) (@ITree.bind' E R S).
 Proof.
   repeat intro; eapply eqit_bind'; eauto.
+  intros; subst; auto.
+Qed.
+
+Global Instance eqit_gbind {E R S} b1 b2 :
+  Proper (eqit eq b1 b2 ==>
+          pointwise_relation _ (eqit eq b1 b2) ==>
+          eqit eq b1 b2) (@ITree.gbind E R S).
+Proof.
+  repeat intro; eapply eqit_gbind'; eauto.
   intros; subst; auto.
 Qed.
 
@@ -940,6 +964,17 @@ Proof.
   apply reflexivity.
 Qed.
 
+Lemma gbind_bind {E R S T} :
+  forall (s : itree E R) (k : R -> itree E S) (h : S -> itree E T),
+    ITree.bind (ITree.gbind s k) h ≅ ITree.gbind s (fun r => ITree.bind (k r) h).
+Proof.
+  intros; unfold ITree.gbind.
+  destruct (observe s); cbn; rewrite unfold_bind; cbn.
+  - reflexivity.
+  - rewrite bind_bind. reflexivity.
+  - apply eqit_Vis; intros. apply bind_bind.
+Qed.
+
 Lemma map_map {E R S T}: forall (f : R -> S) (g : S -> T) (t : itree E R),
     ITree.map g (ITree.map f t) ≅ ITree.map (fun x => g (f x)) t.
 Proof.
@@ -952,6 +987,16 @@ Lemma bind_map {E R S T}: forall (f : R -> S) (k: S -> itree E T) (t : itree E R
 Proof.
   unfold ITree.map. intros.
   rewrite bind_bind. setoid_rewrite bind_ret. reflexivity.
+Qed.
+
+Lemma gbind_map {E R S T} : forall (f : R -> S) (k: S -> itree E T) (t : itree E R),
+    ITree.gbind (ITree.map f t) k ≅ ITree.gbind t (fun x => k (f x)).
+Proof.
+  unfold ITree.map. intros.
+  rewrite unfold_bind; unfold ITree.gbind. destruct (observe t); cbn.
+  - reflexivity.
+  - rewrite bind_bind. setoid_rewrite bind_ret. reflexivity.
+  - setoid_rewrite bind_bind. setoid_rewrite bind_ret. reflexivity.
 Qed.
 
 Lemma map_bind {E X Y Z} (t: itree E X) (k: X -> itree E Y) (f: Y -> Z) :

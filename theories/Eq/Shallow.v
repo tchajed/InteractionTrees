@@ -94,12 +94,12 @@ Lemma bind_vis_ {E R U V} (e: E V) (ek: V -> itree E U) (k: U -> itree E R) :
     (Vis e (fun x => ITree.bind (ek x) k)).
 Proof. apply @unfold_bind_. Qed.
 
-(** Unfolding lemma for [aloop]. There is also a variant [unfold_aloop]
+(** Unfolding lemma for [iter]. There is also a variant [unfold_iter]
     without [Tau]. *)
-Lemma unfold_aloop_ {E A B} (f : A -> itree E (A + B)) (x : A) :
+Lemma unfold_iter_ {E A B} (f : A -> itree E (A + B)) (x : A) :
   observing eq
     (ITree.iter f x)
-    (ITree.bind (f x) (ITree._iter (fun t => Tau t) (ITree.iter f))).
+    (ITree.gbind (f x) (ITree._iter (ITree.iter f))).
 Proof.
   constructor; reflexivity.
 Qed.

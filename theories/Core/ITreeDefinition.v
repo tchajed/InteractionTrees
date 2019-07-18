@@ -174,6 +174,15 @@ Arguments _bind _ _ /.
 
 Notation bind c k := (bind' k c).
 
+Definition _gbind {E T U} (t : itreeF E T (itree E T)) (k : T -> itree E U) : itree E U :=
+  match t with
+  | RetF r => Tau (k r)
+  | TauF t => Tau (bind t k)
+  | VisF e h => Vis e (fun x => bind (h x) k)
+  end.
+
+Definition gbind {E T U} (t : itree E T) (k : T -> itree E U) : itree E U :=
+  _gbind (observe t) k.
 
 (** Monadic composition of continuations (i.e., Kleisli composition).
  *)
@@ -185,17 +194,16 @@ Definition cat {E T U V}
 (** [iter]: See [Basics.Basics.MonadIter]. *)
 
 Definition _iter {E : Type -> Type} {R I : Type}
-           (tau : _)
            (iter_ : I -> itree E R)
            (step_i : I + R) : itree E R :=
   match step_i with
-  | inl i => tau (iter_ i)
+  | inl i => iter_ i
   | inr r => Ret r
   end.
 
 Definition iter {E : Type -> Type} {R I: Type}
            (step : I -> itree E (I + R)) : I -> itree E R :=
-  cofix iter_ i := bind (step i) (_iter (fun t => Tau t) iter_).
+  cofix iter_ i := gbind (step i) (_iter iter_).
 
 (* note(gmm): There needs to be generic automation for monads to simplify
  * using the monad laws up to a setoid.
