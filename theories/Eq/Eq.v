@@ -964,6 +964,14 @@ Proof.
   apply reflexivity.
 Qed.
 
+Lemma eq_gbind_bind {E R S} (u : itree E R) (k : R -> itree E S)
+  : ITree.gbind u k ≈ ITree.bind u k.
+Proof.
+  rewrite unfold_bind; unfold ITree.gbind; destruct observe; cbn.
+  1: rewrite tau_eutt.
+  all: reflexivity.
+Qed.
+
 Lemma gbind_bind {E R S T} :
   forall (s : itree E R) (k : R -> itree E S) (h : S -> itree E T),
     ITree.bind (ITree.gbind s k) h ≅ ITree.gbind s (fun r => ITree.bind (k r) h).
