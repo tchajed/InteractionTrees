@@ -59,9 +59,9 @@ Qed.
 Definition _interp {E F R} (f : E ~> itree F) (ot : itreeF E R _)
   : itree F R :=
   match ot with
-  | RetF r => Ret r
+  | RetF r => Tau (Ret r)
   | TauF t => Tau (interp f t)
-  | VisF e k => f _ e >>= (fun x => Tau (interp f (k x)))
+  | VisF e k => ITree.gbind (f _ e) (fun x => interp f (k x))
   end.
 
 (** Unfold lemma. *)
@@ -70,7 +70,7 @@ Lemma unfold_interp {E F R} {f : E ~> itree F} (t : itree E R) :
 Proof.
   unfold interp. unfold Basics.iter, MonadIter_itree. rewrite unfold_iter.
   destruct (observe t); cbn;
-    rewrite ?bind_ret, ?bind_map; reflexivity.
+    rewrite ?bind_ret, ?gbind_map; reflexivity.
 Qed.
 
 (** ** [interp] and constructors *)
@@ -80,7 +80,7 @@ Qed.
  *)
 
 Lemma interp_ret {E F R} {f : E ~> itree F} (x: R):
-  interp f (Ret x) ≅ Ret x.
+  interp f (Ret x) ≅ Tau (Ret x).
 Proof. rewrite unfold_interp. reflexivity. Qed.
 
 Lemma interp_tau {E F R} {f : E ~> itree F} (t: itree E R):
@@ -88,17 +88,17 @@ Lemma interp_tau {E F R} {f : E ~> itree F} (t: itree E R):
 Proof. rewrite unfold_interp. reflexivity. Qed.
 
 Lemma interp_vis {E F R} {f : E ~> itree F} U (e: E U) (k: U -> itree E R) :
-  eq_itree eq (interp f (Vis e k)) (ITree.bind (f _ e) (fun x => Tau (interp f (k x)))).
+  eq_itree eq (interp f (Vis e k)) (ITree.gbind (f _ e) (fun x => interp f (k x))).
 Proof. rewrite unfold_interp. reflexivity. Qed.
 
 Lemma interp_trigger {E F : Type -> Type} {R : Type}
       (f : E ~> (itree F))
       (e : E R) :
-  interp f (ITree.trigger e) ≈ f _ e.
+  interp f (ITree.trigger e) ≳ f _ e.
 Proof.
   unfold ITree.trigger. rewrite interp_vis.
   setoid_rewrite interp_ret.
-  setoid_rewrite tau_eutt. rewrite bind_ret2.
+  setoid_rewrite tau_eutt. rewrite eq_gbind_bind, bind_ret2.
   reflexivity.
 Qed.
 
@@ -117,10 +117,11 @@ Proof.
   intros l r Hlr.
   rewrite 2 unfold_interp.
   punfold Hlr; red in Hlr.
-  destruct Hlr; cbn; subst; try discriminate; pclearbot; try (gstep; constructor; eauto with paco; fail).
-  guclo eqit_clo_bind. econstructor; [eapply Hfg|].
-  intros ? _ [].
-  gstep; econstructor; eauto with paco.
+  destruct Hlr; cbn; subst; try discriminate; pclearbot.
+  - do 2 (gstep; constructor); auto.
+  - gstep; constructor; auto with paco.
+  - eapply clo_gbind_; [ apply Hfg |].
+    intros ? _ []; eauto with paco.
 Qed.
 
 Instance eq_itree_interp' {E F R f}
@@ -139,14 +140,12 @@ Proof.
   repeat red.
   intros until T.
   ginit. gcofix CIH. intros.
-
   rewrite !unfold_interp. punfold H1. red in H1.
   induction H1; intros; subst; pclearbot; simpl.
-  - gstep. constructor. eauto.
-  - gstep. constructor. eauto with paco.
-  - guclo eqit_clo_bind; econstructor; [apply H|].
-    intros; subst.
-    gstep; constructor; eauto with paco.
+  - do 2 (gstep; constructor). auto.
+  - gstep; constructor. auto with paco.
+  - eapply clo_gbind_; [eapply H|].
+    intros ? _ []. eauto with paco.
   - rewrite tau_eutt, unfold_interp. auto.
   - rewrite tau_eutt, unfold_interp. auto.
 Qed.
@@ -163,13 +162,20 @@ Proof.
 
   rewrite !unfold_interp. punfold H1. red in H1.
   induction H1; intros; subst; pclearbot; simpl.
-  - gstep. constructor. eauto.
-  - gstep. constructor. eauto with paco.
-  - guclo eqit_clo_bind; econstructor; [apply H|].
-    intros; subst.
-    gstep; constructor; eauto with paco.
+  - do 2 (gstep; constructor). auto.
+  - gstep; constructor. eauto with paco.
+  - eapply clo_gbind_; [apply H|].
+    intros ? _ []; eauto with paco.
   - rewrite tau_eutt, unfold_interp. auto.
   - discriminate.
+Qed.
+
+Instance euttge_interp' (E F : Type -> Type) (h : E ~> itree F) R
+  : @Proper (itree E R -> itree F R)
+            (euttge eq ==> euttge eq)
+            (@interp _ _ _ _ _ h _).
+Proof.
+  repeat intro. apply euttge_interp; auto. reflexivity.
 Qed.
 
 Instance eutt_interp' {E F : Type -> Type} {R : Type} (f : E ~> itree F) :
@@ -200,22 +206,53 @@ Qed.
 
  *)
 
+Lemma interp_bind' {E F R S}
+      (f : E ~> itree F) (t : itree E R) (k : R -> itree E S) :
+    ITree.bind (interp f t) (fun r => interp f (k r))
+  ≳ interp f (ITree.bind t k).
+Proof.
+  revert R t k. ginit. gcofix CIH; intros.
+  rewrite (unfold_bind t), (unfold_interp t).
+  destruct (observe t); cbn.
+  - rewrite tau_eutt, bind_ret. apply reflexivity.
+  - rewrite bind_tau, !interp_tau.
+    gstep; econstructor. eauto with paco.
+  - rewrite interp_vis, gbind_bind.
+    eapply clo_gbind_; [reflexivity |].
+    intros ? _ []. auto with paco.
+Qed.
+
 Lemma interp_bind {E F R S}
       (f : E ~> itree F) (t : itree E R) (k : R -> itree E S) :
     interp f (ITree.bind t k)
-  ≅ ITree.bind (interp f t) (fun r => interp f (k r)).
+  ≈ ITree.bind (interp f t) (fun r => interp f (k r)).
+Proof. rewrite interp_bind'. reflexivity. Qed.
+
+Lemma interp_gbind' {E F R S}
+      (f : E ~> itree F) (t : itree E R) (k : R -> itree E S) :
+    ITree.gbind (interp f t) (fun r => interp f (k r))
+  ≳ interp f (ITree.gbind t k).
 Proof.
-  revert R t k. ginit. gcofix CIH; intros.
-  rewrite unfold_bind, (unfold_interp t).
+  rewrite (unfold_interp t); unfold ITree.gbind.
   destruct (observe t); cbn.
-  - rewrite bind_ret. apply reflexivity.
-  - rewrite bind_tau, !interp_tau.
-    gstep. econstructor. eauto with paco.
-  - rewrite interp_vis, bind_bind.
-    guclo eqit_clo_bind; econstructor; try reflexivity.
-    intros; subst.
-    rewrite bind_tau. gstep; constructor; auto with paco.
+  - rewrite bind_ret, interp_tau. apply reflexivity.
+  - rewrite interp_tau, interp_bind'; reflexivity.
+  - rewrite interp_vis.
+    match goal with
+    | [ |- context E [ ITree._gbind (observe ?f) ?k ] ] =>
+      fold (ITree.gbind f k)
+    end.
+    rewrite eq_gbind_bind, gbind_bind.
+    ginit.
+    eapply clo_gbind_; [reflexivity |].
+    intros ? _ []. rewrite interp_bind'; apply reflexivity.
 Qed.
+
+Lemma interp_gbind {E F R S}
+      (f : E ~> itree F) (t : itree E R) (k : R -> itree E S) :
+    interp f (ITree.bind t k)
+  ≈ ITree.gbind (interp f t) (fun r => interp f (k r)).
+Proof. rewrite interp_gbind', eq_gbind_bind. reflexivity. Qed.
 
 Hint Rewrite @interp_bind : itree.
 
@@ -226,9 +263,11 @@ Lemma interp_id_h {A R} (t : itree A R)
 Proof.
   revert t. ginit. gcofix CIH. intros.
   rewrite (itree_eta t), unfold_interp.
-  destruct (observe t); try (gstep; constructor; auto with paco).
-  cbn. gstep. red; cbn. constructor; red; intros.
-  rewrite bind_ret, tau_eutt. eauto with paco.
+  destruct (observe t); cbn.
+  - rewrite tau_eutt; apply reflexivity.
+  - gstep; constructor; auto with paco.
+  - gstep; constructor; intros.
+    red. rewrite bind_ret. auto with paco.
 Qed.
 
 Lemma interp_trigger_h {E R} (t : itree E R) :
@@ -236,32 +275,39 @@ Lemma interp_trigger_h {E R} (t : itree E R) :
 Proof.
   revert t. einit. ecofix CIH. intros.
   rewrite unfold_interp. rewrite (itree_eta t) at 2.
-  destruct (observe t); try estep.
-  unfold ITree.trigger. simpl. rewrite bind_vis.
-  evis. intros. rewrite bind_ret, tau_eutt.
-  auto with paco.
+  destruct (observe t); cbn; try estep.
+  - rewrite tau_eutt; apply reflexivity.
+  - intros. rewrite bind_ret. auto with paco.
 Qed.
 
 (** ** Composition of [interp] *)
 
-Theorem interp_interp {E F G R} (f : E ~> itree F) (g : F ~> itree G) :
+Theorem interp_interp' {E F G R} (f : E ~> itree F) (g : F ~> itree G) :
   forall t : itree E R,
-      interp g (interp f t)
-    ≅ interp (fun _ e => interp g (f _ e)) t.
+      interp g (interp (fun _ e => Tau (f _ e)) t)
+    ≈ interp (fun _ e => Tau (interp g (f _ e))) t.
 Proof.
   ginit. gcofix CIH. intros.
   rewrite 2 (unfold_interp t).
   destruct (observe t); cbn.
-  - rewrite interp_ret. gstep. constructor. reflexivity.
-  - rewrite interp_tau. gstep. constructor. auto with paco.
-  - rewrite interp_bind.
-    guclo eqit_clo_bind.
-    apply pbc_intro_h with (RU := eq).
-    + reflexivity.
-    + intros ? _ [].
-      rewrite interp_tau.
-      gstep; constructor.
-      auto with paco.
+  - rewrite interp_tau. gstep; constructor.
+    rewrite interp_ret, tau_eutt. apply reflexivity.
+  - rewrite interp_tau. gstep; constructor. auto with paco.
+  - rewrite interp_tau. gstep; constructor.
+    (* TODO *)
+Admitted.
+
+Theorem interp_interp {E F G R} (f : E ~> itree F) (g : F ~> itree G) :
+  forall t : itree E R,
+      interp g (interp f t)
+    ≈ interp (fun _ e => interp g (f _ e)) t.
+Proof.
+  intros. transitivity (interp g (interp (fun _ e => Tau (f _ e)) t)).
+  - do 2 (eapply eutt_interp; try reflexivity).
+    do 4 red; intros. rewrite tau_eutt; reflexivity.
+  - rewrite interp_interp'.
+    eapply eutt_interp; try reflexivity.
+    do 4 red; intros. rewrite tau_eutt; reflexivity.
 Qed.
 
 Lemma interp_translate {E F G} (f : E ~> F) (g : F ~> itree G) {R} (t : itree E R) :
@@ -275,9 +321,9 @@ Proof.
   destruct (observe t); cbn.
   - apply reflexivity. (* SAZ: typeclass resolution failure? *)
   - gstep. constructor. gbase. apply CIH.
-  - guclo eqit_clo_bind; econstructor.
+  - eapply clo_gbind_.
     + reflexivity.
-    + intros ? _ []. gstep; constructor; auto with paco.
+    + intros ? _ []. auto with paco.
 Qed.
 
 Lemma translate_to_interp {E F R} (f : E ~> F) (t : itree E R) :
@@ -286,24 +332,21 @@ Proof.
   revert t. einit. ecofix CIH. intros.
   rewrite unfold_translate.
   rewrite unfold_interp.
-  destruct (observe t); try estep.
-  unfold ITree.trigger. simpl. rewrite bind_vis.
-  evis. intros. rewrite bind_ret, tau_eutt. auto with paco.
+  destruct (observe t); cbn.
+  - rewrite tau_eutt. reflexivity.
+  - estep.
+  - unfold ITree.trigger. simpl.
+    evis. intros. rewrite bind_ret. auto with paco.
 Qed.
 
 Lemma interp_forever {E F} (f : E ~> itree F) {R S}
       (t : itree E R)
   : interp f (ITree.forever t)
-  ≅ @ITree.forever F R S (interp f t).
+  ≈ @ITree.forever F R S (interp f t).
 Proof.
-  ginit. gcofix CIH.
-  rewrite (unfold_forever t).
-  rewrite (unfold_forever (interp _ _)).
-  rewrite interp_bind.
-  guclo eqit_clo_bind. econstructor; [reflexivity |].
-  intros ? _ []. rewrite interp_tau.
-  gstep. constructor; auto with paco.
-Qed.
+  einit. ecofix CIH.
+  rewrite (unfold_forever t), (unfold_forever (interp _ _)).
+Admitted.
 
 Lemma interp_iter' {E F} (f : E ~> itree F) {I A}
       (t  : I -> itree E (I + A))
@@ -315,7 +358,7 @@ Lemma interp_iter' {E F} (f : E ~> itree F) {I A}
 Proof.
   ginit. gcofix CIH; intros i.
   rewrite 2 unfold_iter.
-  rewrite interp_bind.
+  rewrite interp_gbind.
   guclo eqit_clo_bind; econstructor; eauto.
   { apply EQ_t. }
   intros [] _ []; cbn.

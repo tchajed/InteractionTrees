@@ -965,7 +965,7 @@ Proof.
 Qed.
 
 Lemma eq_gbind_bind {E R S} (u : itree E R) (k : R -> itree E S)
-  : ITree.gbind u k ≈ ITree.bind u k.
+  : ITree.gbind u k ≳ ITree.bind u k.
 Proof.
   rewrite unfold_bind; unfold ITree.gbind; destruct observe; cbn.
   1: rewrite tau_eutt.

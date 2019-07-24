@@ -80,24 +80,16 @@ Proof.
     }
 Admitted.
 
-(*
-Lemma clo_gbind_ {E} {R1 R2} {RR : R1 -> R2 -> Prop} b1 b2 vclo
-      (MON: monotone2 vclo)
-      (CMP: compose (eqitC RR b1 b2) vclo <3= compose vclo (eqitC RR b1 b2))
-      (ID: id <3= vclo):
-  eqit_gbind_clo b1 b2 <3= gupaco2 (@eqit_ E _ _ RR b1 b2 vclo) (eqitC RR b1 b2).
-*)
-
 Lemma clo_gbind_ {E X1 X2 R1 R2} (Rx : X1 -> X2 -> Prop) (RR : R1 -> R2 -> Prop)
-      r
+      b1 b2 r
       (u1 : itree E X1) (u2 : itree E X2) (k1 : X1 -> itree E R1) (k2 : X2 -> itree E R2)
- : (eq_itree Rx u1 u2) ->
+ : (eqit Rx b1 b2 u1 u2) ->
  (forall x1 x2, Rx x1 x2 ->
-  gpaco2 (eqit_ RR false false id) (eqitC RR false false) r r
+  gpaco2 (eqit_ RR b1 b2 id) (eqitC RR b1 b2) r r
     (k1 x1)
     (k2 x2))
  ->
- gpaco2 (eqit_ RR false false id) (eqitC RR false false) bot2 r
+ gpaco2 (eqit_ RR b1 b2 id) (eqitC RR b1 b2) bot2 r
     (ITree.gbind u1 k1)
     (ITree.gbind u2 k2).
 Admitted.
@@ -114,7 +106,7 @@ Lemma eq_itree_iter' {E I1 I2 R1 R2}
 Proof.
   ginit. gcofix CIH. intros.
   do 2 rewrite unfold_iter.
-  eapply clo_gbind_; eauto.
+  eapply clo_gbind_; [apply eutt_body; auto |].
   intros ? ? []; cbn.
   - eauto with paco.
   - gfinal. right. pfold. constructor; auto.
@@ -227,7 +219,7 @@ Instance IterUnfold_ktree {E} : IterUnfold (ktree E) sum.
 Proof.
   repeat intro.
   rewrite unfold_iter_ktree.
-  do 2 red. apply eq_gbind_bind.
+  do 2 red. rewrite eq_gbind_bind; reflexivity.
 Qed.
 
 Instance IterNatural_ktree {E} : IterNatural (ktree E) sum.
