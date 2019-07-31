@@ -12,6 +12,8 @@ From ITree.Basics Require Import
 Import Carrier.
 Import CatNotations.
 Local Open Scope cat.
+
+Set Universe Polymorphism.
 (* end hide *)
 
 (** ** Categories *)

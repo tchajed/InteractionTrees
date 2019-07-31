@@ -21,6 +21,10 @@
 ]]
  *)
 
+(* begin hide *)
+Set Universe Polymorphism.
+(* end hide *)
+
 (** ** Low-level infrastructure *)
 
 (** Categories are parameterized by a type of objects [obj]. *)
