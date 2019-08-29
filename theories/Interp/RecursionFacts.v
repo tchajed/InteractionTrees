@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Properties of [Recursion.mrec] and [Recursion.rec]. *)
 
 (** The main facts to take away are [mrec_as_interp] and [rec_as_interp]:

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Facts about [aloop] and [loop] *)
 
 (* begin hide *)

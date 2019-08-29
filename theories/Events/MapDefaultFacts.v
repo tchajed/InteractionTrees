@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Mutable map whose lookup operation provides a default value.*)
 
 (* begin hide *)

@@ -10,11 +10,19 @@ From ITree Require Import
      Eq.Eq
      Eq.UpToTaus.
 
+Set Universe Polymorphism.
+
 Instance EqM_ITree {E} : EqM (itree E) := fun a => eutt eq.
 
 Instance EqMProps_ITree {E} : EqMProps (itree E).
 Proof.
+<<<<<<< HEAD
   intros a. typeclasses eauto.
+=======
+  repeat red.
+  intros a.
+  typeclasses eauto.
+>>>>>>> WIP: Universe cleanup
 Qed.
 
 Instance MonadLaws_ITree {E} : MonadLaws (itree E).
@@ -36,4 +44,3 @@ Proof.
   repeat red; intros.
   apply eqit_bind; auto.
 Qed.
-

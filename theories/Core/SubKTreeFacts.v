@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 From ITree Require Import
      Basics.Basics
      Basics.Function

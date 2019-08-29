@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Theorems about [Interp.translate] *)
 
 (* begin hide *)

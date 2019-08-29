@@ -18,7 +18,8 @@ Set Universe Polymorphism.
 
 Section IsoFacts.
 
-Context {obj : Type} {C : Hom obj}.
+Universe u v.
+Context {obj : Type@{u}} {C : obj -> obj -> Type@{v}}.
 Context {Eq2C : Eq2 C} {IdC : Id_ C} {CatC : Cat C}.
 
 Context {CatIdL_C : CatIdL C}.
@@ -76,7 +77,8 @@ End IsoFacts.
 
 Section CategoryFacts.
 
-Context {obj : Type} {C : Hom obj}.
+Universe u v.
+Context {obj : Type@{u}} {C : obj -> obj -> Type@{v}}.
 
 Context {Eq2_C : Eq2 C}.
 Context {E_Eq2_C : forall a b, @Equivalence (C a b) eq2}.
@@ -102,7 +104,8 @@ End CategoryFacts.
 
 Section BifunctorFacts.
 
-Context {obj : Type} {C : Hom obj}.
+Universe u v.
+Context {obj : Type@{u}} {C : obj -> obj -> Type@{v}}.
 
 Context {Eq2_C : Eq2 C}.
 Context {E_Eq2_C : forall a b, @Equivalence (C a b) eq2}.
@@ -136,7 +139,8 @@ End BifunctorFacts.
 
 Section CoproductFacts.
 
-Context {obj : Type} {C : Hom obj}.
+Universe u v.
+Context {obj : Type@{u}} {C : obj -> obj -> Type@{v}}.
 
 Context {Eq2_C : Eq2 C}.
 Context {E_Eq2_C : forall a b, @Equivalence (C a b) eq2}.
@@ -609,7 +613,8 @@ Hint Rewrite @case_inr : cocartesian.
 (** Iterative categories are traced. *)
 Section TracedIterativeFacts.
 
-Context {obj : Type} {C : Hom obj}.
+Universe u v.
+Context {obj : Type@{u}} {C : obj -> obj -> Type@{v}}.
 
 Context {Eq2_C : Eq2 C}.
 Context {E_Eq2_C : forall a b, @Equivalence (C a b) eq2}.

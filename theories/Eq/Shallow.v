@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Shallow equivalence *)
 
 (** Equality under [observe]:

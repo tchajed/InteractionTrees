@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Strong bisimulation is propositional equality *)
 
 (** This is not provable but admissible as an axiom.

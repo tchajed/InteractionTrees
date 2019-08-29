@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Dependently-typed events *)
 
 (** A _type family_ is given by a parameter type [I : Type] and a type function

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * The category of continuation trees (KTrees) *)
 
 (** The Kleisli category of ITrees. *)

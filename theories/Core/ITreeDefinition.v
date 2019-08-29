@@ -8,9 +8,12 @@ Require Import Program.Tactics.
 
 From ITree Require Import Basics.
 
+Set Universe Polymorphism.
+Set Primitive Projections.
 Set Implicit Arguments.
 Set Contextual Implicit.
-Set Primitive Projections.
+
+Set Printing Universes.
 (* end hide *)
 
 (** ** The type of interaction trees *)
@@ -23,14 +26,15 @@ Set Primitive Projections.
 
 Section itree.
 
-  Context {E : Type -> Type} {R : Type}.
+  Universe uE uF uR uT.
+  Context {E : Type@{uE} -> Type@{uF}} {R : Type@{uR}}.
 
   (** The type [itree] is defined as the final coalgebra ("greatest
       fixed point") of the functor [itreeF]. *)
-  Variant itreeF (itree : Type) :=
+  Variant itreeF (itree : Type@{uT}) :=
   | RetF (r : R)
   | TauF (t : itree)
-  | VisF {X : Type} (e : E X) (k : X -> itree)
+  | VisF {X : Type@{uE}} (e : E X) (k : X -> itree)
   .
 
   (** We define non-recursive types such as [itreeF] using the [Variant]
@@ -38,7 +42,7 @@ Section itree.
       [Variant] does not generate any induction schemes (which are
       unnecessary). *)
 
-  CoInductive itree : Type := go
+  CoInductive itree : Type@{uT} := go
   { _observe : itreeF itree }.
 
   (** A primitive projection, such as [_observe], must always be
@@ -73,7 +77,7 @@ Notation itree' E R := (itreeF E R (itree E R)).
 
 (** We wrap the primitive projection [_observe] in a function
     [observe]. *)
-Definition observe {E R} (t : itree E R) : itree' E R := @_observe E R t.
+Definition observe@{uE uF uR uT} {E R} (t : itree@{uE uF uR uT} E R) : itree' E R := @_observe E R t.
 
 (** Note that when [_observe] appears unapplied in an expression,
     it is implicitly wrapped in a function. However, there is no
@@ -142,18 +146,23 @@ Notation Vis e k := (go (VisF e k)).
  *)
 Module ITree.
 
+Section ITree.
+
+Universe uE uF uR uT.
+Context {E : Type@{uE} -> Type@{uF}}.
+
 (** [bind]: monadic composition, tree substitution, sequencing of
     computations. [bind t k] is also denoted by [t >>= k] and using
     "do-notation" [x <- t ;; k x]. *)
-
 Section bind.
-  Context {E : Type -> Type} {T U : Type}.
+  Context {T U : Type@{uR}}.
+
   (* We can keep the continuation outside the cofixpoint.
      In particular, this allows us to nest [bind] in other cofixpoints,
      as long as the recursive occurences are in the continuation
      (i.e., this makes it easy to define tail-recursive functions).
    *)
-  Variable k : T -> itree E U.
+  Variable k : T -> itree@{uE uF uR uT} E U.
 
   Definition _bind
              (bind : itree E T -> itree E U)
@@ -164,27 +173,25 @@ Section bind.
     | VisF e h => Vis e (fun x => bind (h x))
     end.
 
-  CoFixpoint bind' (t : itree E T) : itree E U :=
+  CoFixpoint bind' (t : itree@{uE uF uR uT} E T) : itree E U :=
     _bind bind' (observe t).
 
 End bind.
 
 Arguments _bind _ _ /.
 
-
 Notation bind c k := (bind' k c).
-
 
 (** Monadic composition of continuations (i.e., Kleisli composition).
  *)
-Definition cat {E T U V}
-           (k : T -> itree E U) (h : U -> itree E V) :
-  T -> itree E V :=
+Definition cat {T U V : Type@{uR}}
+           (k : T -> itree@{uE uF uR uT} E U) (h : U -> itree E V)
+  : T -> itree E V :=
   fun t => bind' h (k t).
 
 (** [iter]: See [Basics.Basics.MonadIter]. *)
 
-Definition _iter {E : Type -> Type} {R I : Type}
+Definition _iter {R I : Type}
            (tau : _)
            (iter_ : I -> itree E R)
            (step_i : I + R) : itree E R :=
@@ -193,7 +200,7 @@ Definition _iter {E : Type -> Type} {R I : Type}
   | inr r => Ret r
   end.
 
-Definition iter {E : Type -> Type} {R I: Type}
+Definition iter {R I: Type@{uR}}
            (step : I -> itree E (I + R)) : I -> itree E R :=
   cofix iter_ i := bind (step i) (_iter (fun t => Tau t) iter_).
 
@@ -206,23 +213,28 @@ Definition iter {E : Type -> Type} {R I: Type}
  *)
 
 (** Functorial map ([fmap] in Haskell) *)
-Definition map {E R S} (f : R -> S)  (t : itree E R) : itree E S :=
+Definition map {R S : Type@{uR}} (f : R -> S) (t : itree@{uE uF uR uT} E R)
+  : itree E S :=
   bind t (fun x => Ret (f x)).
 
 (** Atomic itrees triggering a single event. *)
-Definition trigger {E : Type -> Type} : E ~> itree E :=
+Definition trigger : forall T : Type@{uE}, E T -> itree@{uE uF uR uT} E T :=
   fun R e => Vis e (fun x => Ret x).
 
 (** Ignore the result of a tree. *)
-Definition ignore {E R} : itree E R -> itree E unit :=
+Definition ignore {R} : itree E R -> itree E unit :=
   map (fun _ => tt).
 
 (** Infinite taus. *)
-CoFixpoint spin {E R} : itree E R := Tau spin.
+CoFixpoint spin {R : Type@{uR}} : itree@{uE uF uR uT} E R := Tau spin.
 
 (** Repeat a computation infinitely. *)
-Definition forever {E R S} (t : itree E R) : itree E S :=
+Definition forever {R S} (t : itree E R) : itree E S :=
   cofix forever_t := bind t (fun _ => Tau (forever_t)).
+
+End ITree.
+
+Notation bind c k := (bind' k c).
 
 End ITree.
 
@@ -252,24 +264,28 @@ End ITreeNotations.
 
 (** ** Instances *)
 
-Instance Functor_itree {E} : Functor (itree E) :=
+Instance Functor_itree@{uE uF uR uT} {E : Type@{uE} -> Type@{uF}}
+  : Functor (itree@{uE uF uR uT} E) :=
 { fmap := @ITree.map E }.
 
 (* Instead of [pure := @Ret E], [ret := @Ret E], we eta-expand
    [pure] and [ret] to make the extracted code respect OCaml's
    value restriction. *)
-Instance Applicative_itree {E} : Applicative (itree E) :=
+Instance Applicative_itree@{uE uF uR uT} {E : Type@{uE} -> Type@{uF}}
+  : Applicative (itree@{uE uF uR uT} E) :=
 { pure := fun _ x => Ret x
 ; ap := fun _ _ f x =>
           ITree.bind f (fun f => ITree.bind x (fun x => Ret (f x)))
 }.
 
-Instance Monad_itree {E} : Monad (itree E) :=
+Instance Monad_itree@{uE uF uR uT} {E : Type@{uE} -> Type@{uF}}
+  : Monad (itree@{uE uF uR uT} E) :=
 {| ret := fun _ x => Ret x
 ;  bind := fun T U t k => @ITree.bind' E T U k t
 |}.
 
-Instance MonadIter_itree {E} : MonadIter (itree E) :=
+Instance MonadIter_itree@{uE uF uR uT} {E}
+  : MonadIter@{uR uT} (itree@{uE uF uR uT} E) :=
   fun _ _ => ITree.iter.
 
 (** ** Tactics *)
@@ -312,3 +328,5 @@ Fixpoint burn (n : nat) {E R} (t : itree E R) :=
     | TauF t' => burn n t'
     end
   end.
+
+Create HintDb itree discriminated.

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * The Category of Functions *)
 
 (** Definitions to work with Coq functions [A -> B] categorically.

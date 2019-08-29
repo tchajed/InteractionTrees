@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Equivalence up to taus *)
 
 (** Abbreviated as [eutt]. *)

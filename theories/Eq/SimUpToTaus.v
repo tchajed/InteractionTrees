@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Simulation up to taus *)
 
 (** A preorder [sutt t1 t2], where every visible step

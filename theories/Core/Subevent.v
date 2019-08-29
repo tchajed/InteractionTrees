@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Extensible effects *)
 
 (** Notations to handle large sums and classes for extensible effects. *)

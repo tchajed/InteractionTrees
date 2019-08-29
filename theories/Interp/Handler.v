@@ -23,6 +23,8 @@ Import ITreeNotations.
 
 Open Scope itree_scope.
 
+Set Printing Universes.
+Set Universe Polymorphism.
 (* end hide *)
 
 (** ** Handler combinators *)
@@ -33,90 +35,88 @@ Module Handler.
     (with the same function names). *)
 
 (** Lift an _event morphism_ into an _event handler_. *)
-Definition htrigger {A B} (m : A ~> B) : A ~> itree B :=
+Definition htrigger@{uE uF uR uT} {A B : Type@{uE} -> Type@{uF}} (m : A ~> B) : A ~> itree@{uE uF uR uT} B :=
   fun _ e => ITree.trigger (m _ e).
 
 (** Trivial handler, triggering any event it's given, so
     the resulting interpretation is the identity function:
     [interp (id_ E) _ t ≈ t]. *)
-Definition id_ (E : Type -> Type) : E ~> itree E := ITree.trigger.
+Definition id_@{uE uF uR uT} (E : Type@{uE} -> Type@{uF}) : E ~> itree@{uE uF uR uT} E := ITree.trigger.
 
 (** Chain handlers: [g] handles the events produced by [f]. *)
-Definition cat {E F G : Type -> Type}
-           (f : E ~> itree F) (g : F ~> itree G)
-  : E ~> itree G
+Definition cat@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}}
+           (f : E ~> itree@{uE uF uR uT} F) (g : F ~> itree G)
+  : E ~> itree@{uE uF uR uT} G
   := fun R e => interp g (f R e).
 
 (** Wrap events to the left of a sum. *)
-Definition inl_ {E F : Type -> Type} : E ~> itree (E +' F)
+Definition inl_@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} : E ~> itree@{uE uF uR uT} (E +' F)
   := htrigger inl1.
 
 (** Wrap events to the right of a sum. *)
-Definition inr_ {E F : Type -> Type} : F ~> itree (E +' F)
+Definition inr_@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} : F ~> itree@{uE uF uR uT} (E +' F)
   := htrigger inr1.
 
 (** Case analysis on sums of events. *)
-Definition case_ {E F G : Type -> Type}
+Definition case_@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}}
            (f : E ~> itree G) (g : F ~> itree G)
-  : E +' F ~> itree G
+  : sum1@{uE uF} E F ~> itree@{uE uF uR uT} G
   := fun _ ab => match ab with
                  | inl1 a => f _ a
                  | inr1 b => g _ b
                  end.
 
-(* Definition case_' {E F G : Type -> Type}
-           (f : E ~> itree G) (g : F ~> itree G)
-  : E +' F ~> itree G
-  := @case_sum1 E F (itree G) f g.
-(* TODO: why is there a universe inconsistency if this is before [inl_] and [inr_]? *)
- *)
-
 (** Handle events independently, with disjoint sets of output events. *)
-Definition bimap {E F G H : Type -> Type}
+Definition bimap@{uE uF uR uT} {E F G H : Type@{uE} -> Type@{uF}}
            (f : E ~> itree G) (g : F ~> itree H)
-  : E +' F ~> itree (G +' H)
+  : E +' F ~> itree@{uE uF uR uT} (G +' H)
   := case_ (Handler.cat f inl_) (Handler.cat g inr_).
 
 (** Handle [void1] events (of which there are none). *)
-Definition empty {E : Type -> Type}
-  : void1 ~> itree E
+Definition empty@{uE uF uR uT} {E : Type@{uE} -> Type@{uF}}
+  : void1@{uE uF} ~> itree@{uE uF uR uT} E
   := fun _ e => match e : void1 _ with end.
 
 End Handler.
 
 (** ** Category instances *)
 
-Definition Handler (E F : Type -> Type) := E ~> itree F.
+Definition Handler@{uE uF uR uT} (E F : Type@{uE} -> Type@{uF}) := E ~> itree@{uE uF uR uT} F.
 
-Definition eq_Handler {E F : Type -> Type}
-  : Handler E F -> Handler E F -> Prop
+Definition eq_Handler@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
+  : Handler@{uE uF uR uT} E F -> Handler E F -> Prop
   := i_pointwise (fun R => eq_itree eq).
 
-Definition eutt_Handler {E F : Type -> Type}
-  : Handler E F -> Handler E F -> Prop
+Definition eutt_Handler@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
+  : Handler E F -> Handler@{uE uF uR uT} E F -> Prop
   := i_pointwise (fun R => eutt eq).
 
+Section Instances.
+Universe uE uF uR uT uY.
+
 (** The default handler equivalence is [eutt]. *)
-Instance Eq2_Handler : Eq2 Handler
+Global Instance Eq2_Handler : Eq2@{uY _} Handler@{uE uF uR uT}
   := @eutt_Handler.
 
-Instance Id_Handler : Id_ Handler
+Global Instance Id_Handler : Id_@{uY _} Handler@{uE uF uR uT}
   := @Handler.id_.
 
-Instance Cat_Handler : Cat Handler
+Global Instance Cat_Handler : Cat@{uY _} Handler@{uE uF uR uT}
   := @Handler.cat.
 
-Instance Case_sum1_Handler : CoprodCase Handler sum1
+Global Instance Case_sum1_Handler : CoprodCase@{uY _} Handler@{uE uF uR uT} sum1
   := @Handler.case_.
 
-Instance Inl_sum1_Handler : CoprodInl Handler sum1
+Global Instance Inl_sum1_Handler : CoprodInl@{uY _} Handler@{uE uF uR uT} sum1
   := @Handler.inl_.
 
-Instance Inr_sum1_Handler : CoprodInr Handler sum1
+Global Instance Inr_sum1_Handler : CoprodInr@{uY _} Handler@{uE uF uR uT} sum1
   := @Handler.inr_.
 
-Instance Initial_void1_Handler : Initial Handler void1
+Global Instance Initial_void1_Handler : Initial@{uY _} Handler@{uE uF uR uT} void1
   := @Handler.empty.
 
-Instance Iter_Handler : Iter Handler sum1
+Global Instance Iter_Handler : Iter@{uY _} Handler@{uE uF uR uT} sum1
   := @mrec.
+
+End Instances.

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Strong bisimulation *)
 
 (** Because [itree] is a coinductive type, the naive [eq] relation
@@ -63,6 +64,8 @@ Coercion is_true : bool >-> Sortclass.
 
 Section eqit.
 
+  Universe uE uF uR uT.
+
   (** Although the original motivation is to define an equivalence
       relation on [itree E R], we will generalize it into a
       heterogeneous relation [eqit_] between [itree E R1] and
@@ -72,7 +75,7 @@ Section eqit.
       Then the desired equivalence relation is obtained by setting
       [RR := eq] (with [R1 = R2]).
    *)
-  Context {E : Type -> Type} {R1 R2 : Type} (RR : R1 -> R2 -> Prop).
+  Context {E : Type@{uE} -> Type@{uF}} {R1 R2 : Type@{uR}} (RR : R1 -> R2 -> Prop).
 
   (** We also need to do some gymnastics to work around the
       two-layered definition of [itree]. We first define a
@@ -84,15 +87,15 @@ Section eqit.
       pattern-matching is not allowed on [itree].
    *)
 
-  Inductive eqitF (b1 b2: bool) vclo (sim : itree E R1 -> itree E R2 -> Prop) :
-    itree' E R1 -> itree' E R2 -> Prop :=
+  Inductive eqitF@{} (b1 b2: bool) (vclo : _) (sim : itree E R1 -> itree E R2 -> Prop) :
+    itreeF@{uE uF uR uT} E R1 (itree E R1) -> itreeF E R2 (itree@{uE uF uR uT} E R2) -> Prop :=
   | EqRet r1 r2
        (REL: RR r1 r2):
      eqitF b1 b2 vclo sim (RetF r1) (RetF r2)
   | EqTau m1 m2
         (REL: sim m1 m2):
       eqitF b1 b2 vclo sim (TauF m1) (TauF m2)
-  | EqVis {u} (e : E u) k1 k2
+  | EqVis {u : Type@{uE}} (e : E u) k1 k2
         (REL: forall v, vclo sim (k1 v) (k2 v) : Prop):
       eqitF b1 b2 vclo sim (VisF e k1) (VisF e k2)
   | EqTauL t1 ot2
@@ -106,14 +109,14 @@ Section eqit.
   .
   Hint Constructors eqitF.
 
-  Definition eqit_ b1 b2 vclo sim :
+  Definition eqit_@{} b1 b2 vclo sim :
     itree E R1 -> itree E R2 -> Prop :=
     fun t1 t2 => eqitF b1 b2 vclo sim (observe t1) (observe t2).
   Hint Unfold eqit_.
 
   (** [eqitF] and [eqit_] are both monotone. *)
 
-  Lemma eqitF_mono b1 b2 x0 x1 vclo vclo' sim sim'
+  Lemma eqitF_mono@{} b1 b2 x0 x1 vclo vclo' sim sim'
         (IN: eqitF b1 b2 vclo sim x0 x1)
         (MON: monotone2 vclo)
         (LEc: vclo <3= vclo')
@@ -123,17 +126,17 @@ Section eqit.
     intros. induction IN; eauto.
   Qed.
 
-  Lemma eqit__mono b1 b2 vclo (MON: monotone2 vclo) : monotone2 (eqit_ b1 b2 vclo).
+  Lemma eqit__mono@{} b1 b2 vclo (MON: monotone2 vclo) : monotone2 (eqit_ b1 b2 vclo).
   Proof. do 2 red. intros. eapply eqitF_mono; eauto. Qed.
 
   Hint Resolve eqit__mono : paco.
 
-  Lemma eqit_idclo_mono: monotone2 (@id (itree E R1 -> itree E R2 -> Prop)).
+  Lemma eqit_idclo_mono@{}: monotone2 (@id (itree@{uE uF uR uT} E R1 -> itree@{uE uF uR uT} E R2 -> Prop)).
   Proof. unfold id. eauto. Qed.
 
   Hint Resolve eqit_idclo_mono : paco.
   
-  Definition eqit b1 b2 : itree E R1 -> itree E R2 -> Prop :=
+  Definition eqit@{} b1 b2 : itree E R1 -> itree E R2 -> Prop :=
     paco2 (eqit_ b1 b2 id) bot2.
 
   (** Strong bisimulation on itrees. If [eqit RR t1 t2],
@@ -141,11 +144,11 @@ Section eqit.
       at above, bisimilarity can be intuitively thought of as
       equality. *)
   
-  Definition eq_itree := eqit false false.
+  Definition eq_itree@{} := eqit false false.
 
-  Definition eutt := eqit true true.
+  Definition eutt@{} := eqit true true.
 
-  Definition euttge := eqit true false.
+  Definition euttge@{} := eqit true false.
 
 End eqit.
 
@@ -453,7 +456,7 @@ Qed.
 Global Instance observing_sub_eqit l r :
   subrelation (observing eq) (eqit l r).
 Proof.
-  repeat red; intros. destruct H.
+  repeat red; intros.
   pstep. red. rewrite H. apply Reflexive_eqitF; eauto. left. apply reflexivity.
 Qed.
 

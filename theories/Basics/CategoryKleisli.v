@@ -1,3 +1,4 @@
+(* begin hide *)
 From Coq Require Import
      Morphisms.
 
@@ -10,15 +11,19 @@ From ITree Require Import
      Basics.Function
      Basics.MonadTheory.
 
-Implicit Types m : Type -> Type.
-Implicit Types a b c : Type.
+Set Universe Polymorphism.
+Set Printing Universes.
+(* end hide *)
 
-Definition Kleisli m a b : Type := a -> m b.
+Definition Kleisli@{uE uF uG} (m : Type@{uE} -> Type@{uF}) (a b : Type@{uE})
+  : Type@{uG} := a -> m b.
 
 (* SAZ: We need to show how these are intended to be used. *)
 (** A trick to allow rewriting in pointful contexts. *)
-Definition Kleisli_arrow {m a b} : (a -> m b) -> Kleisli m a b := fun f => f.
-Definition Kleisli_apply {m a b} : Kleisli m a b -> (a -> m b) := fun f => f.
+Definition Kleisli_arrow@{uE uF uG} {m : Type@{uE} -> Type@{uF}} {a b : Type@{uE}}
+  : (a -> m b) -> Kleisli@{uE uF uG} m a b := fun f => f.
+Definition Kleisli_apply@{uE uF uG} {m : Type@{uE} -> Type@{uF}} {a b : Type@{uE}}
+  : Kleisli@{uE uF uG} m a b -> (a -> m b) := fun f => f.
 
 
 Definition pure {m} `{Monad m} {a b} (f : a -> b) : Kleisli m a b :=

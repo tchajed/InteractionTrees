@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (* begin hide *)
 From Coq Require Import
      Program

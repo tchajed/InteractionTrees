@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * The Category of Indexed Functions *)
 
 (** Indexed functions have type [E ~> F], i.e., [forall T, E T -> F T],

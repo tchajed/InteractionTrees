@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Theorems about State effects *)
 
 (* begin hide *)

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Relations on indexed types *)
 
 (* begin hide *)

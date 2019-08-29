@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (* SAZ: This entire file should be supplanted by CategoryKleisliFacts for the m = itree E instance *)
 
 (** * Theorems about the cocartesian category of KTrees *)

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Monad laws and associated typeclasses *)
 
 (* hide *)

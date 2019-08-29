@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Mutable map *)
 
 (* begin hide *)

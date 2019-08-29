@@ -62,7 +62,9 @@ Delimit Scope cat_scope with cat.
 (* [/ᐠ｡‸｡ᐟ\] *)
 Section CatOps.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}}.
+Context (C : obj -> obj -> Type@{v}).
 
 (** The equivalence between two morphisms [f] and [g] is written
     [eq2 f g] or [f ⩯ g] ([\hatapprox] in LaTeX). *)
@@ -96,7 +98,8 @@ Arguments empty {obj C i Initial a}.
 
 Section CocartesianOps.
 
-Context {obj : Type} (C : Hom obj) (bif : binop obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}) (bif : binop obj).
 
 (** Bifunctors map pairs of objects to objects ([bif])
     and pairs of morphisms to morphisms ([bimap]).
@@ -217,7 +220,8 @@ Local Open Scope cat.
 (** *** Coproduct operations *)
 
 (** Generalization of [a + a -> a]. *)
-Definition merge {obj : Type} {C : Hom obj} {bif : binop obj}
+Definition merge@{u v} {obj : Type@{u}} {C : obj -> obj -> Type@{v}}
+           {bif : binop obj}
            {Id_C : Id_ C} {Coproduct_C : CoprodCase C bif}
   : forall {a : obj}, C (bif a a) a :=
   fun a => case_ (id_ a) (id_ a).
@@ -229,7 +233,8 @@ Definition merge {obj : Type} {C : Hom obj} {bif : binop obj}
 
 Section CocartesianConstruct.
 
-Context {obj : Type} (C : Hom obj) (Cat_C : Cat C).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}) (Cat_C : Cat C).
 Variables (SUM : binop obj) (Coprod_SUM : CoprodCase C SUM)
           (CoprodInl_SUM : CoprodInl C SUM)
           (CoprodInr_SUM : CoprodInr C SUM).
@@ -276,7 +281,8 @@ End CocartesianConstruct.
 
 Section Iteration.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Variables (bif : binop obj).
 
 (** Categories with a loop operator (_pre-iterative categories_).
@@ -313,11 +319,12 @@ Arguments loop {obj C bif _ _ _ _ _ _ a b c}.
 
 Section RESUM.
 
-Context {obj : Type} (C : Hom obj) (bif : binop obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}) (bif : binop obj).
 Context `{Id_ _ C} `{Cat _ C}.
 Context `{CoprodCase _ C bif} `{CoprodInl _ C bif} `{CoprodInr _ C bif}.
 
-Class ReSum (a b : obj) :=
+Class ReSum (a b : obj) : Type :=
   resum : C a b.
 
 (** The instance weights on [ReSum_inl] (8) and [ReSum_inr] (9) are so that,

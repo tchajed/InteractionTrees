@@ -10,7 +10,10 @@ Import ITreeNotations.
 
 Open Scope itree_scope.
 
+Set Universe Polymorphism.
+Set Printing Universes.
 (* end hide *)
+
 (** * General recursion *)
 
 (** *** Mutual recursion *)
@@ -68,8 +71,9 @@ Open Scope itree_scope.
 
 (** Interpret an itree in the context of a mutually recursive
     definition ([ctx]). *)
-Definition interp_mrec {D E : Type -> Type}
-           (ctx : D ~> itree (D +' E)) : itree (D +' E) ~> itree E :=
+Definition interp_mrec@{uE uF uR uT} {D E : Type@{uE} -> Type@{uF}}
+           (ctx : D ~> itree (D +' E))
+  : itree@{uE uF uR uT} (D +' E) ~> itree@{uE uF uR uT} E :=
   fun R =>
     ITree.iter (fun t : itree (D +' E) R =>
       match observe t with
@@ -83,14 +87,15 @@ Arguments interp_mrec {D E} ctx [T].
 
 (** Unfold a mutually recursive definition into separate trees,
     resolving the mutual references. *)
-Definition mrec {D E : Type -> Type}
-           (ctx : D ~> itree (D +' E)) : D ~> itree E :=
+Definition mrec@{uE uF uR uT} {D E : Type@{uE} -> Type@{uF}}
+           (ctx : D ~> itree (D +' E)) : D ~> itree@{uE uF uR uT} E :=
   fun R d => interp_mrec ctx (ctx _ d).
 
 Arguments mrec {D E} ctx [T].
 
 (** Make a recursive call in the handler argument of [mrec]. *)
-Definition trigger_inl1 {D E : Type -> Type} : D ~> itree (D +' E)
+Definition trigger_inl1@{uE uF uR uT} {D E : Type@{uE} -> Type@{uF}}
+  : D ~> itree@{uE uF uR uT} (D +' E)
   := fun _ d => ITree.trigger (inl1 d).
 
 Arguments trigger_inl1 {D E} [T].
@@ -100,8 +105,8 @@ Arguments trigger_inl1 {D E} [T].
 (** Short for endofunctions, used in [mrec_fix] and [rec_fix]. *)
 Local Notation endo T := (T -> T).
 
-Definition mrec_fix {D E : Type -> Type} {A B : Type}
-           (ctx : endo (D ~> itree (D +' E)))
+Definition mrec_fix@{uE uF uR uT} {D E : Type@{uE} -> Type@{uF}}
+           (ctx : endo (D ~> itree@{uE uF uR uT} (D +' E)))
   : D ~> itree E
   := mrec (ctx trigger_inl1).
 
@@ -111,40 +116,40 @@ Notation "'mrec-fix' f d := g" := (mrec_fix (fun f _ d => g))
 
 (** *** Simple recursion *)
 
-Inductive callE (A B : Type) : Type -> Type :=
+Section Rec.
+
+Universe uA uB uF.
+
+Inductive callE (A : Type@{uA}) (B : Type@{uB}) : Type@{uB} -> Type@{uF} :=
 | Call : A -> callE A B B.
 
 Arguments Call {A B}.
 
+Context {A : Type@{uA}} {B : Type@{uB}}.
+
 (** Get the [A] contained in a [callE A B]. *)
-Definition unCall {A B T} (e : callE A B T) : A :=
+Definition unCall@{} {T : Type@{uB}} (e : callE A B T) : A :=
   match e with
   | Call a => a
   end.
 
 (** Lift a function on [A] to a morphism on [callE]. *)
-Definition calling {A B} {F : Type -> Type}
-           (f : A -> F B) : callE A B ~> F :=
+Definition calling@{uR uT} {F : Type@{uR} -> Type@{uT}}
+           (f : A -> F B) : forall T : Type@{uB}, callE A B T -> F T :=
   fun _ e =>
     match e with
     | Call a => f a
     end.
 
-(* TODO: This is identical to [callWith] but [rec] finds a universe
-   inconsistency with [calling], and not with [calling'].
-   The inconsistency now pops up later (currently in [Events.Env]) *)
-Definition calling' {A B} {F : Type -> Type}
-           (f : A -> itree F B) : callE A B ~> itree F :=
-  fun _ e =>
-    match e with
-    | Call a => f a
-    end.
+End Rec.
+
+Arguments Call {A B}.
 
 (* Interpret a single recursive definition. *)
-Definition rec {E : Type -> Type} {A B : Type}
-           (body : A -> itree (callE A B +' E) B) :
+Definition rec@{uE uF uR uT uA} {E : Type@{uE} -> Type@{uF}} {A : Type@{uA}} {B : Type@{uE}}
+           (body : A -> itree@{uE uF uR uT} (callE@{uA uE uF} A B +' E) B) :
   A -> itree E B :=
-  fun a => mrec (calling' body) (Call a).
+  fun a => mrec (calling body) (Call a).
 
 (** An easy way to construct an event suitable for use with [rec].
     [call] is an event representing the recursive call.  Since in general, the

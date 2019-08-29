@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Theorems for [ITree.Indexed.Function] *)
 
 (* begin hide *)

@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * ITrees as sets of traces *)
 
 (* begin hide *)

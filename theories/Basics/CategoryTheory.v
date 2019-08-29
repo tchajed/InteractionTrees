@@ -14,13 +14,20 @@ Import CatNotations.
 Local Open Scope cat.
 
 Set Universe Polymorphism.
+
+
+
+
+
+Set Printing Universes.
 (* end hide *)
 
 (** ** Categories *)
 
 Section CatLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2C : Eq2 C} {IdC : Id_ C} {CatC : Cat C}.
 
 (** [cat] must have units and be associative. *)
@@ -78,7 +85,8 @@ Notation unique_initial := initial_object.
 
 Section SemiIso.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2C : Eq2 C} {IdC : Id_ C} {CatC : Cat C}.
 
 (** An instance [SemiIso C f f'] means that [f] is a section of
@@ -100,7 +108,8 @@ Arguments semi_iso {obj C Eq2C IdC CatC a b} f f' {SemiIso}.
 
 Section BifunctorLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2_C : Eq2 C} {Id_C : Id_ C} {Cat_C : Cat C}.
 Context (bif : binop obj).
 Context {Bimap_bif : Bimap C bif}.
@@ -136,7 +145,8 @@ Arguments bimap_cat {obj C Eq2_C Cat_C bif Bimap_bif BimapCat} [_ _ _ _ _ _] f1 
 
 Section CoproductLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2_C : Eq2 C} {Id_C : Id_ C} {Cat_C : Cat C}.
 Context (bif : binop obj).
 Context {CoprodCase_C : CoprodCase C bif}
@@ -181,7 +191,8 @@ Notation inr_case := case_inr.
 
 Section MonoidalLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2_C : Eq2 C} {Id_C : Id_ C} {Cat_C : Cat C}.
 Context (bif : binop obj).
 
@@ -324,7 +335,8 @@ Arguments assoc_l_assoc_l {obj C Eq2_C Id_C Cat_C bif Bimap_bif AssocL_bif Assoc
 
 Section SymmetricLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2_C : Eq2 C} {Id_C : Id_ C} {Cat_C : Cat C}.
 Context (bif : binop obj).
 Context {Bimap_bif : Bimap C bif}.
@@ -382,7 +394,8 @@ Arguments swap_assoc_l {obj C Eq2_C Id_C Cat_C bif Bimap_bif Swap_bif AssocL_bif
 
 Section IterationLaws.
 
-Context {obj : Type} (C : Hom obj).
+Universe u v.
+Context {obj : Type@{u}} (C : obj -> obj -> Type@{v}).
 Context {Eq2_C : Eq2 C} {Id_C : Id_ C} {Cat_C : Cat C}.
 Context (bif : binop obj).
 Context {CoprodCase_C : CoprodCase C bif}.

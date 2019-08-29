@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (* begin hide *)
 From ITree Require Import
      Basics.Basics

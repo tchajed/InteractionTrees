@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Concurrency *)
 
 (* begin hide *)
@@ -47,7 +48,11 @@ Definition rr_match {E} (rr : list (itree ((spawnE E) +' E) unit) -> itree E uni
     match q with
     | [] => Ret tt
     | t::ts =>
+<<<<<<< HEAD
       match observe t with
+=======
+      match t.(_observe) with
+>>>>>>> WIP: Universe cleanup
       | RetF _ => Tau (rr ts)
       | TauF u => Tau (rr (ts ++ [u]))
       | @VisF _ _ _ X o k =>

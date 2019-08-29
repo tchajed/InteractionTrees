@@ -1,3 +1,4 @@
+(* begin hide *)
 From Coq Require Import
      Program
      Setoid
@@ -18,26 +19,29 @@ Import CatNotations.
 Open Scope cat_scope.
 Open Scope monad_scope.
 
+Set Universe Polymorphism.
+Set Printing Universes.
+(* end hide *)
 
 Section BasicFacts.
-
-  Context {m : Type -> Type}.
+  Universe uE uF uG.
+  Context {m : Type@{uE} -> Type@{uF}}.
   Context {EqM : EqM m}.
   Context {Mm : Monad m}.
   Context {EqMP : @EqMProps m _ EqM}.
   Context {ML : @MonadLaws m EqM Mm}.
   Context {MP : @MonadProperOps m EqM Mm}.
   
-  Instance Proper_Kleisli_apply {a b} :
-    Proper (eq2 ==> eq ==> eqm) (@Kleisli_apply m a b).
+  Instance Proper_Kleisli_apply {a b : Type@{uE}} :
+    Proper (eq2@{_ uF} ==> eq ==> eqm@{uE uF}) (@Kleisli_apply m a b).
   Proof.
     cbv; intros; subst; auto.
   Qed.
 
-  Lemma fold_Kleisli {a b} (f : Kleisli m a b) (x : a) : f x = Kleisli_apply f x.
+  Lemma fold_Kleisli {a b : Type@{uE}} (f : Kleisli m a b) (x : a) : f x = Kleisli_apply f x.
   Proof. reflexivity. Qed.
   
-  Global Instance Equivalence_Kleisli_eq2 {a b} : @Equivalence (Kleisli m a b) eq2.
+  Global Instance Equivalence_Kleisli_eq2 {a b : Type@{uE}} : @Equivalence (Kleisli m a b) eq2.
   Proof.
     split; repeat intro.
     - reflexivity.
@@ -46,7 +50,7 @@ Section BasicFacts.
   Qed.
 
 
-Global Instance Proper_cat_Kleisli {a b c}
+Global Instance Proper_cat_Kleisli {a b c : Type@{uE}}
   : @Proper (Kleisli m a b -> Kleisli m b c -> _)
             (eq2 ==> eq2 ==> eq2) cat.
 Proof.
@@ -55,13 +59,13 @@ Proof.
   apply Proper_bind; auto.
 Qed.
 
-Lemma assoc_l_kleisli {a b c : Type} :
+Lemma assoc_l_kleisli {a b c : Type@{uE}} :
   (@assoc_l _ (Kleisli m) sum _ _ _ _) ⩯ (@pure m _ (a + (b + c))%type _ assoc_l).
 Proof.
   cbv; intros x; destruct x as [ | []];  try setoid_rewrite bind_ret; reflexivity.
 Qed.
 
-Lemma assoc_r_ktree {a b c : Type} :
+Lemma assoc_r_ktree {a b c : Type@{uE}} :
   (@assoc_r _ (Kleisli m) sum _ _ _ _) ⩯ (@pure m _ ((a + b) + c)%type _ assoc_r).
 Proof.
   cbv; intros x; destruct x as [[] | ]; try setoid_rewrite bind_ret; reflexivity.  

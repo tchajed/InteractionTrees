@@ -38,6 +38,8 @@ From ITree Require Import
      Basics.Basics
      Core.ITreeDefinition
      Indexed.Relation.
+
+Set Universe Polymorphism.
 (* end hide *)
 
 (** ** Translate *)
@@ -72,14 +74,29 @@ Arguments translate {E F} h [T].
 
 (** ** Interpret *)
 
+(*
+Set Printing Universes.
+Definition interp
+           {E : Type -> Type} {M : Type -> Type}
+           {FM : Functor M} {MM : Monad M} {IM : MonadIter M}
+           (h : forall T : Type, E T -> M T) :
+  forall T : Type, itree E T -> M T := fun R =>
+  iter (fun t =>
+    match observe t with
+    | RetF r => ret (inr r)
+    | TauF t => ret (inl t)
+    | VisF e k => fmap (fun x => inl (k x)) (h _ e)
+    end).
+*)
+
 (** An event handler [E ~> M] defines a monad morphism
     [itree E ~> M] for any monad [M] with a loop operator. *)
-
-Definition interp {E M : Type -> Type}
+Definition interp@{uE uF uR uT uR0 uT0}
+           {E : Type@{uE} -> Type@{uF}} {M : Type@{uR0} -> Type@{uT0}}
            {FM : Functor M} {MM : Monad M} {IM : MonadIter M}
-           (h : E ~> M) :
-  itree E ~> M := fun R =>
-  iter (fun t =>
+           (h : forall T : Type@{uE}, E T -> M T) :
+  forall T : Type@{uR}, itree@{uE uF uR uT} E T -> M T := fun R =>
+  iter@{uR0 uT0} (fun t =>
     match observe t with
     | RetF r => ret (inr r)
     | TauF t => ret (inl t)

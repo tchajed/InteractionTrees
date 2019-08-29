@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * Equivalences for interaction trees *)
 
 From ITree Require Export

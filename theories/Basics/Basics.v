@@ -1,3 +1,4 @@
+Set Universe Polymorphism.
 (** * General-purpose definitions *)
 
 (** Not specific to itrees. *)
@@ -143,8 +144,8 @@ End Monads.
     Iterate a function updating an accumulator [I], until it produces
     an output [R].
  *)
-Polymorphic Class MonadIter (M : Type -> Type) : Type :=
-  iter : forall {R I: Type}, (I -> M (I + R)%type) -> I -> M R.
+Class MonadIter@{uR uT} (M : Type@{uR} -> Type@{uT}) : Type :=
+  iter : forall {R I: Type@{uR}}, (I -> M (I + R)%type) -> I -> M R.
 
 (** *** Transformer instances *)
 
@@ -215,4 +216,4 @@ Inductive iter_Prop {R I : Type} (step : I -> I + R -> Prop) (i : I) (r : R)
     iter_Prop step i r
 .
 
-Polymorphic Instance MonadIter_Prop : MonadIter Ensembles.Ensemble := @iter_Prop.
+Instance MonadIter_Prop : MonadIter Ensembles.Ensemble := @iter_Prop.
