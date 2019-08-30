@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Theorems for [ITree.Interp.Handler] *)
 
 (* begin hide *)
@@ -27,6 +26,8 @@ Import ITreeNotations.
 
 Open Scope itree_scope.
 
+Set Universe Polymorphism.
+Set Printing Universes.
 (* end hide *)
 
 Section HandlerCategory.
@@ -72,30 +73,30 @@ Proof.
   cbv; contradiction.
 Qed.
 
-Instance Proper_Case_Handler {A B C}
-  : @Proper (Handler A C -> Handler B C -> Handler (A +' B) C)
+Instance Proper_Case_Handler@{uE uF uR uT uY} {A B C : Type@{uE} -> Type@{uF}}
+  : @Proper (Handler@{uE uF uR uT} A C -> Handler B C -> Handler (A +' B) C)
             (eq2 ==> eq2 ==> eq2)
-            case_.
+            (case_@{uY _}).
 Proof.
   cbv; intros.
   destruct (_ : sum1 _ _ _); auto.
 Qed.
 
-Instance CaseInl_Handler : CaseInl Handler sum1.
+Instance CaseInl_Handler@{uE uF uR uT uY} : CaseInl@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros.
   rewrite interp_trigger.
   reflexivity.
 Qed.
 
-Instance CaseInr_Handler : CaseInr Handler sum1.
+Instance CaseInr_Handler@{uE uF uR uT uY} : CaseInr@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros.
   rewrite interp_trigger.
   reflexivity.
 Qed.
 
-Instance CaseUniversal_Handler : CaseUniversal Handler sum1.
+Instance CaseUniversal_Handler@{uE uF uR uT uY} : CaseUniversal@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros.
   destruct (_ : sum1 _ _ _).
@@ -103,30 +104,30 @@ Proof.
   - rewrite <- H0, interp_trigger. reflexivity.
 Qed.
 
-Global Instance Coproduct_Handler : Coproduct Handler sum1.
+Global Instance Coproduct_Handler@{uE uF uR uT uY} : Coproduct@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   split; typeclasses eauto.
 Qed.
 
 Local Opaque Recursion.interp_mrec.
 
-Instance Proper_Iter_Handler {A B}
-  : @Proper (Handler A (A +' B) -> Handler A B)
+Instance Proper_Iter_Handler@{uE uF uR uT uY} {A B}
+  : @Proper (Handler@{uE uF uR uT} A (A +' B) -> Handler A B)
             (eq2 ==> eq2)
-            iter.
+            iter@{uY _}.
 Proof.
   repeat intro.
   apply Proper_interp_mrec; auto.
 Qed.
 
-Instance IterUnfold_Handler : IterUnfold Handler sum1.
+Instance IterUnfold_Handler@{uE uF uR uT uY} : IterUnfold@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros.
   rewrite interp_mrec_as_interp.
   reflexivity.
 Qed.
 
-Instance IterNatural_Handler : IterNatural Handler sum1.
+Instance IterNatural_Handler@{uE uF uR uT uY} : IterNatural@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros.
   pattern f.
@@ -199,19 +200,20 @@ Qed.
 
 Section DinatSimulation.
 
-Context {A B C : Type -> Type}.
-Context (f0 : A ~> itree (B +' C)) (g0 : B ~> itree (A +' C)).
-Context {R : Type}.
+Universe uE uF uR uT uY.
+Context {A B C : Type@{uE} -> Type@{uF}}.
+Context (f0 : A ~> itree@{uE uF uR uT} (B +' C)) (g0 : B ~> itree@{uE uF uR uT} (A +' C)).
+Context {R : Type@{uR}}.
 
 Context (f := fun T e => Tau (f0 T e)) (g := fun T e => Tau (g0 T e)).
 
 Inductive interleaved
   : itree (A +' C) R -> itree (B +' C) R -> Prop :=
 | interleaved_Ret r : interleaved (Ret r) (Ret r)
-| interleaved_Left {U} (t : itree _ U) k1 k2 :
+| interleaved_Left {U : Type@{uR}} (t : itree _ U) k1 k2 :
     (forall (x : U), interleaved (k1 x) (k2 x)) ->
     interleaved (interp (case_ g inr_) t >>= k1) (t >>= k2)
-| interleaved_Right {U} (t : itree _ U) k1 k2 :
+| interleaved_Right {U : Type@{uR}} (t : itree _ U) k1 k2 :
     (forall (x : U), interleaved (k1 x) (k2 x)) ->
     interleaved (t >>= k1) (interp (case_ f inr_) t >>= k2)
 .
@@ -268,7 +270,7 @@ End DinatSimulation.
 Local Opaque eutt.
 Local Transparent ITree.trigger.
 
-Instance IterDinatural_Handler : IterDinatural Handler sum1.
+Instance IterDinatural_Handler@{uE uF uR uT uY} : IterDinatural@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros a b c f0 g0 T a0.
   pose (f := fun T e => Tau (f0 T e)). pose (g := fun T e => Tau (g0 T e)).
@@ -302,7 +304,7 @@ Local Opaque ITree.trigger.
 
 Import Recursion.
 
-Instance IterCodiagonal_Handler : IterCodiagonal Handler sum1.
+Instance IterCodiagonal_Handler@{uE uF uR uT uY} : IterCodiagonal@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   cbv; intros a b f0 T x.
   remember (f0 T x) as t eqn:EQt; clear.
@@ -354,7 +356,7 @@ Proof.
     auto with paco.
 Qed.
 
-Global Instance Iterative_Handler : Iterative Handler sum1.
+Global Instance Iterative_Handler@{uE uF uR uT uY} : Iterative@{uY _} Handler@{uE uF uR uT} sum1.
 Proof.
   split; typeclasses eauto.
 Qed.

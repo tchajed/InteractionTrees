@@ -103,8 +103,8 @@ Proof. rewrite unfold_interp. reflexivity. Qed.
 
 End T.
 
-Lemma interp_trigger@{uE uF uR uT uX uY} {E F : Type@{uE} -> Type@{uF}} {R : Type@{uE}} (f : forall T : Type@{uE}, E T -> itree@{uE uF uR uT} F T) (e : E R)
-  : interp@{uE uF uR uT uX uY} f (ITree.trigger e) ≳ f R e.
+Lemma interp_trigger@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} {R : Type@{uE}} (f : forall T : Type@{uE}, E T -> itree@{uE uF uR uT} F T) (e : E R)
+  : interp@{uE uF uR uT} f (ITree.trigger e) ≳ f R e.
 Proof.
   unfold ITree.trigger. rewrite interp_vis.
   setoid_rewrite interp_ret.
@@ -117,10 +117,10 @@ Hint Rewrite @interp_vis : itree.
 Hint Rewrite @interp_trigger : itree.
 
 (** ** [interp] properness *)
-Instance eq_itree_interp@{uE uF uR uT uX uY} {E F : Type@{uE} -> Type@{uF}}
+Instance eq_itree_interp@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
   : @Proper (Handler@{uE uF uR uT} E F -> (itree E ~> itree F))
             (eq_Handler ==> respectful_eq_itree)
-            interp@{uE uF uR uT uX uY}.
+            interp@{uE uF uR uT}.
 Proof.
   intros f g Hfg T.
   ginit. gcofix CIH with rr.
@@ -144,7 +144,7 @@ Qed.
 Instance eutt_interp@{uE uF uR uT uX} (E F : Type@{uE} -> Type@{uF})
   : @Proper (Handler@{uE uF uR uT} E F -> (itree@{uE uF uR uT} E ~> itree@{uE uF uR uT} F))
             (eq2@{uX _} ==> respectful_eutt)
-            (@interp@{uE uF uR uT uR uT} E (itree@{uE uF uR uT} F) _ _ _).
+            (@interp@{uE uF uR uT} E (itree@{uE uF uR uT} F) _ _ _).
 Proof.
   repeat red.
   intros until T.
@@ -264,8 +264,8 @@ Qed.
 Theorem interp_interp@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}} {R}
         (f : E ~> itree F) (g : F ~> itree G) :
   forall t : itree E R,
-      interp g (interp@{uE uF uR uT uR uT} f t)
-    ≅ interp@{uE uF uR uT uR uT} (fun _ e => interp g (f _ e)) t.
+      interp g (interp@{uE uF uR uT} f t)
+    ≅ interp@{uE uF uR uT} (fun _ e => interp g (f _ e)) t.
 Proof.
   ginit. gcofix CIH. intros.
   rewrite 2 (unfold_interp t).
@@ -283,7 +283,7 @@ Proof.
 Qed.
 
 Lemma interp_translate@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}} (f : E ~> F) (g : F ~> itree G) {R} (t : itree E R) :
-  interp@{uE uF uR uT uR uT} g (translate f t) ≅ interp (fun _ e => g _ (f _ e)) t.
+  interp@{uE uF uR uT} g (translate f t) ≅ interp (fun _ e => g _ (f _ e)) t.
 Proof.
   revert t.  
   ginit. gcofix CIH.
@@ -311,7 +311,7 @@ Qed.
 
 Lemma interp_forever@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} (f : E ~> itree F) {R S}
       (t : itree E R)
-  : interp@{uE uF uR uT uR uT} f (ITree.forever t)
+  : interp@{uE uF uR uT} f (ITree.forever t)
   ≅ @ITree.forever F R S (interp f t).
 Proof.
   ginit. gcofix CIH.
@@ -327,9 +327,9 @@ Lemma interp_iter'@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
       (f : forall T : Type@{uE}, E T -> itree F T) {I A : Type@{uR}}
       (t  : I -> itree E (I + A))
       (t' : I -> itree F (I + A))
-      (EQ_t : forall i, eq_itree@{uE uF uR uT} eq (interp@{uE uF uR uT uR uT} f (t i)) (t' i))
+      (EQ_t : forall i, eq_itree@{uE uF uR uT} eq (interp@{uE uF uR uT} f (t i)) (t' i))
   : forall i,
-    interp@{uE uF uR uT uR uT} f (ITree.iter@{uE uF uR uT} t i)
+    interp@{uE uF uR uT} f (ITree.iter@{uE uF uR uT} t i)
   ≅ ITree.iter@{uE uF uR uT} t' i.
 Proof.
   ginit. gcofix CIH; intros i.
@@ -344,7 +344,7 @@ Qed.
 
 Lemma interp_iter@{uE uF uR uT uY} {E F : Type@{uE} -> Type@{uF}} (f : forall T : Type@{uE}, E T -> itree F T) {A B : Type@{uR}}
       (t : A -> itree E (A + B)) a0
-  : interp@{uE uF uR uT uR uT} f (iter@{uY _} t a0) ≅ iter (fun a => interp f (t a)) a0.
+  : interp@{uE uF uR uT} f (iter@{uY _} t a0) ≅ iter (fun a => interp f (t a)) a0.
 Proof.
   unfold iter, Iter_Kleisli, Basics.iter, MonadIter_itree.
   apply interp_iter'.

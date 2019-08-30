@@ -15,10 +15,13 @@ Set Implicit Arguments.
 Set Contextual Implicit.
 (* end hide *)
 
+Set Printing Universes.
+
 (** Sum of type constructors [Type -> Type].
 
     [sum1 : (Type -> Type) -> (Type -> Type) -> (Type -> Type)]. *)
-Variant sum1@{uE uF} (E1 E2 : Type@{uE} -> Type@{uF}) (X : Type@{uE}) : Type@{uF} :=
+Variant sum1@{uE uF} (E1 : Type@{uE} -> Type@{uF})
+        (E2 : Type@{uE} -> Type@{uF}) (X : Type@{uE}) : Type@{uF} :=
 | inl1 (_ : E1 X)
 | inr1 (_ : E2 X).
 Arguments inr1 {E1 E2} [X].

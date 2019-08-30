@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Simplified interface *)
 
 (* begin hide *)
@@ -8,6 +7,8 @@ From Coq Require Import
 
 From ITree Require Import
      Eq.Shallow.
+
+Monomorphic Universe uE uF uR uT.
 (* end hide *)
 
 (** ** Core definitions *)
@@ -79,11 +80,11 @@ Module Type SimpleTheory.
 
 Section EquivalenceUpToTaus.
 
-Context {E : Type -> Type} {R : Type}.
+Context {E : Type@{uE} -> Type@{uF}} {R : Type@{uR}}.
 
 (** The standard [itree] equivalence: "Equivalence Up To Taus"
     ([eutt] for short), or _weak bisimulation_. *)
-Parameter eutt : itree E R -> itree E R -> Prop.
+Parameter eutt : itree@{uE uF uR uT} E R -> itree@{uE uF uR uT} E R -> Prop.
 
 Infix "≈" := eutt (at level 40).
 
@@ -147,7 +148,8 @@ Hint Rewrite @bind_bind : itree.
 
 (** *** Monadic interpretation: [interp] *)
 
-Definition _interp {E F R} (f : E ~> itree F) (ot : itreeF E R _)
+Definition _interp {E F : Type -> Type} {R : Type}
+           (f : forall T : Type, E T -> itree F T) (ot : itreeF E R _)
   : itree F R
   := match ot with
      | RetF r => Ret r
@@ -156,16 +158,16 @@ Definition _interp {E F R} (f : E ~> itree F) (ot : itreeF E R _)
      end.
 
 Parameter unfold_interp
-  : forall {E F R} {f : E ~> itree F} (t : itree E R),
+  : forall {E F R} {f : forall T : Type, E T -> itree F T} (t : itree E R),
     interp f t ≈ (_interp f (observe t)).
 
 (** The next three are immediate corollaries of [unfold_interp]. *)
 Parameter interp_ret
-  : forall {E F R} {f : E ~> itree F} (x: R),
+  : forall {E F R} {f : forall T : Type, E T -> itree F T} (x: R),
     interp f (Ret x) ≈ Ret x.
 
 Parameter interp_vis
-  : forall {E F R} {f : E ~> itree F} U (e: E U) (k: U -> itree E R),
+  : forall {E F : Type -> Type} {R : Type} {f : forall T, E T -> itree F T} U (e: E U) (k: U -> itree E R),
     interp f (Vis e k)
   ≈ ITree.bind (f _ e) (fun x => interp f (k x)).
 
@@ -173,7 +175,7 @@ Parameter interp_trigger : forall {E F : Type -> Type} {R : Type}
       (f : E ~> (itree F)) (e : E R),
     interp f (ITree.trigger e) ≈ f _ e.
 
-Parameter interp_bind : forall {E F R S}
+Parameter interp_bind : forall {E F : Type -> Type} {R S}
       (f : E ~> itree F) (t : itree E R) (k : R -> itree E S),
     interp f (ITree.bind t k)
   ≈ ITree.bind (interp f t) (fun r => interp f (k r)).
@@ -189,7 +191,7 @@ Hint Rewrite @interp_bind : itree.
     where [recursive] is defined as follows. *)
 Definition recursive {E A B} (f : A -> itree (callE A B +' E) B)
   : (callE A B +' E) ~> itree E
-  := case_ (calling' (rec f)) ITree.trigger.
+  := case_ (calling (rec f)) ITree.trigger.
 
 Parameter rec_as_interp
   : forall {E A B} (f : A -> itree (callE A B +' E) B) (a : A),
@@ -274,11 +276,11 @@ Module Export Simple : SimpleTheory.
 
 Section EquivalenceUpToTaus.
 
-Context {E : Type -> Type} {R : Type}.
+Context {E : Type@{uE} -> Type@{uF}} {R : Type@{uR}}.
 
 (** The standard [itree] equivalence: "Equivalence Up To Taus",
     or _weak bisimulation_. *)
-Definition eutt : itree E R -> itree E R -> Prop :=
+Definition eutt : itree@{uE uF uR uT} E R -> itree@{uE uF uR uT} E R -> Prop :=
   ITree.Eq.Eq.eutt eq.
 
 Infix "≈" := eutt (at level 40).
@@ -315,10 +317,10 @@ Lemma eutt_inv_ret (r1 r2 : R)
     r1 = r2.
 Proof. apply ITree.Eq.Eq.eqit_inv_ret. Qed.
 
-Lemma eutt_inv_vis {U : Type} (e : E U) (k1 k2 : U -> itree E R)
+Lemma eutt_inv_vis {U : Type@{uE}} (e : E U) (k1 k2 : U -> itree E R)
   : Vis e k1 ≈ Vis e k2 ->
     (forall u, k1 u ≈ k2 u).
-Proof. apply ITree.Eq.Eq.eqit_inv_vis; auto. Qed.
+Proof. apply ITree.Eq.Eq.eqit_inv_vis. Qed.
 
 End EquivalenceUpToTaus.
 
@@ -367,7 +369,7 @@ Hint Rewrite @bind_bind : itree.
 
 (** **** Monadic interpretation: [interp] *)
 
-Definition _interp {E F R} (f : E ~> itree F) (ot : itreeF E R _)
+Definition _interp {E F : Type -> Type} {R} (f : E ~> itree F) (ot : itreeF E R _)
   : itree F R
   := match ot with
      | RetF r => Ret r
@@ -376,23 +378,24 @@ Definition _interp {E F R} (f : E ~> itree F) (ot : itreeF E R _)
      end.
 
 Lemma unfold_interp
-  : forall {E F R} {f : E ~> itree F} (t : itree E R),
+  : forall {E F : Type -> Type} {R : Type}
+           {f : forall T : Type, E T -> itree F T} (t : itree E R),
     interp f t ≈ (_interp f (observe t)).
 Proof.
-  intros; rewrite <- ITree.Interp.InterpFacts.unfold_interp.
+  intros; rewrite ITree.Interp.InterpFacts.unfold_interp.
   reflexivity.
 Qed.
 
 (** The next two are immediate corollaries of [unfold_interp]. *)
 Lemma interp_ret
-  : forall {E F R} {f : E ~> itree F} (x: R),
+  : forall {E F : Type -> Type} {R} {f : E ~> itree F} (x : R),
     interp f (Ret x) ≈ Ret x.
 Proof.
   intros; rewrite unfold_interp; reflexivity.
 Qed.
 
 Lemma interp_vis
-  : forall {E F R} {f : E ~> itree F} U (e: E U) (k: U -> itree E R),
+  : forall {E F : Type -> Type} {R} {f : E ~> itree F} U (e: E U) (k: U -> itree E R),
     interp f (Vis e k)
   ≈ ITree.bind (f _ e) (fun x => interp f (k x)).
 Proof.
@@ -407,7 +410,7 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma interp_bind : forall {E F R S}
+Lemma interp_bind : forall {E F : Type -> Type} {R S}
       (f : E ~> itree F) (t : itree E R) (k : R -> itree E S),
     interp f (ITree.bind t k)
   ≈ ITree.bind (interp f t) (fun r => interp f (k r)).
@@ -427,7 +430,7 @@ Hint Rewrite @interp_bind : itree.
     where [recursive] is defined as follows. *)
 Definition recursive {E A B} (f : A -> itree (callE A B +' E) B)
   : (callE A B +' E) ~> itree E
-  := case_ (calling' (rec f)) ITree.trigger.
+  := case_ (calling (rec f)) ITree.trigger.
 
 Lemma rec_as_interp
   : forall {E A B} (f : A -> itree (callE A B +' E) B) (a : A),
@@ -438,7 +441,7 @@ Proof.
 Qed.
 
 Lemma interp_recursive_call
-  : forall {E A B} (f : A -> itree (callE A B +' E) B) (x : A),
+  : forall {E : Type -> Type} {A B} (f : A -> itree (callE A B +' E) B) (x : A),
     interp (recursive f) (call x)
   ≈ rec f x.
 Proof.

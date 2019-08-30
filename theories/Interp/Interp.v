@@ -91,12 +91,12 @@ Definition interp
 
 (** An event handler [E ~> M] defines a monad morphism
     [itree E ~> M] for any monad [M] with a loop operator. *)
-Definition interp@{uE uF uR uT uR0 uT0}
-           {E : Type@{uE} -> Type@{uF}} {M : Type@{uR0} -> Type@{uT0}}
+Definition interp@{uE uF uR uT}
+           {E : Type@{uE} -> Type@{uF}} {M : Type@{uR} -> Type@{uT}}
            {FM : Functor M} {MM : Monad M} {IM : MonadIter M}
            (h : forall T : Type@{uE}, E T -> M T) :
   forall T : Type@{uR}, itree@{uE uF uR uT} E T -> M T := fun R =>
-  iter@{uR0 uT0} (fun t =>
+  iter (fun t =>
     match observe t with
     | RetF r => ret (inr r)
     | TauF t => ret (inl t)

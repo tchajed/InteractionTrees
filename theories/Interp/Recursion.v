@@ -156,12 +156,12 @@ Definition rec@{uE uF uR uT uA} {E : Type@{uE} -> Type@{uF}} {A : Type@{uA}} {B 
     function might have other events of type [E], the resulting itree has
     type [(callE A B +' E)].
 *)
-Definition call {E A B} (a:A) : itree (callE A B +' E) B := ITree.trigger (inl1 (Call a)).
+Definition call@{uE uF uR uT uA uB} {E : Type@{uE} -> Type@{uF}} {A : Type@{uA}} {B : Type@{uB}} (a:A) : itree@{uE uF uR uT} (callE A B +' E) B := ITree.trigger (inl1 (Call a)).
 
 (** Here's some syntactic sugar with a notation [mrec-fix]. *)
 
-Definition rec_fix {E : Type -> Type} {A B : Type}
-           (body : endo (A -> itree (callE A B +' E) B))
+Definition rec_fix@{uE uF uR uT uA uB} {E : Type@{uE} -> Type@{uF}} {A : Type@{uA}} {B : Type@{uB}}
+           (body : endo (A -> itree@{uE uF uR uT} (callE A B +' E) B))
   : A -> itree E B
   := rec (body call).
 

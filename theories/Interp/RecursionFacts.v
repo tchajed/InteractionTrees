@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Properties of [Recursion.mrec] and [Recursion.rec]. *)
 
 (** The main facts to take away are [mrec_as_interp] and [rec_as_interp]:
@@ -6,13 +5,14 @@ Set Universe Polymorphism.
     [recursive] as handlers.
  *)
 
-Require Import Paco.paco.
-
+(* begin hide *)
 From Coq Require Import
      Program.Tactics
      Setoid
      Morphisms
      RelationClasses.
+
+Require Import Paco.paco.
 
 From ITree Require Import
      Basics.Category
@@ -30,16 +30,22 @@ From ITree Require Import
 
 Import ITreeNotations.
 
+Set Universe Polymorphism.
+Set Printing Universes.
+(* end hide *)
+
 Section Facts.
 
-Context {D E : Type -> Type} (ctx : D ~> itree (D +' E)).
+Universe uE uF uR uT.
+Context {D E : Type@{uE} -> Type@{uF}}
+        (ctx : forall T : Type@{uE}, D T -> itree@{uE uF uR uT} (D +' E) T).
 
 (** Unfolding of [interp_mrec]. *)
 
-Definition _interp_mrec {R : Type} (ot : itreeF (D +' E) R _) : itree E R :=
+Definition _interp_mrec {R : Type@{uR}} (ot : itreeF@{uE uF uR uT} (D +' E) R _) : itree E R :=
   match ot with
   | RetF r => Ret r
-  | TauF t => Tau (interp_mrec ctx t)
+  | TauF t => Tau (interp_mrec@{uE uF uR uT} ctx t)
   | VisF e k =>
     match e with
     | inl1 d => Tau (interp_mrec ctx (ctx _ d >>= k))
@@ -135,15 +141,15 @@ Proof.
   apply interp_mrec_as_interp.
 Qed.
 
-Lemma interp_mrecursive {T} (d : D T) :
-  interp (mrecursive ctx) (trigger_inl1 d) ≈ mrec ctx d.
+Lemma interp_mrecursive {T : Type@{uE}} (d : D T) :
+  interp@{uE uF uR uT} (mrecursive ctx) (trigger_inl1 d) ≈ mrec ctx d.
 Proof.
   unfold mrecursive. unfold trigger_inl1.
   rewrite interp_trigger. cbn. reflexivity.
 Qed.
 
-Theorem unfold_interp_mrec_h {T} (t : itree _ T)
-  : interp_mrec ctx (interp (case_ ctx inr_) t)
+Theorem unfold_interp_mrec_h@{uY} {T : Type@{uE}} (t : itree _ T)
+  : interp_mrec ctx (interp (case_@{uY _} ctx inr_@{uY _}) t)
   ≈ interp_mrec ctx t.
 Proof.
   rewrite <- tau_eutt.
@@ -158,8 +164,8 @@ Proof.
     guclo eqit_clo_bind; econstructor; [reflexivity|].
     intros ? _ []; rewrite unfold_interp_mrec; cbn; auto with paco.
   - unfold inr_, Handler.Inr_sum1_Handler, Handler.Handler.inr_, Handler.Handler.htrigger.
-    rewrite bind_trigger, unfold_interp_mrec; cbn.
     rewrite tau_eutt.
+    rewrite bind_trigger, unfold_interp_mrec; cbn.
     gstep; constructor.
     intros; red. gstep; constructor.
     rewrite unfold_interp_mrec; cbn.
@@ -190,13 +196,19 @@ Proof.
   1,2: rewrite unfold_interp_mrec, tau_eutt; auto.
 Qed.
 
+Section rec_as_interp.
+
+Universe uE uF uR uT uA uB.
+Context {E : Type@{uE} -> Type@{uF}} {A : Type@{uA}} {B : Type@{uB}}.
+
 (** [rec body] is equivalent to [interp (recursive body)],
     where [recursive] is defined as follows. *)
-Definition recursive {E A B} (f : A -> itree (callE A B +' E) B) : (callE A B +' E) ~> itree E :=
-  case_ (calling' (rec f)) ITree.trigger.
+Definition recursive@{uY} (f : A -> itree@{uE uF uR uT} (callE A B +' E) B)
+  : forall T : Type@{uE}, (callE A B +' E) T -> itree@{uE uF uR uT} E T :=
+  case_@{uY _} (calling (rec f)) ITree.trigger.
 
-Lemma rec_as_interp {E A B} (f : A -> itree (callE A B +' E) B) (x : A) :
-  rec f x ≈ interp (recursive f) (f x).
+Lemma rec_as_interp@{uY} (f : A -> itree (callE A B +' E) B) (x : A) :
+  rec f x ≈ interp (recursive@{uY} f) (f x).
 Proof.
   unfold rec.
   rewrite mrec_as_interp.
@@ -206,20 +218,25 @@ Proof.
   - reflexivity.
 Qed.
 
-Lemma interp_recursive_call {E A B} (f : A -> itree (callE A B +' E) B) (x:A) :
-   interp (recursive f) (call x) ≈ rec f x.
+Lemma interp_recursive_call@{uY} (f : A -> itree (callE A B +' E) B) (x : A) :
+   interp (recursive@{uY} f) (call@{uE uF uR uT _ _} x) ≈ rec f x.
 Proof.
   unfold recursive. unfold call.
   rewrite interp_trigger. cbn.
   reflexivity.
 Qed.
 
+End rec_as_interp.
 
-Global Instance euttge_interp_mrec {D E} :
+Section Proper.
+
+Universe uE uF uR uT.
+
+Global Instance euttge_interp_mrec {D E : Type@{uE} -> Type@{uF}} :
   @Proper ((D ~> itree (D +' E)) -> (itree (D +' E) ~> itree E))
           (Relation.i_pointwise (fun _ => euttge eq) ==>
            Relation.i_respectful (fun _ => euttge eq) (fun _ => euttge eq))
-          interp_mrec.
+          interp_mrec@{uE uF uR uT}.
 Proof.
   intros f g Hfg R.
   ginit; gcofix CIH; intros t1 t2 Ht.
@@ -235,8 +252,10 @@ Proof.
   discriminate.
 Qed.
 
-Global Instance euttge_interp_mrec' {E D R} (ctx : D ~> itree (D +' E)) :
-  Proper (euttge eq ==> euttge eq) (@interp_mrec _ _ ctx R).
+Global Instance euttge_interp_mrec' {E D : Type@{uE} -> Type@{uF}} {R : Type@{uR}} (ctx : forall T : Type@{uE}, D T -> itree (D +' E) T) :
+  Proper (euttge eq ==> euttge eq) (@interp_mrec@{uE uF uR uT} _ _ ctx R).
 Proof.
   do 4 red. eapply euttge_interp_mrec. reflexivity.
 Qed.
+
+End Proper.
