@@ -109,17 +109,17 @@ End ProdRelInstances.
 
 Module Monads.
 
-Definition identity (a : Type) : Type := a.
+Definition identity@{u v} (a : Type@{u}) : Type@{v} := a.
 
-Definition stateT (s : Type) (m : Type -> Type) (a : Type) : Type :=
+Definition stateT@{u v} (s : Type@{u}) (m : Type@{u} -> Type@{v}) (a : Type@{u}) : Type@{v} :=
   s -> m (prod s a).
 Definition state (s a : Type) := s -> prod s a.
 
-Definition readerT (r : Type) (m : Type -> Type) (a : Type) : Type :=
+Definition readerT@{u v} (r : Type@{u}) (m : Type@{u} -> Type@{v}) (a : Type@{u}) : Type@{v} :=
   r -> m a.
 Definition reader (r a : Type) := r -> a.
 
-Definition writerT (w : Type) (m : Type -> Type) (a : Type) : Type :=
+Definition writerT@{u v} (w : Type@{u}) (m : Type@{u} -> Type@{v}) (a : Type@{u}) : Type@{v} :=
   m (prod w a).
 Definition writer := prod.
 
@@ -166,8 +166,13 @@ Instance MonadIter_stateT {M S} {MM : Monad M} {AM : MonadIter M}
           | inr r => inr (r, snd is')
           end) (i, s)).
 
-Polymorphic Instance MonadIter_stateT0 {M S} {MM : Monad M} {AM : MonadIter M}
-  : MonadIter (Monads.stateT S M) :=
+Section MI_State.
+
+Universe u v.
+(* TODO: there is an extra universe used by pbind. *)
+Global Instance MonadIter_stateT0 {M : Type@{u} -> Type@{v}}
+            {S : Type@{u}} {MM : Monad@{u v} M} {AM : MonadIter@{u v} M}
+  : MonadIter@{u v} (Monads.stateT@{u v} S M) :=
   fun _ _ step i s =>
     iter (fun si =>
       let s := fst si in
@@ -177,6 +182,8 @@ Polymorphic Instance MonadIter_stateT0 {M S} {MM : Monad M} {AM : MonadIter M}
           | inl i' => inl (fst si', i')
           | inr r => inr (fst si', r)
           end) (s, i).
+
+End MI_State.
 
 Instance MonadIter_readerT {M S} {AM : MonadIter M} : MonadIter (readerT S M) :=
   fun _ _ step i => mkReaderT (fun s =>

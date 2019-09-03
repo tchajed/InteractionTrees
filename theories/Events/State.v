@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * State *)
 
 (** Events to read and update global state. *)
@@ -16,57 +15,74 @@ From ITree Require Import
      Indexed.Function
      Indexed.Sum
      Core.Subevent
+     Interp.Handler
      Interp.Interp.
 
 Import ITree.Basics.Basics.Monads.
 Import ITreeNotations.
 
 Open Scope itree_scope.
+
+Set Universe Polymorphism.
+Set Printing Universes.
 (* end hide *)
+
+Section interp_state.
+Universe uE uF uR uT.
 
 (* Stateful handlers [E ~> stateT S (itree F)] and morphisms
    [E ~> state S] define stateful itree morphisms
    [itree E ~> stateT S (itree F)]. *)
-
-Definition interp_state {E M S}
+Definition interp_state {E : Type@{uE} -> Type@{uF}} {M : Type@{uR} -> Type@{uT}} {S : Type@{uR}}
            {FM : Functor M} {MM : Monad M}
-           {IM : MonadIter M} (h : E ~> stateT S M) :
-  itree E ~> stateT S M := interp h.
+           {IM : MonadIter@{uR uT} M} (h : forall T : Type@{uE}, E T -> stateT@{uR uT} S M T) :
+  forall T : Type@{uR}, itree@{uE uF uR uT} E T -> stateT S M T := interp@{uE uF uR uT} h.
+
+End interp_state.
 
 Arguments interp_state {E M S FM MM IM} h [T].
 
+Variant stateE@{uE uF} (S : Type@{uE}) : Type@{uE} -> Type@{uF} :=
+| Get : stateE S S
+| Put : S -> stateE S unit
+.
+
+Arguments Get {S}.
+Arguments Put {S}.
+
 Section State.
+Universe uE uF uR uT.
+Context {S : Type@{uE}} {E : Type@{uE} -> Type@{uF}}.
 
-  Variable (S : Type).
+Definition get `{stateE S -< E} : itree@{uE uF uR uT} E S := embed Get.
+Definition put `{stateE S -< E} : S -> itree@{uE uF uR uT} E unit := embed Put.
 
-  Variant stateE : Type -> Type :=
-  | Get : stateE S
-  | Put : S -> stateE unit.
+Definition handle_state
+  : forall T : Type@{uE}, stateE@{uE uF} S T -> stateT S (itree@{uE uF uR uT} E) T :=
+  fun _ e s =>
+    match e with
+    | Get => Ret (s, s)
+    | Put s' => Ret (s', tt)
+    end.
 
-  Definition get {E} `{stateE -< E} : itree E S := embed Get.
-  Definition put {E} `{stateE -< E} : S -> itree E unit := embed Put.
-
-  Definition handle_state {E} : stateE ~> stateT S (itree E) :=
-    fun _ e s =>
-      match e with
-      | Get => Ret (s, s)
-      | Put s' => Ret (s', tt)
-      end.
-
-  (* SAZ: this is the instance for the hypothetical "Trigger E M" typeclass.
+(* SAZ: this is the instance for the hypothetical "Trigger E M" typeclass.
     Class Trigger E M := trigger : E ~> M 
-  *)
-  Definition pure_state {S E} : E ~> stateT S (itree E)
-    := fun _ e s => Vis e (fun x => Ret (s, x)).
-
-  Definition run_state {E}
-    : itree (stateE +' E) ~> stateT S (itree E)
-    := interp_state (case_ handle_state pure_state).
+ *)
+Definition pure_state
+  : forall T : Type@{uE}, E T -> stateT S (itree@{uE uF uR uT} E) T
+  := fun _ e s => Vis e (fun x => Ret (s, x)).
 
 End State.
 
 Arguments get {S E _}.
 Arguments put {S E _}.
+
+Definition run_state@{uE uF uR uT uY u0 u1} {S : Type@{uE}} {E : Type@{uE} -> Type@{uF}}
+  : itree@{uE uF uR uT} (stateE@{uE uF} S +' E) ~> stateT S (itree@{uE uF uR uT} E)
+  := interp_state@{_ _ uR uT u0 u1}
+       (case_@{uY _} (mk_IFun handle_state@{_ _ uR uT})
+                     (mk_IFun pure_state@{_ _ uR uT})).
+
 Arguments run_state {S E} [_] _ _.
 
 

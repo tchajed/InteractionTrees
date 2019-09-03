@@ -1,4 +1,4 @@
-Set Universe Polymorphism.
+(* begin hide *)
 From ITree Require Import
      Basics.Basics
      Basics.Function
@@ -19,34 +19,41 @@ From Coq Require Import
      Morphisms
      Setoid.
 
-
 Import ITreeNotations.
 Import CatNotations.
 Local Open Scope itree_scope.
 Local Open Scope cat_scope.
 
-Global Instance lift_SemiIso {A B: Type} {f: A -> B} {g: B -> A} `{@SemiIso _ Fun _ _ _ _ _ f g} {E}:
-  SemiIso (ktree E) (lift_ktree f) (lift_ktree g).
+Set Universe Polymorphism.
+(* end hide *)
+
+Global Instance lift_SemiIso@{uE uF uR uT uY} {A B : Type@{uR}}
+       {f: A -> B} {g: B -> A}
+       `{@SemiIso@{uY _} _ Fun _ _ _ _ _ f g}
+       {E : Type@{uE} -> Type@{uF}}
+  : SemiIso@{uY _} (Kleisli (itree@{uE uF uR uT} E)) (lift_ktree f) (lift_ktree g).
 Proof.
-  red.  rewrite compose_pure, semi_iso, pure_id; auto; reflexivity.
+  red. rewrite compose_pure, semi_iso, pure_id; auto; reflexivity.
 Qed.
 
 Section Facts.
 
-  Context {i: Type}.
-  Context {iEmbed: Embedding i}.
+  Universe uE uF uR uT uI uY.
+  Context {i: Type@{uI}}.
+  Context {iEmbed: Embedding@{uI uR} i}.
   Context {iI: i}.
   Context {isum: i -> i -> i}.
   Context {FInit: Embedded_initial iI}.
-  Context {iI_iso: Iso Fun iI_void void_iI}.
+  Context {iI_iso: Iso@{uY uR} Fun iI_void void_iI}.
   Context {Fsum: Embedded_sum isum}.
-  Context {sum_Iso: forall A B, Iso Fun (@isum_sum _ _ _ _ A B) sum_isum}.
+  Context {sum_Iso: forall A B, Iso@{uY uR} Fun (@isum_sum _ _ _ _ A B) sum_isum}.
 
-  Context {E: Type -> Type}.
+  Context {E: Type@{uE} -> Type@{uF}}.
 
   Notation sktree := (@sktree i iEmbed E).
 
-  Global Instance Eq2_sktree_equivalence {a b} : Equivalence (@Eq2_sktree i iEmbed E a b).
+  (** TODO: remove this (eq2 should be the "canonical name") *)
+  Global Instance Eq2_sktree_equivalence {a b} : Equivalence (@Eq2_sktree@{uI uE uF uR uT uY} i iEmbed E a b).
   Proof.
     unfold Eq2_sktree, eutt_sktree.
     constructor; repeat intro.
@@ -54,22 +61,25 @@ Section Facts.
     - symmetry. auto.
     - etransitivity; eauto.
   Qed.
-    
 
-  Global Instance Proper_Eq2sktree {a b:i} : Proper ((@Eq2_sktree i iEmbed E a b) ==>
-                                                     (@Eq2_sktree i iEmbed E a b) ==>
-                                                     iff) (@eq2 _ (ktree E) _ _ _).
-  repeat red.
-  intros x y H x0 y0 H0.
-  split; intros.
-  - unfold Eq2_sktree, eutt_sktree in *. rewrite <- H. rewrite <- H0. assumption.
-  - unfold Eq2_sktree, eutt_sktree in *. rewrite H. rewrite H0. assumption.
+  (** TODO: remove this *)
+  Global Instance Proper_Eq2sktree {a b : i}
+    : Proper ((@Eq2_sktree@{uI uE uF uR uT uY} i iEmbed E a b) ==>
+              (@Eq2_sktree@{uI uE uF uR uT uY} i iEmbed E a b) ==>
+              iff)
+             (@eq2 _ (ktree E) _ _ _).
+  Proof.
+    repeat red.
+    intros x y H x0 y0 H0.
+    split; intros.
+    - unfold Eq2_sktree, eutt_sktree in *. rewrite <- H. rewrite <- H0. assumption.
+    - unfold Eq2_sktree, eutt_sktree in *. rewrite H. rewrite H0. assumption.
   Qed.
 
-
-  Global Instance Proper_sktreeEq2 {a b:i} : Proper ((@eq2 _ (ktree E) _ (F a) (F b)) ==>
-                                                     (@eq2 _ (ktree E) _ (F a) (F b)) ==>
-                                                     iff) (@eq2 _ (sktree) _ _ _).
+  Global Instance Proper_sktreeEq2 {a b : i}
+    : Proper ((@eq2@{uI _} _ (ktree E) _ (F a) (F b)) ==>
+              (@eq2 _ (ktree E) _ (F a) (F b)) ==>
+              iff) (@eq2@{uI uT} _ (sktree) _ _ _).
   Proof.
     repeat red.
     intros.
@@ -138,9 +148,9 @@ Section Facts.
   Section UnfoldingLemmas.
 
     Lemma unfold_bimap: forall {A B C D} (f: ktree E (F A) (F C)) (g: ktree E (F B) (F D)),
-      (@eq2 _ (ktree E) _ _ _)
-      (@bimap i sktree isum _ _ _ _ _ f g)
-      (isum_suml >>> @bimap Type (ktree E) sum _ _ _ _ _ f g >>> sum_isuml).
+      (@eq2@{uY _} _ (ktree@{uR uT} E) _ _ _)
+      (@bimap i sktree@{uI uE uF uR uT uY} isum _ _ _ _ _ f g)
+      (isum_suml >>> @bimap@{uY _} _ (ktree@{uR uT} E) sum _ _ _ _ _ f g >>> sum_isuml).
     Proof.
       intros A B C D ab cd.
       unfold bimap, Bimap_Coproduct.
@@ -150,9 +160,8 @@ Section Facts.
 
     Lemma unfold_bimap_l:
       forall {A B C D : i} (ab : sktree A B) (cd: sktree C D),
-       (sum_isuml >>> @bimap _ sktree _ _ _ _ _ _ cd ab)
-         ⩯
-         (@bimap _ (ktree E) _ _ _ _ _ _ cd ab >>> sum_isuml).
+        (sum_isuml@{uI uE uF uR uT uY} >>> @bimap _ sktree _ _ _ _ _ _ cd ab)
+      ⩯ (@bimap Type (ktree E) _ _ _ _ _ _ cd ab >>> sum_isuml).
     Proof.
       intros A B C D ab cd.
       rewrite unfold_bimap.
@@ -174,7 +183,7 @@ Section Facts.
     Lemma unfold_unit_l {A: i}:
       (@eq2 _ (ktree E) _ _ _)
       (@unit_l _ sktree _ _ _ A)
-      (isum_suml >>> bimap iI_voidl (id_ _) >>> unit_l).
+      (isum_suml >>> bimap iI_voidl (id_ (F@{_ uR} A)) >>> unit_l).
     Proof.
       unfold unit_l, UnitL_Coproduct, bimap, Bimap_Coproduct.
       rewrite cat_id_l.
@@ -185,7 +194,7 @@ Section Facts.
     Lemma unfold_unit_l' {A: i}:
       (@eq2 _ (ktree E) _ _ _)
       (@unit_l' _ sktree _ _ _ A)
-      (unit_l' >>> bimap void_iIl (id_ _) >>> sum_isuml).
+      (unit_l' >>> @bimap Type@{uR} _ _ _ _ _ _ _ void_iIl (id_ (F@{_ uR} A)) >>> sum_isuml).
     Proof.
       unfold unit_l', UnitL'_Coproduct, bimap, Bimap_Coproduct.
       rewrite cat_id_l, case_inr.
@@ -280,11 +289,14 @@ Section Facts.
       rewrite (cat_case inl_), case_inl.
       rewrite cat_assoc, case_inr...
       match goal with |- ?f ⩯ _ => set (g:=f) end.
-      rewrite <- cat_assoc, (cat_assoc _ sum_isuml _), (semi_iso _ _), cat_id_r.
+Unset Printing All. Unset Printing Implicit. Set Printing Notations. Unset Printing Universes.
+      rewrite <- (cat_assoc _ isum_suml).
+      rewrite (cat_assoc _ sum_isuml isum_suml).
+      rewrite (semi_iso _ _), cat_id_r.
       rewrite cat_case.
       rewrite case_inr.
-      rewrite cat_assoc, case_inl.
-      rewrite <- cat_assoc, (semi_iso _ _), cat_id_l.
+      rewrite (cat_assoc _ inl_), case_inl.
+      rewrite <- (cat_assoc sum_isuml), (semi_iso _ _), cat_id_l.
       rewrite <- cat_assoc, <- cat_case.
       rewrite <- cat_assoc, <- cat_case.
       subst g.

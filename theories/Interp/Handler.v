@@ -59,7 +59,7 @@ Definition inr_@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} : F ~> itree@{uE uF
 
 (** Case analysis on sums of events. *)
 Definition case_@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}}
-           (f : E ~> itree G) (g : F ~> itree G)
+           (f : E ~> itree@{uE uF uR uT} G) (g : F ~> itree@{uE uF uR uT} G)
   : sum1@{uE uF} E F ~> itree@{uE uF uR uT} G
   := fun _ ab => match ab with
                  | inl1 a => f _ a
@@ -68,20 +68,25 @@ Definition case_@{uE uF uR uT} {E F G : Type@{uE} -> Type@{uF}}
 
 (** Handle events independently, with disjoint sets of output events. *)
 Definition bimap@{uE uF uR uT} {E F G H : Type@{uE} -> Type@{uF}}
-           (f : E ~> itree G) (g : F ~> itree H)
-  : E +' F ~> itree@{uE uF uR uT} (G +' H)
-  := case_ (Handler.cat f inl_) (Handler.cat g inr_).
+           (f : E ~> itree G)
+           (g : F ~> itree H)
+  : (E +' F) ~> itree (G +' H)
+  := case_@{uE uF uR uT} (Handler.cat f inl_) (Handler.cat g inr_).
 
 (** Handle [void1] events (of which there are none). *)
 Definition empty@{uE uF uR uT} {E : Type@{uE} -> Type@{uF}}
-  : void1@{uE uF} ~> itree@{uE uF uR uT} E
-  := fun _ e => match e : void1 _ with end.
+  : void1 ~> itree@{uE uF uR uT} E
+  := fun _ e => match e : void1@{uE uF} _ with end.
 
 End Handler.
 
 (** ** Category instances *)
 
 Definition Handler@{uE uF uR uT} (E F : Type@{uE} -> Type@{uF}) := E ~> itree@{uE uF uR uT} F.
+
+Definition handler@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
+  : (E ~> itree@{uE uF uR uT} F) -> Handler E F
+  := fun h => h.
 
 Definition eq_Handler@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}}
   : Handler@{uE uF uR uT} E F -> Handler E F -> Prop

@@ -15,51 +15,53 @@ Set Universe Polymorphism.
 Set Printing Universes.
 (* end hide *)
 
-Definition Kleisli@{uE uF uG} (m : Type@{uE} -> Type@{uF}) (a b : Type@{uE})
-  : Type@{uG} := a -> m b.
+Definition Kleisli@{uR uT} (m : Type@{uR} -> Type@{uT}) (a b : Type@{uR})
+  : Type@{uT} := a -> m b.
 
 (* SAZ: We need to show how these are intended to be used. *)
 (** A trick to allow rewriting in pointful contexts. *)
-Definition Kleisli_arrow@{uE uF uG} {m : Type@{uE} -> Type@{uF}} {a b : Type@{uE}}
-  : (a -> m b) -> Kleisli@{uE uF uG} m a b := fun f => f.
-Definition Kleisli_apply@{uE uF uG} {m : Type@{uE} -> Type@{uF}} {a b : Type@{uE}}
-  : Kleisli@{uE uF uG} m a b -> (a -> m b) := fun f => f.
+Definition Kleisli_arrow@{uR uT} {m : Type@{uR} -> Type@{uT}} {a b : Type@{uR}}
+  : (a -> m b) -> Kleisli@{uR uT} m a b := fun f => f.
+Definition Kleisli_apply@{uR uT} {m : Type@{uR} -> Type@{uT}} {a b : Type@{uR}}
+  : Kleisli@{uR uT} m a b -> (a -> m b) := fun f => f.
 
-
-Definition pure {m} `{Monad m} {a b} (f : a -> b) : Kleisli m a b :=
+Definition pure@{uR uT} {m : Type@{uR} -> Type@{uT}} `{Monad m} {a b : Type@{uR}} (f : a -> b)
+  : Kleisli@{uR uT} m a b :=
   fun x => ret (f x).
 
 Section Instances.
-  Context {m : Type -> Type}.
+  Universe uR uT uY.
+  Context {m : Type@{uR} -> Type@{uT}}.
   Context `{Monad m}.
   Context `{EqM m}.
 
-  Global Instance Eq2_Kleisli : Eq2 (Kleisli m) :=
+  Global Instance Eq2_Kleisli : Eq2@{uY _} (Kleisli@{uR uT} m) :=
     fun _ _ => pointwise_relation _ eqm.
 
-  Global Instance Cat_Kleisli : Cat (Kleisli m) :=
+  Global Instance Cat_Kleisli : Cat@{uY _} (Kleisli@{uR uT} m) :=
     fun _ _ _ u v x =>
       bind (u x) (fun y => v y).
 
-  Definition map {a b c} (g:b -> c) (ab : Kleisli m a b) : Kleisli m a c :=
-     cat ab (pure g).
+  Definition map {a b c : Type@{uR}} (g:b -> c) (ab : Kleisli@{uR uT} m a b)
+    : Kleisli@{uR uT} m a c
+    := @cat@{uY _} Type@{uR} _ _ _ _ _ ab (pure@{uR uT} g).
   
-  Global Instance Initial_Kleisli : Initial (Kleisli m) void :=
+  Global Instance Initial_Kleisli : Initial@{uY _} (Kleisli@{uR uT} m) void :=
     fun _ v => match v : void with end.
 
-  Global Instance Id_Kleisli : Id_ (Kleisli m) :=
+  Global Instance Id_Kleisli : Id_@{uY _} (Kleisli@{uR uT} m) :=
     fun _ => pure id.
 
-  Global Instance CoprodCase_Kleisli : CoprodCase (Kleisli m) sum :=
+  Global Instance CoprodCase_Kleisli : CoprodCase@{uY _} (Kleisli@{uR uT} m) sum :=
     fun _ _ _ l r => case_sum _ _ _ l r.
 
-  Global Instance CoprodInl_Kleisli : CoprodInl (Kleisli m) sum :=
+  Global Instance CoprodInl_Kleisli : CoprodInl@{uY _} (Kleisli@{uR uT} m) sum :=
     fun _ _ => pure inl.
 
-  Global Instance CoprodInr_Kleisli : CoprodInr (Kleisli m) sum :=
+  Global Instance CoprodInr_Kleisli : CoprodInr@{uY _} (Kleisli@{uR uT} m) sum :=
     fun _ _ => pure inr.
 
-  Global Instance Iter_Kleisli `{MonadIter m} : Iter (Kleisli m) sum :=
+  Global Instance Iter_Kleisli `{MonadIter m} : Iter@{uY _} (Kleisli@{uR uT} m) sum :=
     fun a b => Basics.iter.
 
 End Instances.

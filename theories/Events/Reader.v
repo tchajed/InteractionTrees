@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Reader *)
 
 (** Immutable environment. *)
@@ -20,28 +19,34 @@ From ITree Require Import
      Events.Exception
      Interp.Interp
      Interp.Handler.
+
+Set Universe Polymorphism.
+Set Printing Universes.
 (* end hide *)
 
+Variant readerE@{uE uF} (Env : Type@{uE}) : Type@{uE} -> Type@{uF} :=
+| Ask : readerE Env Env.
+
+Arguments Ask {Env}.
+
 Section Reader.
+Universe uE uF uR uT.
+Context {Env : Type@{uE}} {E : Type@{uE} -> Type@{uF}}.
 
-Variable (Env : Type).
-
-Variant readerE : Type -> Type :=
-| Ask : readerE Env.
-
-Definition ask {E} `{readerE -< E} : itree E Env :=
+Definition ask `{readerE Env -< E} : itree@{uE uF uR uT} E Env :=
   trigger Ask.
 
-Definition eval_reader {E} : Env -> Handler readerE E :=
+Definition eval_reader : Env -> Handler@{uE uF uR uT} (readerE@{uE uF} Env) E :=
   fun r _ e =>
     match e with
     | Ask => Ret r
     end.
 
-Definition run_reader {E} : Env -> itree (readerE +' E) ~> itree E :=
-  fun r => interp (case_ (eval_reader r) (id_ _)).
-
 End Reader.
 
 Arguments ask {Env E _}.
-Arguments run_reader {Env E} _ _ _.
+
+Definition run_reader {Env E} : Env -> itree (readerE Env +' E) ~> itree E
+  := fun r => interp (case_ (eval_reader r) (id_ _)).
+
+Arguments run_reader {Env E} _ [_] _.

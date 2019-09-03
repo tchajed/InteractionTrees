@@ -298,8 +298,8 @@ Proof.
     + intros ? _ []. gstep; constructor; auto with paco.
 Qed.
 
-Lemma translate_to_interp {E F R} (f : E ~> F) (t : itree E R) :
-  translate f t ≈ interp (fun _ e => ITree.trigger (f _ e)) t.
+Lemma translate_to_interp@{uE uF uR uT} {E F : Type@{uE} -> Type@{uF}} {R} (f : E ~> F) (t : itree E R) :
+  translate f t ≈ interp@{uE uF uR uT} (fun _ e => ITree.trigger (f _ e)) t.
 Proof.
   revert t. einit. ecofix CIH. intros.
   rewrite unfold_translate.

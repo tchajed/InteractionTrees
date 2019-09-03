@@ -32,7 +32,7 @@ Instance Cat_Fun : Cat Fun :=
   fun A B C f g => fun a => g (f a).
 
 (** [void] as an initial object. *)
-Instance Initial_void : Initial Fun void :=
+Instance Initial_void@{u v} : Initial@{u v} Fun@{v v v} void :=
   fun _ v => match v : void with end.
 
 (** ** The [sum] coproduct. *)
