@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Theorems about State effects *)
 
 (* begin hide *)
@@ -32,10 +31,14 @@ Import ITreeNotations.
 Open Scope itree_scope.
 
 Import Monads.
+
+Set Universe Polymorphism.
+Set Printing Universes.
 (* end hide *)
 
-Definition _interp_state {E F S R}
-           (f : E ~> stateT S (itree F)) (ot : itreeF E R _)
+Definition _interp_state {E F : Type -> Type} {S R}
+           (f : E ~> stateT S (itree F))
+           (ot : itreeF E R _)
   : stateT S (itree F) R := fun s =>
   match ot with
   | RetF r => Ret (s, r)
@@ -43,7 +46,8 @@ Definition _interp_state {E F S R}
   | VisF e k => f _ e s >>= (fun sx => Tau (interp_state f (k (snd sx)) (fst sx)))
   end.
 
-Lemma unfold_interp_state {E F S R} (h : E ~> Monads.stateT S (itree F))
+Lemma unfold_interp_state {E F : Type -> Type}
+      {S R} (h : E ~> Monads.stateT S (itree F))
       (t : itree E R) s :
     eq_itree eq
       (interp_state h t s)
@@ -59,7 +63,8 @@ Proof.
     apply eqit_bind; reflexivity.
 Qed.
 
-Instance eq_itree_interp_state {E F S R} (h : E ~> Monads.stateT S (itree F)) :
+Instance eq_itree_interp_state {E F : Type -> Type}
+         {S R} (h : E ~> Monads.stateT S (itree F)) :
   Proper (eq_itree eq ==> eq ==> eq_itree eq)
          (@interp_state _ _ _ _ _ _ h R).
 Proof.
@@ -152,7 +157,7 @@ Proof.
   - rewrite tau_eutt, unfold_interp_state; eauto.
 Qed.
 
-Lemma eutt_interp_state_aloop {E F S I I' A A'}
+Lemma eutt_interp_state_aloop {E F : Type -> Type} {S I I' A A'}
       (RA : A -> A' -> Prop) (RI : I -> I' -> Prop)
       (RS : S -> S -> Prop)
       (h : E ~> Monads.stateT S (itree F))
@@ -178,7 +183,7 @@ Proof.
     + rewrite 2 interp_state_ret. auto with paco.
 Qed.
 
-Lemma eutt_interp_state_iter {E F S A A' B B'}
+Lemma eutt_interp_state_iter {E F : Type -> Type} {S A A' B B'}
       (RA : A -> A' -> Prop) (RB : B -> B' -> Prop)
       (RS : S -> S -> Prop)
       (h : E ~> Monads.stateT S (itree F))
@@ -197,7 +202,7 @@ Proof.
   apply eutt_interp_state_aloop.
 Qed.
 
-Lemma eutt_interp_state_loop {E F S A B C} (RS : S -> S -> Prop)
+Lemma eutt_interp_state_loop {E F : Type -> Type} {S A B C} (RS : S -> S -> Prop)
       (h : E ~> Monads.stateT S (itree F))
       (t1 t2 : C + A -> itree E (C + B)) :
   (forall ca s1 s2, RS s1 s2 ->
@@ -232,7 +237,7 @@ Definition state_eq {E S X}
   : (stateT S (itree E) X) -> (stateT S (itree E) X) -> Prop :=
   fun t1 t2 => forall s, eq_itree eq (t1 s) (t2 s).
 
-Lemma interp_state_iter {E F } S (f : E ~> stateT S (itree F)) {I A}
+Lemma interp_state_iter {E F : Type -> Type} S (f : E ~> stateT S (itree F)) {I A}
       (t  : I -> itree E (I + A))
       (t' : I -> stateT S (itree F) (I + A))
       (EQ_t : forall i, state_eq (State.interp_state f (t i)) (t' i))

@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (* begin hide *)
 From Coq Require Import
      Program
@@ -24,6 +23,9 @@ Import CatNotations.
 Local Open Scope cat_scope.
 Local Open Scope cat.
 
+Set Universe Polymorphism.
+(* end hide *)
+
 Section Kleisli.
   Variable m : Type -> Type.
   Variable S : Type.
@@ -37,6 +39,7 @@ Section Kleisli.
     fun a => pointwise_relation _ eqm.
 
   Global Instance EqMProps_stateTM : @EqMProps (stateT S m) _ EqM_stateTM.
+  Proof.
   constructor.
   - repeat red.
     reflexivity.
@@ -55,6 +58,7 @@ Section Kleisli.
   Qed.
 
   Instance MonadLaws_stateTM : @MonadLaws (stateT S m) _ _.
+  Proof.
   constructor.
   - cbn. intros a b f x. 
     repeat red.  intros s.

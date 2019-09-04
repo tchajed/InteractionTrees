@@ -1,4 +1,3 @@
-Set Universe Polymorphism.
 (** * Mutable map whose lookup operation provides a default value.*)
 
 (* begin hide *)
@@ -21,21 +20,23 @@ From ITree Require Import
      Events.State.
 
 Import ITree.Basics.Basics.Monads.
+
+Set Universe Polymorphism.
 (* end hide *)
+
+Variant mapE (d:V) : Type -> Type :=
+| Insert : K -> V -> mapE d unit
+| LookupDef : K -> mapE d V
+| Remove : K -> mapE d unit
+.
+
+Arguments Insert {d}.
+Arguments LookupDef {d}.
+Arguments Remove {d}.
 
 Section Map.
 
   Variables (K V : Type).
-
-  Variant mapE (d:V) : Type -> Type :=
-  | Insert : K -> V -> mapE d unit
-  | LookupDef : K -> mapE d V
-  | Remove : K -> mapE d unit
-  .
-
-  Arguments Insert {d}.
-  Arguments LookupDef {d}.
-  Arguments Remove {d}.
   
   Definition insert {E d} `{(mapE d) -< E} : K -> V -> itree E unit := embed Insert.
   Definition lookup_def {E d} `{(mapE d) -< E} : K -> itree E V := embed LookupDef.
