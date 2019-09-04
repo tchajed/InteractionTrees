@@ -212,7 +212,7 @@ Proof.
   - apply split_merge.
 Qed.      
 
-Global Instance FiniIIso: Iso Fun iI_void void_iI := {}.
-- intros x. destruct x. omega.
-- intros x. destruct x.
+Global Instance FiniIIso: Iso Fun iI_void void_iI.
+Proof.
+  constructor; intros []. omega.
 Defined.
