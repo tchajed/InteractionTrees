@@ -178,40 +178,65 @@ Import ITreeNotations.
 Import CatNotations.
 Local Open Scope cat.
 (* end hide *)
+
+From ExtLib Require Import Functor.
+From ITree Require Import MonadTheory.
+Local Close Scope itree_scope.
+
 Section Correctness.
 
-  Context {E : Type -> Type}.
-  Context {HasRegs : Reg -< E}.
-  Context {HasMemory : Memory -< E}.
-  Context {HasExit : Exit -< E}.
+  Context
+    {m : Type -> Type}
+    {Functor_m : Functor m}
+    {Monad_m : Monad m}
+    {HasRegs_m : HasReg m}
+    {HasMemory_m : HasMemory m}
+    {MonadExit_m : MonadExit m}
+    {EqM_m : EqM m}
+    {EqMProps_m : EqMProps m}
+    {MonadLaws_m : MonadLaws m}.
+
+  Instance proper_bind {a b} :
+          (@Proper (m a -> (a -> m b) -> m b)
+           (eqm ==> pointwise_relation _ eqm ==> eqm)
+           bind).
+    Admitted.
+
+  Lemma fmap_bind {A B C} (f : B -> C) (u : m A) (k : A -> m B)
+    : fmap f (bind u k) ≈ bind u (fun x => fmap f (k x)).
+  Proof. Admitted.
+
+  Lemma fmap_ret {A B} (f : A -> B) (a : A)
+    : fmap f (ret a) ≈ ret (f a).
+  Proof. Admitted.
+
+  Lemma fmap_exit {A B} (f : A -> B)
+    : fmap f exit ≈ exit.
+    Admitted.
 
   (** *** Internal structures *)
 
   Lemma fmap_block_map:
     forall  {L L'} b (f: F L -> F L'),
-      denote_block (fmap_block f b) ≅ ITree.map f (denote_block b).
+      denote_block (fmap_block f b) ≈ fmap f (denote_block b).
   Proof.
     (* Induction over the structure of the [block b] *)
     induction b as [i b | br]; intros f.
     - (* If it contains an instruction (inductive case). *)
       simpl.
-      unfold ITree.map; rewrite bind_bind.
-      eapply eqit_bind; [| reflexivity].
-      intros []; apply IHb.
+      rewrite fmap_bind. setoid_rewrite IHb.
+      reflexivity.
     - (* If it's a jump, we consider the three cases. *)
       simpl.
       destruct br; simpl.
-      + unfold ITree.map; rewrite bind_ret; reflexivity.
-      + unfold ITree.map; rewrite bind_bind. 
-        eapply eqit_bind; [| reflexivity].
-        intros ?.
-        flatten_goal; rewrite bind_ret; reflexivity.
-      + rewrite (itree_eta (ITree.map _ _)).
-        cbn. apply eqit_Vis. intros [].
+      + rewrite fmap_ret; reflexivity.
+      + rewrite fmap_bind. apply proper_bind; [ reflexivity | ].
+        intros []; rewrite fmap_ret; reflexivity.
+      + rewrite fmap_exit; reflexivity.
   Qed.
 
   (** Denotes a list of instruction by binding the resulting trees. *)
-  Definition denote_list: list instr -> itree E unit :=
+  Definition denote_list: list instr -> m unit :=
     traverse_ denote_instr.
 
   (** Correctness of the [after] operator.
@@ -219,34 +244,30 @@ Section Correctness.
       with the one of the branch.
    *)
 
-  Lemma denote_after :
-    forall {label} instrs (b: branch (F label)),
-      denote_block (after instrs b) ≅ (denote_list instrs ;; denote_branch b).
+  (** TODO: rename this *)
+  Lemma denote_after {label} instrs (b: branch (F label))
+    : denote_block (after instrs b) ≈ (denote_list instrs ;; denote_branch b).
   Proof.
-    induction instrs as [| i instrs IH]; intros b.
+    induction instrs as [| i instrs IH].
     - simpl; rewrite bind_ret; reflexivity.
-    - simpl; rewrite bind_bind.
-      eapply eqit_bind; try reflexivity.
-      intros []; apply IH.
+    - simpl; rewrite bind_bind. setoid_rewrite IH.
+      reflexivity.
   Qed.
 
-  Lemma denote_blk_append : forall lbl (l:list instr) (b:block (F lbl)),
-      denote_block (blk_append l b) ≈ (x <- denote_list l ;; denote_block b).
+  Lemma denote_blk_append lbl (l:list instr) (b:block (F lbl))
+    : denote_block (blk_append l b) ≈ (x <- denote_list l ;; denote_block b).
   Proof.
-    intros lbl.
-    induction l; intros b; simpl.
+    induction l; simpl.
     - rewrite bind_ret. reflexivity.
-    - rewrite bind_bind.
-      eapply eutt_clo_bind. reflexivity. red. intros. apply IHl. 
-  Qed.    
-
+    - rewrite bind_bind. setoid_rewrite IHl.
+      reflexivity.
+  Qed.
   
   (** Utility: denoting the [app] of two lists of instructions binds the denotations. *)
-  Lemma denote_list_app:
-    forall is1 is2,
-      @denote_list (is1 ++ is2) ≅ (@denote_list is1;; denote_list is2).
+  Lemma denote_list_app is1 is2
+    : @denote_list (is1 ++ is2) ≈ (@denote_list is1;; denote_list is2).
   Proof.
-    intros is1 is2; induction is1 as [| i is1 IH]; simpl; intros; [rewrite bind_ret; reflexivity |].
+    induction is1 as [| i is1 IH]; simpl; [rewrite bind_ret; reflexivity |].
     rewrite bind_bind; setoid_rewrite IH; reflexivity.
   Qed.
 
